@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
+using HoloToolkit.Unity;
 using HoloToolkit.Unity.InputModule;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,47 +11,60 @@ namespace HoloToolkit.Examples.ColorPicker
 {
     public class GazeableColorPicker : MonoBehaviour, IFocusable, IInputClickHandler
     {
-        public Renderer rendererComponent;
+        [Serializable]
+        public class ColorCallback : UnityEvent<Color> { }
 
-        [System.Serializable]
-        public class PickedColorCallback : UnityEvent<Color> { }
+        public ColorCallback OnGazedColor = new ColorCallback();
+        public ColorCallback OnPickedColor = new ColorCallback();
 
-        public PickedColorCallback OnGazedColor = new PickedColorCallback();
-        public PickedColorCallback OnPickedColor = new PickedColorCallback();
+        private IPointingSource pointer;
+        private Renderer rendererComponent;
 
-        private bool gazing = false;
-
-        void Update()
+        private void Awake()
         {
-            if (gazing == false) return;
+            rendererComponent = gameObject.EnsureComponent<Renderer>();
+        }
+
+        private void Update()
+        {
+            if (pointer == null)
+            {
+                return;
+            }
+
             UpdatePickedColor(OnGazedColor);
         }
 
-        void UpdatePickedColor(PickedColorCallback cb)
+        private void UpdatePickedColor(ColorCallback colorCallback)
         {
-            GameObject hitObject = GazeManager.Instance.HitObject;
+            if (pointer != null)
+            {
+                FocusDetails focusDetails = FocusManager.Instance.GetFocusDetails(pointer);
 
-            if (hitObject != rendererComponent.gameObject) return;
-            
-            Texture2D texture = rendererComponent.material.mainTexture as Texture2D;
+                if (focusDetails.Object != rendererComponent.gameObject)
+                {
+                    return;
+                }
 
-            //TODO: Fix by adding RaycastHit properties to FocusDetails.
-            //Vector2 pixelUV = hit.textureCoord;            
-            //pixelUV.x *= texture.width;
-            //pixelUV.y *= texture.height;
+                var texture = (Texture2D)rendererComponent.material.mainTexture;
 
-            //Color col = texture.GetPixel((int)pixelUV.x, (int)pixelUV.y);
-            //cb.Invoke(col);
+                Vector2 pixelTextureCoord = focusDetails.Hit.textureCoord;
+                pixelTextureCoord.x *= texture.width;
+                pixelTextureCoord.y *= texture.height;
+
+                Color col = texture.GetPixel((int)pixelTextureCoord.x, (int)pixelTextureCoord.y);
+                colorCallback.Invoke(col);
+            }
         }
 
         public void OnFocusEnter()
         {
-            gazing = true;
+            pointer = FocusManager.Instance.TryGetSinglePointer();
         }
 
         public void OnFocusExit()
         {
-            gazing = false;
+            pointer = null;
         }
 
         public void OnInputClicked(InputClickedEventData eventData)

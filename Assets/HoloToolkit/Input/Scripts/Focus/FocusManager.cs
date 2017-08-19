@@ -86,6 +86,7 @@ namespace HoloToolkit.Unity.InputModule
                     Point = physicsHit.point,
                     Normal = physicsHit.normal,
                     Object = physicsHit.transform.gameObject,
+                    Hit = physicsHit
                 };
             }
 
@@ -98,7 +99,7 @@ namespace HoloToolkit.Unity.InputModule
                 {
                     Point = uiHit.worldPosition,
                     Normal = uiHit.worldNormal,
-                    Object = uiHit.gameObject,
+                    Object = uiHit.gameObject
                 };
             }
 
@@ -110,8 +111,7 @@ namespace HoloToolkit.Unity.InputModule
                 End = new FocusDetails
                 {
                     Point = (StartPoint + (extent * PointingSource.Ray.direction)),
-                    Normal = (-PointingSource.Ray.direction),
-                    Object = null,
+                    Normal = (-PointingSource.Ray.direction)
                 };
             }
 
@@ -121,8 +121,7 @@ namespace HoloToolkit.Unity.InputModule
                 End = new FocusDetails
                 {
                     Point = End.Point,
-                    Normal = End.Normal,
-                    Object = null,
+                    Normal = End.Normal
                 };
             }
         }
