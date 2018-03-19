@@ -249,7 +249,7 @@ namespace HoloToolkit.Unity.InputModule
 
         public void RegisterPointer(IPointingSource pointingSource)
         {
-            Debug.Assert(pointingSource != null, "Can't register a pointer if you give us one.");
+            Debug.Assert(pointingSource != null, "Can't register a pointer if you don't give us one.");
 
             int pointerIndex;
             PointerData pointer;
@@ -415,6 +415,22 @@ namespace HoloToolkit.Unity.InputModule
 
             pointingSource = null;
             return false;
+        }
+
+        /// <summary>
+        /// Checks if exactly one pointer is registered and returns it if so.
+        /// </summary>
+        /// <returns>The registered pointer if exactly one is registered, null otherwise.</returns>
+        public List<IPointingSource> GetPointers()
+        {
+            List<IPointingSource> returnPointers = new List<IPointingSource>();
+
+            foreach (PointerData pointerData in pointers)
+            {
+                returnPointers.Add(pointerData.PointingSource);
+            }
+
+            return returnPointers;
         }
 
         public delegate void FocusEnteredMethod(GameObject focusedObject);
