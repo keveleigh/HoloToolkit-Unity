@@ -10,6 +10,20 @@ namespace HoloToolkit.Unity.InputModule
     /// </summary>
     public abstract class BaseInputSource : MonoBehaviour, IInputSource
     {
+        private uint sourceId;
+        public uint SourceId
+        {
+            get
+            {
+                if (sourceId == 0)
+                {
+                    sourceId = InputManager.GenerateNewSourceId();
+                }
+
+                return sourceId;
+            }
+        }
+
         public abstract SupportedInputInfo GetSupportedInputInfo(uint sourceId);
 
         public bool SupportsInputInfo(uint sourceId, SupportedInputInfo inputInfo)

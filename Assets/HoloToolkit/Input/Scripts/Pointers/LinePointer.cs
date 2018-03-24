@@ -2,18 +2,14 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using HoloToolkit.Unity.UX;
-using System;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace HoloToolkit.Unity.InputModule
 {
-    /// <summary>
-    /// Class implementing IPointingSource to demonstrate how to create a pointing source.
-    /// This is consumed by SimpleSinglePointerSelector.
-    /// </summary>
-    public class InputSourcePointer : BaseControllerPointer
+    [RequireComponent(typeof(DistorterGravity))]
+    [UseWith(typeof(LineBase))]
+    [UseWith(typeof(LineRendererBase))]
+    public class LinePointer : BaseControllerPointer
     {
         [Header("Colors")]
         [SerializeField]
@@ -53,8 +49,7 @@ namespace HoloToolkit.Unity.InputModule
             LineBase = GetComponent<LineBase>();
             DistorterGravity = GetComponent<DistorterGravity>();
             LineBase.AddDistorter(DistorterGravity);
-            if (LineRenderers == null || LineRenderers.Length == 0)
-            {
+            if (LineRenderers == null || LineRenderers.Length == 0) {
                 LineRenderers = LineBase.GetComponentsInChildren<LineRendererBase>();
             }
         }
@@ -72,44 +67,36 @@ namespace HoloToolkit.Unity.InputModule
 
         public override void OnPreRaycast()
         {
+            if (LineBase == null) { return; }
+
+            //Vector3 pointerPosition;
+            //TryGetPointerPosition(out pointerPosition);
+
+            // Set our first and last points
+            //LineBase.FirstPoint = pointerPosition;
+            //LineBase.LastPoint = pointerPosition + (PointerDirection * (PointerExtent ?? FocusManager.Instance.GetPointingExtent(this)));
+
             // Make sure our array will hold
             if (Rays == null || Rays.Length != LineCastResolution)
             {
                 Rays = new RayStep[LineCastResolution];
             }
 
-            if (InputSource == null)
+            // Set up our rays
+            if (!FocusLocked)
             {
-                Rays[0] = default(RayStep);
+                // Turn off gravity so we get accurate rays
+                DistorterGravity.enabled = false;
             }
-            else
+
+            float stepSize = 1f / Rays.Length;
+            Vector3 lastPoint = LineBase.GetUnclampedPoint(0f);
+
+            for (int i = 0; i < Rays.Length; i++)
             {
-                Debug.Assert(InputSource.SupportsInputInfo(InputSourceId, SupportedInputInfo.Pointing), string.Format("{0} with id {1} does not support pointing!", InputSource, InputSourceId));
-
-                Ray pointingRay;
-                if (InputSource.TryGetPointingRay(InputSourceId, out pointingRay))
-                {
-                    // Set our first and last points
-                    LineBase.FirstPoint = pointingRay.origin;
-                    LineBase.LastPoint = pointingRay.origin + (pointingRay.direction * (ExtentOverride ?? FocusManager.GlobalPointingExtent));
-
-                    // Set up our rays
-                    if (!FocusLocked)
-                    {
-                        // Turn off gravity so we get accurate rays
-                        DistorterGravity.enabled = false;
-                    }
-
-                    float stepSize = 1f / Rays.Length;
-                    Vector3 lastPoint = LineBase.GetUnclampedPoint(0f);
-
-                    for (int i = 0; i < Rays.Length; i++)
-                    {
-                        Vector3 currentPoint = LineBase.GetUnclampedPoint(stepSize * (i + 1));
-                        Rays[i] = new RayStep(lastPoint, currentPoint);
-                        lastPoint = currentPoint;
-                    }
-                }
+                Vector3 currentPoint = LineBase.GetUnclampedPoint(stepSize * (i + 1));
+                Rays[i] = new RayStep(lastPoint, currentPoint);
+                lastPoint = currentPoint;
             }
         }
 
@@ -147,6 +134,7 @@ namespace HoloToolkit.Unity.InputModule
                         }
                     }
 
+                    // Clamp the end of the parabola to the result hit's point
                     LineBase.LineEndClamp = LineBase.GetNormalizedLengthFromWorldLength(clearWorldLength, LineCastResolution);
 
                     if (FocusTarget != null)

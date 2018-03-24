@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
+using System;
 using UnityEngine;
 
 namespace HoloToolkit.Unity.InputModule
@@ -11,7 +12,7 @@ namespace HoloToolkit.Unity.InputModule
     /// This class uses the InputSourcePointer to define the rules of stealing focus when a pointing ray is detected
     /// with a motion controller that supports pointing.
     /// </summary>
-    public class SimpleSinglePointerSelector : MonoBehaviour, ISourceStateHandler, IInputHandler
+    public class SimpleSinglePointerSelector : MonoBehaviour
     {
         #region Settings
 
@@ -31,10 +32,9 @@ namespace HoloToolkit.Unity.InputModule
         private bool started;
         private bool pointerWasChanged;
 
-        private bool addedInputManagerListener;
         private IPointingSource currentPointer;
 
-        private readonly InputSourcePointer inputSourcePointer = new InputSourcePointer();
+        private InputSourcePointer inputSourcePointer;
 
         #endregion
 
@@ -42,113 +42,30 @@ namespace HoloToolkit.Unity.InputModule
 
         private void Start()
         {
+            if (inputSourcePointer != null)
+            {
+                Instantiate(inputSourcePointer);
+            }
+            else
+            {
+                inputSourcePointer = new InputSourcePointer();
+            }
+
             started = true;
 
             InputManager.AssertIsInitialized();
             FocusManager.AssertIsInitialized();
             GazeManager.AssertIsInitialized();
 
-            AddInputManagerListenerIfNeeded();
-            FindCursorIfNeeded();
+
             ConnectBestAvailablePointer();
         }
 
-        private void OnEnable()
-        {
-            if (started)
-            {
-                AddInputManagerListenerIfNeeded();
-            }
-        }
-
-        private void OnDisable()
-        {
-            RemoveInputManagerListenerIfNeeded();
-        }
-
         #endregion
 
-        #region Input Event Handlers
 
-        void ISourceStateHandler.OnSourceDetected(SourceStateEventData eventData)
-        {
-            // Nothing to do on source detected.
-        }
 
-        void ISourceStateHandler.OnSourceLost(SourceStateEventData eventData)
-        {
-            if (IsInputSourcePointerActive && inputSourcePointer.InputIsFromSource(eventData))
-            {
-                ConnectBestAvailablePointer();
-            }
-        }
-
-        void IInputHandler.OnInputUp(InputEventData eventData)
-        {
-            // Let the input fall to the next interactable object.
-        }
-
-        void IInputHandler.OnInputDown(InputEventData eventData)
-        {
-            HandleInputAction(eventData);
-        }
-
-        #endregion
-
-        #region Utilities
-
-        private void AddInputManagerListenerIfNeeded()
-        {
-            if (!addedInputManagerListener)
-            {
-                InputManager.Instance.AddGlobalListener(gameObject);
-                addedInputManagerListener = true;
-            }
-        }
-
-        private void RemoveInputManagerListenerIfNeeded()
-        {
-            if (addedInputManagerListener)
-            {
-                InputManager.Instance.RemoveGlobalListener(gameObject);
-                addedInputManagerListener = false;
-            }
-        }
-
-        private void FindCursorIfNeeded()
-        {
-            if ((Cursor == null) && SearchForCursorIfUnset)
-            {
-                Debug.LogWarningFormat(
-                    this,
-                    "Cursor hasn't been explicitly set on \"{0}.{1}\". We'll search for a cursor in the hierarchy, but"
-                        + " that comes with a performance cost, so it would be best if you explicitly set the cursor.",
-                    name,
-                    GetType().Name
-                    );
-
-                Cursor[] foundCursors = FindObjectsOfType<Cursor>();
-
-                if ((foundCursors == null) || (foundCursors.Length == 0))
-                {
-                    Debug.LogErrorFormat(this, "Couldn't find cursor for \"{0}.{1}\".", name, GetType().Name);
-                }
-                else if (foundCursors.Length > 1)
-                {
-                    Debug.LogErrorFormat(
-                        this,
-                        "Found more than one ({0}) cursors for \"{1}.{2}\", so couldn't automatically set one.",
-                        foundCursors.Length,
-                        name,
-                        GetType().Name
-                        );
-                }
-                else
-                {
-                    Cursor = foundCursors[0];
-                }
-            }
-        }
+        
 
         private void SetPointer(IPointingSource newPointer)
         {
@@ -280,14 +197,12 @@ namespace HoloToolkit.Unity.InputModule
 
         private bool IsInputSourcePointerActive
         {
-            get { return (currentPointer == inputSourcePointer); }
+            get { return ReferenceEquals(currentPointer, inputSourcePointer); }
         }
 
         private bool IsGazePointerActive
         {
             get { return ReferenceEquals(currentPointer, GazeManager.Instance); }
         }
-
-        #endregion
     }
 }

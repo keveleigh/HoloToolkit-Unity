@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -10,8 +11,14 @@ namespace HoloToolkit.Unity.InputModule
     /// <summary>
     /// Implement this interface to register your pointer as a pointing source. This could be gaze based or motion controller based.
     /// </summary>
-    public interface IPointingSource
+    public interface IPointingSource : IEqualityComparer
     {
+        uint InputSourceId { get; }
+
+        Cursor BaseCursor { get; set; }
+
+        ICursorModifier CursorModifier { get; set; }
+
         bool InteractionEnabled { get; }
 
         float? ExtentOverride { get; }

@@ -13,8 +13,20 @@ namespace HoloToolkit.Unity.InputModule
     /// or pointing ray enabled motion controllers.
     /// If you don't have pointing ray enabled controllers, it defaults to GazeManager.
     /// </summary>
-    public class FocusManager : Singleton<FocusManager>
+    public class FocusManager : Singleton<FocusManager>, ISourceStateHandler
     {
+        #region Settings
+
+        [SerializeField]
+        [Tooltip("The cursor, if any, which should follow the pointers.")]
+        private Cursor cursorGameObject;
+
+        [SerializeField]
+        [Tooltip("True to search for a cursor if one isn't explicitly set.")]
+        private bool SearchForCursorIfUnset = true;
+
+        #endregion
+
         #region MonoBehaviour Implementation
 
         protected override void Awake()
@@ -51,6 +63,9 @@ namespace HoloToolkit.Unity.InputModule
 
         private void Start()
         {
+            AddInputManagerListenerIfNeeded();
+            FindCursorIfNeeded();
+
             if (pointers.Count == 0 && autoRegisterGazePointerIfNoPointersRegistered && GazeManager.IsInitialized)
             {
                 RegisterPointer(GazeManager.Instance);
@@ -63,6 +78,35 @@ namespace HoloToolkit.Unity.InputModule
             UpdateFocusedObjects();
         }
 
+        private void OnEnable()
+        {
+            AddInputManagerListenerIfNeeded();
+        }
+
+        private void OnDisable()
+        {
+            RemoveInputManagerListenerIfNeeded();
+        }
+
+        #endregion
+
+        #region Input Event Handlers
+
+        void ISourceStateHandler.OnSourceDetected(SourceStateEventData eventData)
+        {
+            // Nothing to do on source detected.
+        }
+
+        void ISourceStateHandler.OnSourceLost(SourceStateEventData eventData)
+        {
+            UnregisterPointer(eventData.SourceId);
+
+            if (pointers.Count == 1 && ReferenceEquals(pointers[0], GazeManager.Instance))
+            {
+                GazeManager.Instance.BaseCursor.gameObject.SetActive(true);
+            }
+        }
+
         #endregion
 
         #region Settings
@@ -71,7 +115,9 @@ namespace HoloToolkit.Unity.InputModule
         /// Maximum distance at which the pointer can collide with an object.
         /// </summary>
         [SerializeField]
-        private float pointingExtent = 10f;
+        private static float pointingExtent = 10f;
+
+        public static float GlobalPointingExtent { get { return pointingExtent; } }
 
         /// <summary>
         /// The LayerMasks, in prioritized order, that are used to determine the HitObject when raycasting.
@@ -197,6 +243,7 @@ namespace HoloToolkit.Unity.InputModule
         }
 
         private readonly List<PointerData> pointers = new List<PointerData>(0);
+        private readonly HashSet<uint> sourceIds = new HashSet<uint>();
 
         /// <summary>
         /// GazeManager is a little special, so we keep track of it even if it's not a registered pointer. For the sake
@@ -284,6 +331,16 @@ namespace HoloToolkit.Unity.InputModule
             }
 
             pointers.Add(pointer);
+        }
+
+        public void UnregisterPointer(uint sourceId)
+        {
+            PointerData pointerData = pointers.Find(item => item.PointingSource.InputSourceId == sourceId);
+
+            if (pointerData != null)
+            {
+                UnregisterPointer(pointerData.PointingSource);
+            }
         }
 
         public void UnregisterPointer(IPointingSource pointingSource)
@@ -451,6 +508,91 @@ namespace HoloToolkit.Unity.InputModule
         #endregion
 
         #region Utilities
+
+        private void AddInputManagerListenerIfNeeded()
+        {
+            if (!InputManager.GlobalListeners.Contains(gameObject))
+            {
+                InputManager.Instance.AddGlobalListener(gameObject);
+            }
+        }
+
+        private void RemoveInputManagerListenerIfNeeded()
+        {
+            if (InputManager.GlobalListeners.Contains(gameObject))
+            {
+                InputManager.Instance.RemoveGlobalListener(gameObject);
+            }
+        }
+
+        private void FindCursorIfNeeded()
+        {
+            if ((cursorGameObject == null) && SearchForCursorIfUnset)
+            {
+                Debug.LogWarningFormat(
+                    this,
+                    "Cursor hasn't been explicitly set on \"{0}.{1}\". We'll search for a cursor in the hierarchy, but"
+                        + " that comes with a performance cost, so it would be best if you explicitly set the cursor.",
+                    name,
+                    GetType().Name
+                    );
+
+                Cursor[] foundCursors = FindObjectsOfType<Cursor>();
+
+                if ((foundCursors == null) || (foundCursors.Length == 0))
+                {
+                    Debug.LogErrorFormat(this, "Couldn't find cursor for \"{0}.{1}\".", name, GetType().Name);
+                }
+                else if (foundCursors.Length > 1)
+                {
+                    Debug.LogErrorFormat(
+                        this,
+                        "Found more than one ({0}) cursors for \"{1}.{2}\", so couldn't automatically set one.",
+                        foundCursors.Length,
+                        name,
+                        GetType().Name
+                        );
+                }
+                else
+                {
+                    cursorGameObject = foundCursors[0];
+                }
+            }
+        }
+
+        private bool SupportsPointingRay(BaseInputEventData eventData)
+        {
+            return SupportsPointingRay(eventData.InputSource, eventData.SourceId);
+        }
+
+        private bool SupportsPointingRay(InputSourceInfo source)
+        {
+            return SupportsPointingRay(source.InputSource, source.SourceId);
+        }
+
+        private bool SupportsPointingRay(IInputSource inputSource, uint sourceId)
+        {
+            return inputSource.SupportsInputInfo(sourceId, SupportedInputInfo.Pointing);
+        }
+
+        /// <summary>
+        /// Generate a new unique pointer id.
+        /// </summary>
+        /// <returns></returns>
+        public static uint GenerateNewPointerId()
+        {
+            var newId = (uint)UnityEngine.Random.Range(1, int.MaxValue);
+
+            foreach (var pointerData in Instance.pointers)
+            {
+                if (pointerData.PointingSource.InputSourceId == newId)
+                {
+                    return GenerateNewPointerId();
+                }
+            }
+
+            return newId;
+        }
 
         private void UpdatePointers()
         {

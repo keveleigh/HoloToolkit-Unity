@@ -24,9 +24,10 @@ namespace HoloToolkit.Unity.InputModule
         /// <summary>
         /// Global listeners listen to all events and ignore the fact that other components might have consumed them.
         /// </summary>
-        private readonly List<GameObject> globalListeners = new List<GameObject>(0);
-        private readonly Stack<GameObject> modalInputStack = new Stack<GameObject>();
-        private readonly Stack<GameObject> fallbackInputStack = new Stack<GameObject>();
+        public static List<GameObject> GlobalListeners { get { return globalListeners; } }
+        private static readonly List<GameObject> globalListeners = new List<GameObject>(0);
+        private static readonly Stack<GameObject> modalInputStack = new Stack<GameObject>();
+        private static readonly Stack<GameObject> fallbackInputStack = new Stack<GameObject>();
 
         /// <summary>
         /// To tap on a hologram even when not focused on,
@@ -928,6 +929,25 @@ namespace HoloToolkit.Unity.InputModule
 #endif
 
         #region Helpers
+
+        /// <summary>
+        /// Generates a new unique source id.
+        /// </summary>
+        /// <returns></returns>
+        public static uint GenerateNewSourceId()
+        {
+            var newId = (uint)UnityEngine.Random.Range(1, int.MaxValue);
+
+            foreach (var inputSource in detectedInputSources)
+            {
+                if (inputSource.SourceId == newId)
+                {
+                    return GenerateNewSourceId();
+                }
+            }
+
+            return newId;
+        }
 
         private static void AddSource(IInputSource source, uint sourceId)
         {

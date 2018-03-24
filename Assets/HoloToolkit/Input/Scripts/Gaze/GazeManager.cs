@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -12,6 +13,10 @@ namespace HoloToolkit.Unity.InputModule
     /// </summary>
     public class GazeManager : Singleton<GazeManager>, IPointingSource
     {
+        [SerializeField]
+        [Tooltip("Optional Cursor Prefab to use if you don't wish to reference a cursor in the scene.")]
+        private GameObject cursorPrefab;
+
         [Obsolete("Use FocusManager.PointerSpecificFocusChangedMethod")]
         public delegate void FocusedChangedDelegate(GameObject previousObject, GameObject newObject);
 
@@ -138,6 +143,30 @@ namespace HoloToolkit.Unity.InputModule
 
         public bool FocusLocked { get; set; }
 
+        private uint inputSourceId;
+        public uint InputSourceId
+        {
+            get
+            {
+                if (inputSourceId == 0)
+                {
+                    inputSourceId = InputManager.GenerateNewSourceId();
+                }
+
+                return inputSourceId;
+            }
+        }
+
+        public string PointerName
+        {
+            get { return gameObject.name; }
+            set { gameObject.name = value; }
+        }
+
+        public Cursor BaseCursor { get; set; }
+
+        public ICursorModifier CursorModifier { get; set; }
+
         private float lastHitDistance = 2.0f;
 
         protected override void Awake()
@@ -254,5 +283,49 @@ namespace HoloToolkit.Unity.InputModule
         {
             HitPosition = (Rays[0].Origin + (lastHitDistance * Rays[0].Direction));
         }
+
+        #region IEquality Implementation
+
+        public static bool Equals(IPointingSource left, IPointingSource right)
+        {
+            return left.Equals(right);
+        }
+
+        bool IEqualityComparer.Equals(object left, object right)
+        {
+            return left.Equals(right);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) { return false; }
+            if (ReferenceEquals(this, obj)) { return true; }
+            if (obj.GetType() != GetType()) { return false; }
+
+            return Equals((IPointingSource)obj);
+        }
+
+        private bool Equals(IPointingSource other)
+        {
+            return other != null && InputSourceId == other.InputSourceId;
+        }
+
+        int IEqualityComparer.GetHashCode(object obj)
+        {
+            return obj.GetHashCode();
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hashCode = 0;
+                hashCode = (hashCode * 397) ^ (int)InputSourceId;
+                hashCode = (hashCode * 397) ^ (PointerName != null ? PointerName.GetHashCode() : 0);
+                return hashCode;
+            }
+        }
+
+        #endregion IEquality Implementation
     }
 }

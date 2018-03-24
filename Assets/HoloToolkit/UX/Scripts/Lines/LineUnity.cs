@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
-using HoloToolkit.Unity;
 using System.Collections;
 using UnityEngine;
 
@@ -21,7 +20,7 @@ namespace HoloToolkit.Unity.UX
         public bool RoundedCaps = true;
 
         [SerializeField]
-        private UnityEngine.LineRenderer lineRenderer;
+        private LineRenderer lineRenderer;
 
         private Vector3[] positions;
 
@@ -31,7 +30,7 @@ namespace HoloToolkit.Unity.UX
             if (lineRenderer == null)
             {
                 // Get or create one that's attached to this gameObject
-                lineRenderer = gameObject.EnsureComponent<UnityEngine.LineRenderer>();
+                lineRenderer = gameObject.EnsureComponent<LineRenderer>();
             }
 
             if (LineMaterial == null)

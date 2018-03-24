@@ -52,6 +52,19 @@ namespace HoloToolkit.Unity.InputModule
 #endif
         }
 
+        //protected virtual void Update()
+        //{
+        //    if (ControllerInfo != null && handedness != ControllerInfo.Handedness)
+        //    {
+        //        RemoveControllerTransform(ControllerInfo);
+
+        //        if (MotionControllerVisualizer.Instance.TryGetControllerModel(handedness, out ControllerInfo))
+        //        {
+        //            AddControllerTransform(ControllerInfo);
+        //        }
+        //    }
+        //}
+
         protected virtual void OnDisable()
         {
 #if UNITY_WSA && UNITY_2017_2_OR_NEWER

@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using UnityEngine;
+using System;
 
 #if UNITY_WSA
 #if UNITY_2017_2_OR_NEWER
@@ -31,6 +32,20 @@ namespace HoloToolkit.Unity.InputModule
 
         [Tooltip("Set to true to use the use rails (guides) for the navigation gesture, as opposed to full 3D navigation.")]
         public bool UseRailsNavigation = false;
+
+        [Serializable]
+        private struct ControllerPointerOptions
+        {
+            [Tooltip("The Controller to assign the Pointer to.")]
+            public Handedness TargetController;
+
+            [Tooltip("The Pointer to assign.")]
+            public GameObject PointerPrefab;
+        }
+
+        [SerializeField]
+        [Tooltip("Set custom pointers for your controllers.")]
+        private ControllerPointerOptions[] pointerOptions;
 
         /// <summary>
         /// Always true initially so we only initialize our interaction sources 
@@ -678,6 +693,26 @@ namespace HoloToolkit.Unity.InputModule
             {
                 sourceData = new SourceData(interactionSource);
                 sourceIdToData.Add(sourceData.SourceId, sourceData);
+
+                if (interactionSource.kind == InteractionSourceKind.Controller)
+                {
+                    foreach (var pointerOption in pointerOptions)
+                    {
+                        Debug.Assert(pointerOption.TargetController != Handedness.None, "Interaction Source Pointer must be set to Left, Right, or Both.");
+
+                        if (interactionSource.handedness == InteractionSourceHandedness.Unknown ||
+                            interactionSource.handedness == InteractionSourceHandedness.Left && pointerOption.TargetController == Handedness.Right ||
+                            interactionSource.handedness == InteractionSourceHandedness.Right && pointerOption.TargetController == Handedness.Left)
+                        {
+                            continue;
+                        }
+
+                        var pointerObject = Instantiate(pointerOption.PointerPrefab);
+                        var pointer = pointerObject.GetComponent<BaseControllerPointer>();
+                        pointer.Handedness = interactionSource.handedness;
+                        pointer.PointerName = string.Format("{0}_{1}_{2}", interactionSource.handedness, interactionSource.kind, pointer.GetType().Name);
+                    }
+                }
 
                 // TODO: robertes: whenever we end up adding, should we first synthesize a SourceDetected? Or
                 //       perhaps if we keep strict track of all sources, we should never need to just-in-time add anymore.
