@@ -66,7 +66,8 @@ namespace HoloToolkit.Unity.InputModule
         {
             get
             {
-                return SelectPressedOnce & base.InteractionEnabled;
+                //return SelectPressedOnce & base.InteractionEnabled;
+                return true;
             }
         }
 

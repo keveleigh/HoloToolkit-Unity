@@ -711,6 +711,7 @@ namespace HoloToolkit.Unity.InputModule
                         var pointer = pointerObject.GetComponent<BaseControllerPointer>();
                         pointer.Handedness = interactionSource.handedness;
                         pointer.PointerName = string.Format("{0}_{1}_{2}", interactionSource.handedness, interactionSource.kind, pointer.GetType().Name);
+                        pointer.InputSourceId = interactionSource.id;
                         pointer.InputSource = this;
                     }
                 }

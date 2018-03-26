@@ -296,7 +296,7 @@ namespace HoloToolkit.Unity.InputModule
 
         public void RegisterPointer(IPointingSource pointingSource)
         {
-            Debug.Assert(pointingSource != null, "Can't register a pointer if you give us one.");
+            Debug.Assert(pointingSource != null, "Can't register a pointer if you don't give us one.");
 
             int pointerIndex;
             PointerData pointer;
