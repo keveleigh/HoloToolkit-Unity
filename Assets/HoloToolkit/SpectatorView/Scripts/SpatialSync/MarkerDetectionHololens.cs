@@ -117,7 +117,7 @@ namespace HoloToolkit.Unity.SpectatorView
             set { captureTimeout = value; }
         }
 
-        private void Start ()
+        private void Start()
         {
 #if NETFX_CORE
             try
@@ -161,7 +161,7 @@ namespace HoloToolkit.Unity.SpectatorView
         {
             currentCaptureTimeout = CaptureTimeout;
 #if NETFX_CORE
-            if(!capturing)
+            if (!capturing)
             {
                 holoLensCapture.StartCapture();
             }
@@ -210,16 +210,16 @@ namespace HoloToolkit.Unity.SpectatorView
             int[] detectedMarkerIds;
             detector.GetMarkerIds(out detectedMarkerIds);
 
-            for(int i=0; i<detectedMarkerIds.Length; i++)
+            for (int i = 0; i < detectedMarkerIds.Length; i++)
             {
-                if(!detector.GetMarkerPose(detectedMarkerIds[i], out pos, out rot))
+                if (!detector.GetMarkerPose(detectedMarkerIds[i], out pos, out rot))
                 {
                     Debug.Log("Can't resolve marker position for marker id: " + detectedMarkerIds[i]);
                     continue;
                 }
                 else
                 {
-                    if(OnMarkerDetected != null)
+                    if (OnMarkerDetected != null)
                     {
                         OnMarkerDetected(detectedMarkerIds[i], pos, rot);
                     }

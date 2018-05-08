@@ -93,7 +93,7 @@ namespace HoloToolkit.Unity.SpectatorView
         /// </summary>
         /// <param name="fromAddress">IP address that broadcasted the message</param>
         /// <param name="data">Broadcast message read</param>
-        public override void OnReceivedBroadcast( string fromAddress, string data )
+        public override void OnReceivedBroadcast(string fromAddress, string data)
         {
             base.OnReceivedBroadcast(fromAddress, data);
             MarkerDetectionHololens.StartCapture();

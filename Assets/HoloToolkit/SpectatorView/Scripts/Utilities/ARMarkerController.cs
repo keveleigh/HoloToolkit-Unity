@@ -96,7 +96,7 @@ namespace HoloToolkit.Unity.SpectatorView
         /// </summary>
         private void TurnOffMarker()
         {
-            foreach(Transform tr in CodeContainer.transform)
+            foreach (Transform tr in CodeContainer.transform)
             {
                 Destroy(tr.gameObject);
             }

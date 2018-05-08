@@ -50,7 +50,7 @@ namespace HoloToolkit.Unity.SpectatorView
         /// Texture to which the photo will be saved to
         /// </summary>
         private Texture2D targetTexture;
-        
+
         /// <summary>
         /// Vertical resolution of the capture camera image
         /// </summary>
@@ -66,7 +66,7 @@ namespace HoloToolkit.Unity.SpectatorView
         public void StartCapture()
         {
 #if NETFX_CORE
-            if(!capturing)
+            if (!capturing)
             {
                 PhotoCapture.CreateAsync(false, OnPhotoCaptureCreated);
                 capturing = true;
@@ -82,7 +82,7 @@ namespace HoloToolkit.Unity.SpectatorView
         public void StopCapture()
         {
 #if NETFX_CORE
-            if(capturing)
+            if (capturing)
             {
                 photoCaptureObject.StopPhotoModeAsync(OnStoppedPhotoMode);
             }
@@ -138,7 +138,7 @@ namespace HoloToolkit.Unity.SpectatorView
         {
             if (result.success)
             {
-                if(targetTexture != null)
+                if (targetTexture != null)
                 {
                     Destroy(targetTexture);
                 }
@@ -147,7 +147,7 @@ namespace HoloToolkit.Unity.SpectatorView
                 // Copy the raw image data into our target texture
                 photoCaptureFrame.UploadImageDataToTexture(targetTexture);
 
-                if(OnFrameCapture != null)
+                if (OnFrameCapture != null)
                 {
                     OnFrameCapture(targetTexture.GetRawTextureData().ToList(), photoWidth, photoHeight);
                 }

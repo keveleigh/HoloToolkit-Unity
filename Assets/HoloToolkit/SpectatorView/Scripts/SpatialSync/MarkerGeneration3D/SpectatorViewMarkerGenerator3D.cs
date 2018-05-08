@@ -27,9 +27,9 @@ namespace HoloToolkit.Unity.SpectatorView
             // Assume the marker is square
             int markerRes = marker.width;
 
-            for(int x = 0; x<(MarkerResolutionInSquares + 2) * 2; x++)
+            for (int x = 0; x < (MarkerResolutionInSquares + 2) * 2; x++)
             {
-                for(int y = 0; y<(MarkerResolutionInSquares + 2) * 2; y++)
+                for (int y = 0; y < (MarkerResolutionInSquares + 2) * 2; y++)
                 {
                     int xCoord = ((x * (markerRes / ((MarkerResolutionInSquares + 2) * 2))) + (markerRes / ((MarkerResolutionInSquares + 2) * 4)));
                     int yCoord = ((y * (markerRes / ((MarkerResolutionInSquares + 2) * 2))) + (markerRes / ((MarkerResolutionInSquares + 2) * 4)));
@@ -42,7 +42,7 @@ namespace HoloToolkit.Unity.SpectatorView
                     var height = 0.0f;
                     cube.transform.parent = transform;
                     cube.transform.localPosition = new Vector3((float)xCoord / (float)markerRes - 0.5f, height, (float)yCoord / (float)markerRes - 0.5f);
-                    var scale = 1.0f/((MarkerResolutionInSquares+2)*2) / res;
+                    var scale = 1.0f / ((MarkerResolutionInSquares + 2) * 2) / res;
                     scale += 0.001f;
                     cube.transform.localScale = new Vector3(scale, scale, scale);
 
@@ -65,7 +65,7 @@ namespace HoloToolkit.Unity.SpectatorView
 
         private void Update()
         {
-            if(Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 StartTransition();
             }
@@ -93,10 +93,10 @@ namespace HoloToolkit.Unity.SpectatorView
             var timer = 0f;
             const float transitionTime = 4.0f;
 
-            while(timer < transitionTime)
+            while (timer < transitionTime)
             {
                 timer += Time.deltaTime;
-                transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(360, 360, 360), timer/transitionTime);
+                transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(360, 360, 360), timer / transitionTime);
                 BlackMaterial.SetFloat("_TransitionCompletion", Mathf.Min(1.0f, timer));
                 yield return new WaitForEndOfFrame();
             }

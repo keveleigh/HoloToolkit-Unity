@@ -122,7 +122,7 @@ namespace HoloToolkit.Unity.SpectatorView
             }
         }
 
-        void Start ()
+        void Start()
         {
             if (Text == null)
             {

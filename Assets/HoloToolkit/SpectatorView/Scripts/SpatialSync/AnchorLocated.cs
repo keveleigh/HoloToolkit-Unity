@@ -61,7 +61,7 @@ namespace HoloToolkit.Unity.SpectatorView
         /// the marker generator so that it can create and show an AR marker
         /// </summary>
         /// <param name="arCamera"></param>
-        private void FrameUpdated( UnityARCamera arCamera )
+        private void FrameUpdated(UnityARCamera arCamera)
         {
             if (arCamera.pointCloudData.Length > 4)
             {

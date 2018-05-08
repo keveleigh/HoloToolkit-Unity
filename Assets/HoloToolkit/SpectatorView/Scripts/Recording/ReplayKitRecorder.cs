@@ -19,14 +19,14 @@ namespace HoloToolkit.Unity.SpectatorView
         /// <summary>
         /// Controls container gameObject
         /// </summary>
-        [Tooltip("Controls container gameObject")] 
+        [Tooltip("Controls container gameObject")]
         [SerializeField]
         private GameObject controls;
 
         /// <summary>
         /// Seconds to countdown before recording
         /// </summary>
-        [Tooltip("Seconds to countdown before recording")] 
+        [Tooltip("Seconds to countdown before recording")]
         [SerializeField]
         private int countDownNumber = 3;
 
@@ -43,20 +43,20 @@ namespace HoloToolkit.Unity.SpectatorView
         /// <summary>
         /// Record button gameObject
         /// </summary>
-        [Tooltip("Record button gameObject")] 
+        [Tooltip("Record button gameObject")]
         public GameObject RecordButton;
 
         /// <summary>
         /// Recording countdown button gameObject
         /// </summary>
-        [Tooltip("Recording countdown button gameObject")] 
+        [Tooltip("Recording countdown button gameObject")]
         [SerializeField]
         private GameObject recordCountdownButton;
 
         /// <summary>
         /// Record countdown text field
         /// </summary>
-        [Tooltip("Record countdown text field")] 
+        [Tooltip("Record countdown text field")]
         [SerializeField]
         private Text recordCountdownText;
 
@@ -68,14 +68,14 @@ namespace HoloToolkit.Unity.SpectatorView
         /// <summary>
         /// Replay (preview) button gameObject
         /// </summary>
-        [Tooltip("Replay (preview) button gameObject")] 
+        [Tooltip("Replay (preview) button gameObject")]
         [SerializeField]
         private GameObject replayButton;
 
         /// <summary>
         /// Stop button gameObject
         /// </summary>
-        [Tooltip("Stop button gameObject")] 
+        [Tooltip("Stop button gameObject")]
         [SerializeField]
         private GameObject stopButton;
 
@@ -84,8 +84,8 @@ namespace HoloToolkit.Unity.SpectatorView
         /// </summary>
         public GameObject Controls
         {
-            get {return Controls;}
-            set {Controls = value;}
+            get { return Controls; }
+            set { Controls = value; }
         }
 
         /// <summary>
@@ -93,8 +93,8 @@ namespace HoloToolkit.Unity.SpectatorView
         /// </summary>
         public GameObject RecordCountdownButton
         {
-            get {return recordCountdownButton;}
-            set {recordCountdownButton = value;}
+            get { return recordCountdownButton; }
+            set { recordCountdownButton = value; }
         }
 
         /// <summary>
@@ -102,8 +102,8 @@ namespace HoloToolkit.Unity.SpectatorView
         /// </summary>
         public Text RecordCountdownText
         {
-            get {return recordCountdownText;}
-            set {recordCountdownText = value;}
+            get { return recordCountdownText; }
+            set { recordCountdownText = value; }
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace HoloToolkit.Unity.SpectatorView
         /// </summary>
         public GameObject ReplayButton
         {
-            get {return replayButton;}
-            set {replayButton = value;}
+            get { return replayButton; }
+            set { replayButton = value; }
         }
 
         /// <summary>
@@ -120,8 +120,8 @@ namespace HoloToolkit.Unity.SpectatorView
         /// </summary>
         public GameObject StopButton
         {
-            get {return stopButton;}
-            set {stopButton = value;}
+            get { return stopButton; }
+            set { stopButton = value; }
         }
 
         private void Start()

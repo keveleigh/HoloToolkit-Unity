@@ -84,7 +84,7 @@ namespace HoloToolkit.Unity.SpectatorView
         /// <returns></returns>
         protected Texture2D GetMarker()
         {
-            if(!marker)
+            if (!marker)
             {
                 UnityEngine.Random.InitState(DateTime.Now.Millisecond);
                 MarkerId = UnityEngine.Random.Range(0, Markers.Length);

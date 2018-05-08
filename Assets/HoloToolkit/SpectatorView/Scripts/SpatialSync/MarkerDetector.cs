@@ -13,22 +13,22 @@ namespace HoloToolkit.Unity.SpectatorView
     /// </summary>
     public class MarkerDetector
     {
-        [DllImport("SpectatorViewPlugin", EntryPoint="MarkerDetector_Initialize")]
+        [DllImport("SpectatorViewPlugin", EntryPoint = "MarkerDetector_Initialize")]
         internal static extern void InitalizeMarkerDetector();
 
-        [DllImport("SpectatorViewPlugin", EntryPoint="MarkerDetector_Terminate")]
+        [DllImport("SpectatorViewPlugin", EntryPoint = "MarkerDetector_Terminate")]
         internal static extern void TerminateMarkerDetector();
 
-        [DllImport("SpectatorViewPlugin", EntryPoint="MarkerDetector_DetectMarkers")]
+        [DllImport("SpectatorViewPlugin", EntryPoint = "MarkerDetector_DetectMarkers")]
         internal static extern bool DetectMarkers(int _imageWidth, int _imageHeight, IntPtr _imageDate, float _markerSize);
 
-        [DllImport("SpectatorViewPlugin", EntryPoint="MarkerDetector_GetNumMarkersDetected")]
+        [DllImport("SpectatorViewPlugin", EntryPoint = "MarkerDetector_GetNumMarkersDetected")]
         internal static extern bool GetNumMarkersDetected(out int _numMarkersDetected);
 
-        [DllImport("SpectatorViewPlugin", EntryPoint="MarkerDetector_GetDetectedMarkerIds")]
+        [DllImport("SpectatorViewPlugin", EntryPoint = "MarkerDetector_GetDetectedMarkerIds")]
         internal static extern bool GetDetectedMarkerIds(IntPtr _detectedMarkers);
 
-        [DllImport("SpectatorViewPlugin", EntryPoint="MarkerDetector_GetDetectedMarkerPose")]
+        [DllImport("SpectatorViewPlugin", EntryPoint = "MarkerDetector_GetDetectedMarkerPose")]
         internal static extern bool GetDetectedMarkerPose(int _markerId, out float _xPos, out float _yPos, out float _zPos, out float _xRot, out float _yRot, out float _zRot);
 
         /// <summary>
@@ -121,11 +121,11 @@ namespace HoloToolkit.Unity.SpectatorView
                 int[] markerIds = new int[numMarkersDetected];
                 unsafe
                 {
-                    fixed(int* fmarkerIds = markerIds)
+                    fixed (int* fmarkerIds = markerIds)
                     {
                         bool success = GetDetectedMarkerIds(new IntPtr(fmarkerIds));
                         _markerIds = new int[numMarkersDetected];
-                        for(int i=0; i<numMarkersDetected; i++)
+                        for (int i = 0; i < numMarkersDetected; i++)
                         {
                             _markerIds[i] = fmarkerIds[i];
                         }
@@ -159,14 +159,14 @@ namespace HoloToolkit.Unity.SpectatorView
 
                 GetNumMarkersDetected(out numMarkersDetected);
 
-                if(numMarkersDetected <= 0)
+                if (numMarkersDetected <= 0)
                 {
                     return false;
                 }
 
                 float xPos, yPos, zPos, xRot, yRot, zRot;
                 bool success = GetDetectedMarkerPose(_markerId, out xPos, out yPos, out zPos, out xRot, out yRot, out zRot);
-                if(success)
+                if (success)
                 {
                     //Debug.Log("Found marker with id: " + _markerId);
 
@@ -180,7 +180,7 @@ namespace HoloToolkit.Unity.SpectatorView
                     float theta = rotation.magnitude;
                     rotation.Normalize();
                     _markerRotation = CameraCache.Main.transform.rotation * Quaternion.AngleAxis(theta * Mathf.Rad2Deg, rotation);
-                    _markerRotation = Quaternion.Euler(_markerRotation.eulerAngles.x,_markerRotation.eulerAngles.y, -_markerRotation.eulerAngles.z);
+                    _markerRotation = Quaternion.Euler(_markerRotation.eulerAngles.x, _markerRotation.eulerAngles.y, -_markerRotation.eulerAngles.z);
 
                     return true;
                 }
