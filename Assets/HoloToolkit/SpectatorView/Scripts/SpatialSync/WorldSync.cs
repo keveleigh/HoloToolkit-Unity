@@ -23,16 +23,16 @@ namespace HoloToolkit.Unity.SpectatorView
         private Transform worldRoot;
 
         /// <summary>
-        /// Component for sending hololens webcam feed to the marker detection code
+        /// Component for sending HoloLens webcam feed to the marker detection code
         /// </summary>
-        [Tooltip("Component for sending hololens webcam feed to the marker detection code")]
+        [Tooltip("Component for sending HoloLens webcam feed to the marker detection code")]
         [SerializeField]
         private MarkerDetectionHololens hololensMarkerDetector;
 
         /// <summary>
-        /// Number of captures used to find find a average position/rotation
+        /// Number of captures used to find an average position/rotation
         /// </summary>
-        [Tooltip("Number of captures used to find find a average position/rotation")]
+        [Tooltip("Number of captures used to find a average position/rotation")]
         [SerializeField]
         private int numCapturesRequired;
 
@@ -116,7 +116,7 @@ namespace HoloToolkit.Unity.SpectatorView
         }
 
         /// <summary>
-        /// Component for sending hololens webcam feed to the marker detection code
+        /// Component for sending HoloLens webcam feed to the marker detection code
         /// </summary>
         public MarkerDetectionHololens HololensMarkerDetector
         {
@@ -125,7 +125,7 @@ namespace HoloToolkit.Unity.SpectatorView
         }
 
         /// <summary>
-        /// Number of captures used to find find a average position/rotation
+        /// Number of captures used to find an average position/rotation
         /// </summary>
         public int NumCapturesRequired
         {

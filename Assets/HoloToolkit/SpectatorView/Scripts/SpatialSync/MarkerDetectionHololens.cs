@@ -1,5 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See LICENSE in the project root for license information.using UnityEngine;
+// Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,9 +37,9 @@ namespace HoloToolkit.Unity.SpectatorView
         private float markerSize = 0.05f;
 
         /// <summary>
-        /// Sound played when the hololens enters capturing mode
+        /// Sound played when the HoloLens enters capturing mode
         /// </summary>
-        [Tooltip("Sound played when the hololens enters capturing mode")]
+        [Tooltip("Sound played when the HoloLens enters capturing mode")]
         [SerializeField]
         private AudioSource successSound;
 
@@ -91,7 +91,7 @@ namespace HoloToolkit.Unity.SpectatorView
         }
 
         /// <summary>
-        /// Sound played when the hololens enters capturing mode
+        /// Sound played when the HoloLens enters capturing mode
         /// </summary>
         public AudioSource SuccessSound
         {

@@ -18,9 +18,9 @@ namespace HoloToolkit.Unity.SpectatorView
         private float markerSize;
 
         /// <summary>
-        /// An orthoganal camera used for displaying the marker
+        /// An orthogonal camera used for displaying the marker
         /// </summary>
-        [Tooltip("An orthoganal camera used for displaying the marker")]
+        [Tooltip("An orthogonal camera used for displaying the marker")]
         [SerializeField]
         private Camera orthographicCamera;
 
@@ -34,7 +34,7 @@ namespace HoloToolkit.Unity.SpectatorView
         }
 
         /// <summary>
-        /// An orthoganal camera used for displaying the marker
+        /// An orthogonal camera used for displaying the marker
         /// </summary>
         public Camera OrthographicCamera
         {
@@ -53,7 +53,7 @@ namespace HoloToolkit.Unity.SpectatorView
 
             // Screen.dpi returns an incorrect value for the iPhoneX
             // Look for screens with its dimensions (in both orientations)
-            // and manually set the screen dpi here.
+            // and manually set the screen DPI here.
             if ((Screen.width == 2436 && Screen.height == 1125) || (Screen.height == 2436 && Screen.width == 1125))
             {
                 dpi = 458;

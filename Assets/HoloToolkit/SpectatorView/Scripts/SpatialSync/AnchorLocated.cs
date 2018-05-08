@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
+
 using UnityEngine;
 using UnityEngine.XR.iOS;
 
@@ -11,7 +12,7 @@ namespace HoloToolkit.Unity.SpectatorView
     public class AnchorLocated : MonoBehaviour
     {
         /// <summary>
-        /// Delegate for when an achor is located
+        /// Delegate for when an anchor is located
         /// </summary>
         public delegate void AnchorLocatedEvent();
 

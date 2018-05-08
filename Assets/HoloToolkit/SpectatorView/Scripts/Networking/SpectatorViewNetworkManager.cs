@@ -133,7 +133,7 @@ namespace HoloToolkit.Unity.SpectatorView
             {
                 SpectatorViewNetworkDiscovery = FindObjectOfType<SpectatorViewNetworkDiscovery>();
             }
-            // The host needs an aditional component
+            // The host needs an additional component
             if (isHost)
             {
                 if (MarkerDetectionHololens == null)

@@ -56,7 +56,7 @@ namespace HoloToolkit.Unity.SpectatorView
 
         private void OnEnable()
         {
-            // Setting screen rotation to portrait when dispalying AR code
+            // Setting screen rotation to portrait when displaying AR code
             if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
             {
                 Screen.orientation = ScreenOrientation.Portrait;
@@ -65,7 +65,7 @@ namespace HoloToolkit.Unity.SpectatorView
 
         private void OnDismiss()
         {
-            // Setting screen rotation to autorotation when AR code is dismissed
+            // Setting screen rotation to AutoRotation when AR code is dismissed
             if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
             {
                 Screen.orientation = ScreenOrientation.AutoRotation;

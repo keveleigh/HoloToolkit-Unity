@@ -12,14 +12,14 @@ namespace HoloToolkit.Unity.SpectatorView
     public class ConnectionStatusController : MonoBehaviour
     {
         /// <summary>
-        /// UI Textfield to display status
+        /// UI Text field to display status
         /// </summary>
         [SerializeField]
-        [Tooltip("UI Textfield to display status")]
+        [Tooltip("UI Text field to display status")]
         private Text text;
 
         /// <summary>
-        /// UI Textfield to display status
+        /// UI Text field to display status
         /// </summary>
         public Text Text
         {
@@ -149,7 +149,7 @@ namespace HoloToolkit.Unity.SpectatorView
                 AnchorLocated = FindObjectOfType<AnchorLocated>();
             }
 
-            // Suscribe to Anchor and Network events
+            // Subscribe to Anchor and Network events
             AnchorLocated.OnAnchorLocated += PromptShowToHoloLens;
             SpectatorViewNetworkDiscovery.OnHololensSessionFound += PromptConnecting;
             SpectatorViewNetworkDiscovery.OnHololensSessionFound += PromptAlmostThere;

@@ -1,5 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See LICENSE in the project root for license information.using UnityEngine;
+// Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,7 +20,7 @@ namespace HoloToolkit.Unity.SpectatorView
     /// </summary>
     public class CameraCaptureHololens : MonoBehaviour
     {
-        // Executed once a frame has succesfully been captured
+        // Executed once a frame has successfully been captured
         public delegate void FrameCapturesDelegate(List<byte> frameData, int width, int height);
         public FrameCapturesDelegate OnFrameCapture;
 
@@ -113,7 +113,7 @@ namespace HoloToolkit.Unity.SpectatorView
         }
 
         /// <summary>
-        /// Called when the photo mode starts, if it's successfull then it'll start taking photos
+        /// Called when the photo mode starts, if it's successful then it'll start taking photos
         /// </summary>
         /// <param name="result">Result of the intent of starting the camera</param>
         private void OnPhotoModeStarted(PhotoCapture.PhotoCaptureResult result)
@@ -129,7 +129,7 @@ namespace HoloToolkit.Unity.SpectatorView
         }
 
         /// <summary>
-        /// Called when a photo has been captured to memory, if successfull,
+        /// Called when a photo has been captured to memory, if successful,
         /// it'll copy the photo to the target texture
         /// </summary>
         /// <param name="result">Result of the photo process</param>

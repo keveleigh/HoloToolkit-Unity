@@ -28,7 +28,7 @@ namespace HoloToolkit.Unity.SpectatorView
         private bool autoStart = true;
 
         /// <summary>
-        /// Is the device a host or a client? (Hololens or mobile?)
+        /// Is the device a host or a client? (HoloLens or mobile?)
         /// </summary>
         private bool isHost;
 
@@ -59,7 +59,7 @@ namespace HoloToolkit.Unity.SpectatorView
         private NewDeviceDiscovery newDeviceDiscovery;
 
         /// <summary>
-        /// Called when the phone finds a hololens session with its marker code.
+        /// Called when the phone finds a HoloLens session with its marker code.
         /// </summary>
         public HololensSessionFoundEvent OnHololensSessionFound;
 
@@ -257,7 +257,7 @@ namespace HoloToolkit.Unity.SpectatorView
         }
 
         /// <summary>
-        /// Stops the broadcast, waits for it to be fully stopped and then connects to the hololens
+        /// Stops the broadcast, waits for it to be fully stopped and then connects to the HoloLens
         /// </summary>
         /// <param name="address">IP address to connect to</param>
         private IEnumerator StopBroadcastAndConnect(string address)

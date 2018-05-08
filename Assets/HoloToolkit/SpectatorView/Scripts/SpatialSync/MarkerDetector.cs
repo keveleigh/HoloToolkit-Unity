@@ -32,7 +32,7 @@ namespace HoloToolkit.Unity.SpectatorView
         internal static extern bool GetDetectedMarkerPose(int _markerId, out float _xPos, out float _yPos, out float _zPos, out float _xRot, out float _yRot, out float _zRot);
 
         /// <summary>
-        /// Initalize the detection code
+        /// Initialize the detection code
         /// </summary>
         public bool Initialize()
         {
@@ -170,7 +170,7 @@ namespace HoloToolkit.Unity.SpectatorView
                 {
                     //Debug.Log("Found marker with id: " + _markerId);
 
-                    // Account for the offset of the hololens camera from the transform pos
+                    // Account for the offset of the HoloLens camera from the transform pos
                     Vector3 position = new Vector3(xPos, yPos, zPos);
                     Vector3 offset = new Vector3(0.00f, 0.0f, 0.06f);
                     position += offset;

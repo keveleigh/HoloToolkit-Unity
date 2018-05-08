@@ -1,5 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See LICENSE in the project root for license information.using UnityEngine;
+// Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using System;
 using System.Collections.Generic;
@@ -12,9 +12,9 @@ namespace HoloToolkit.Unity.SpectatorView
         public delegate void OnMarkerGeneratedEvent(int markerId);
 
         /// <summary>
-        /// An array of available pre generated markers
+        /// An array of available pre-generated markers
         /// </summary>
-        [Tooltip("An array of available pre generated markers")]
+        [Tooltip("An array of available pre-generated markers")]
         [SerializeField]
         private Texture2D[] markers;
 
@@ -56,7 +56,7 @@ namespace HoloToolkit.Unity.SpectatorView
         protected const int MarkerResolutionInSquares = 6;
 
         /// <summary>
-        /// An array of available pre generated markers
+        /// An array of available pre-generated markers
         /// </summary>
         public Texture2D[] Markers
         {

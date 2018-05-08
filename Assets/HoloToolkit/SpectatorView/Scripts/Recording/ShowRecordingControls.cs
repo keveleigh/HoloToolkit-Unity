@@ -66,7 +66,7 @@ namespace HoloToolkit.Unity.SpectatorView
 
         public void OnHoldCanceled(HoldEventData eventData)
         {
-            HoldEventCancelled();
+            HoldEventCanceled();
         }
 
         private void Start()
@@ -107,9 +107,9 @@ namespace HoloToolkit.Unity.SpectatorView
         }
 
         /// <summary>
-        /// Holding has been cancelled
+        /// Holding has been canceled
         /// </summary>
-        private void HoldEventCancelled()
+        private void HoldEventCanceled()
         {
             holding = false;
             heldTimer = 0.0f;

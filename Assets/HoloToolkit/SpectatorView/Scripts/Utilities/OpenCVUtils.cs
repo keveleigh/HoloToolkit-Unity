@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.using UnityEngine;
 
 using System.Runtime.InteropServices;
-using UnityEngine;
 
 namespace HoloToolkit.Unity.SpectatorView
 {

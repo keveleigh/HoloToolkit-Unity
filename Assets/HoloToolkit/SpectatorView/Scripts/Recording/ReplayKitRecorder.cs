@@ -12,7 +12,7 @@ using UnityEngine.Apple.ReplayKit;
 namespace HoloToolkit.Unity.SpectatorView
 {
     /// <summary>
-    /// Records and replays screencaptures recorded from the iPhone
+    /// Records and replays screen captures recorded from the iPhone
     /// </summary>
     public class ReplayKitRecorder : MonoBehaviour
     {
@@ -31,7 +31,7 @@ namespace HoloToolkit.Unity.SpectatorView
         private int countDownNumber = 3;
 
         /// <summary>
-        /// If an error ocurred, this variable will hold the last error message
+        /// If an error occurred, this variable will hold the last error message
         /// </summary>
         private string lastError = "";
 
@@ -54,9 +54,9 @@ namespace HoloToolkit.Unity.SpectatorView
         private GameObject recordCountdownButton;
 
         /// <summary>
-        /// Record countdown textfield
+        /// Record countdown text field
         /// </summary>
-        [Tooltip("Record countdown textfield")] 
+        [Tooltip("Record countdown text field")] 
         [SerializeField]
         private Text recordCountdownText;
 
@@ -98,7 +98,7 @@ namespace HoloToolkit.Unity.SpectatorView
         }
 
         /// <summary>
-        /// Record countdown textfield
+        /// Record countdown text field
         /// </summary>
         public Text RecordCountdownText
         {
@@ -186,7 +186,7 @@ namespace HoloToolkit.Unity.SpectatorView
             Countdown();
             RecordCountdownButton.GetComponent<Animation>().Play();
 #else
-            Debug.LogWarning("Not impletmenting on the current platform");
+            Debug.LogWarning("Not implemented on the current platform");
 #endif
         }
 
