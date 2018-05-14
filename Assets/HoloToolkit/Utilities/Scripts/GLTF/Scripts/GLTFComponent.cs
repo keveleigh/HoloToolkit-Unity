@@ -1,85 +1,84 @@
+using System;
 using System.Collections;
 using System.IO;
+using GLTF;
+using GLTF.Schema;
 using UnityEngine;
+using UnityGLTF.Loader;
 
 namespace UnityGLTF
 {
+
     /// <summary>
     /// Component to load a GLTF scene with
     /// </summary>
-    class GLTFComponent : MonoBehaviour
+    public class GLTFComponent : MonoBehaviour
     {
-        public string Url = "";
+        public string GLTFUri = null;
         public bool Multithreaded = true;
         public bool UseStream = false;
 
+        [SerializeField]
+        private bool loadOnStart = true;
+
         public int MaximumLod = 300;
+        public GLTFSceneImporter.ColliderType Collider = GLTFSceneImporter.ColliderType.None;
 
-        public Shader GLTFStandard = null;
-        public Shader GLTFStandardSpecular = null;
-        public Shader GLTFConstant = null;
-
-        public bool addColliders = false;
-
-        public Stream GLTFStream = null;
-
-        public bool IsLoaded { get; set; }
+        [SerializeField]
+        private Shader shaderOverride = null;
 
         IEnumerator Start()
         {
-            GLTFSceneImporter loader = null;
+            if (loadOnStart)
+            {
+                yield return Load();
+            }
+        }
+
+        public IEnumerator Load()
+        {
+            GLTFSceneImporter sceneImporter = null;
+            ILoader loader = null;
 
             if (UseStream)
             {
-                string fullPath = "";
-
-                if (GLTFStream == null)
-                {
-                    fullPath = Path.Combine(Application.streamingAssetsPath, Url);
-                    GLTFStream = File.OpenRead(fullPath);
-                }
-
-                loader = new GLTFSceneImporter(
-                    fullPath,
-                    GLTFStream,
-                    gameObject.transform,
-                    addColliders
+                // Path.Combine treats paths that start with the separator character
+                // as absolute paths, ignoring the first path passed in. This removes
+                // that character to properly handle a filename written with it.
+                GLTFUri = GLTFUri.TrimStart(new[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar });
+                string fullPath = Path.Combine(Application.streamingAssetsPath, GLTFUri);
+                string directoryPath = URIHelper.GetDirectoryName(fullPath);
+                loader = new FileLoader(directoryPath);
+                sceneImporter = new GLTFSceneImporter(
+                    Path.GetFileName(GLTFUri),
+                    loader
                     );
             }
             else
             {
-                loader = new GLTFSceneImporter(
-                    Url,
-                    gameObject.transform,
-                    addColliders
+                string directoryPath = URIHelper.GetDirectoryName(GLTFUri);
+                loader = new WebRequestLoader(directoryPath);
+                sceneImporter = new GLTFSceneImporter(
+                    URIHelper.GetFileFromUri(new Uri(GLTFUri)),
+                    loader
                     );
+
             }
 
-            loader.SetShaderForMaterialType(GLTFSceneImporter.MaterialType.PbrMetallicRoughness, GLTFStandard);
-            loader.SetShaderForMaterialType(GLTFSceneImporter.MaterialType.KHR_materials_pbrSpecularGlossiness, GLTFStandardSpecular);
-            loader.SetShaderForMaterialType(GLTFSceneImporter.MaterialType.CommonConstant, GLTFConstant);
-            loader.MaximumLod = MaximumLod;
-            yield return loader.Load(-1, Multithreaded);
+            sceneImporter.SceneParent = gameObject.transform;
+            sceneImporter.Collider = Collider;
+            sceneImporter.MaximumLod = MaximumLod;
+            sceneImporter.CustomShaderName = shaderOverride ? shaderOverride.name : null;
+            yield return sceneImporter.LoadScene(-1, Multithreaded);
 
-            if (GLTFStream != null)
+            // Override the shaders on all materials if a shader is provided
+            if (shaderOverride != null)
             {
-#if WINDOWS_UWP
-                GLTFStream.Dispose();
-#else
-                GLTFStream.Close();
-#endif
-
-                GLTFStream = null;
-            }
-            
-            IsLoaded = true;
-        }
-
-        public IEnumerator WaitForModelLoad()
-        {
-            while (!IsLoaded)
-            {
-                yield return null;
+                Renderer[] renderers = gameObject.GetComponentsInChildren<Renderer>();
+                foreach (Renderer renderer in renderers)
+                {
+                    renderer.sharedMaterial.shader = shaderOverride;
+                }
             }
         }
     }
