@@ -318,7 +318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a7cbd46737a99e4686c70b1726c7ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SupportsPosition: 1
+  SupportsPosition: 0
   SupportsRotation: 0
   SupportsGripPosition: 1
   SupportsGripRotation: 0
