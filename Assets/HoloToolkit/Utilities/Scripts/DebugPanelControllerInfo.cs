@@ -130,50 +130,65 @@ namespace HoloToolkit.Unity
 #if UNITY_WSA && UNITY_2017_2_OR_NEWER
             foreach (ControllerState controllerState in controllers.Values)
             {
+                string controllerStateHandedness = controllerState.Handedness.ToString();
+                string controllerStatePointerPosition = controllerState.PointerPosition.ToString();
+                string controllerStatePointerRotation = controllerState.PointerRotation.eulerAngles.ToString();
+                string controllerStateGripPosition = controllerState.GripPosition.ToString();
+                string controllerStateGripRotation = controllerState.GripRotation.eulerAngles.ToString();
+                string controllerStateGrasped = controllerState.Grasped.ToString();
+                string controllerStateMenuPressed = controllerState.MenuPressed.ToString();
+                string controllerStateSelectPressed = controllerState.SelectPressed.ToString();
+                string controllerStateSelectPressedAmount = controllerState.SelectPressedAmount.ToString();
+                string controllerStateThumbstickPressed = controllerState.ThumbstickPressed.ToString();
+                string controllerStateThumbstickPosition = controllerState.ThumbstickPosition.ToString();
+                string controllerStateTouchpadPressed = controllerState.TouchpadPressed.ToString();
+                string controllerStateTouchpadTouched = controllerState.TouchpadTouched.ToString();
+                string controllerStateTouchpadPosition = controllerState.TouchpadPosition.ToString();
+
                 // Debug message
                 toReturn += string.Format("Hand: {0}\nPointer: Position: {1} Rotation: {2}\n" +
                                           "Grip: Position: {3} Rotation: {4}\nGrasped: {5} " +
                                           "MenuPressed: {6}\nSelect: Pressed: {7} PressedAmount: {8}\n" +
                                           "Thumbstick: Pressed: {9} Position: {10}\nTouchpad: Pressed: {11} " +
                                           "Touched: {12} Position: {13}\n\n",
-                                          controllerState.Handedness, controllerState.PointerPosition, controllerState.PointerRotation.eulerAngles,
-                                          controllerState.GripPosition, controllerState.GripRotation.eulerAngles, controllerState.Grasped,
-                                          controllerState.MenuPressed, controllerState.SelectPressed, controllerState.SelectPressedAmount,
-                                          controllerState.ThumbstickPressed, controllerState.ThumbstickPosition, controllerState.TouchpadPressed,
-                                          controllerState.TouchpadTouched, controllerState.TouchpadPosition);
+                                          controllerStateHandedness, controllerStatePointerPosition, controllerStatePointerRotation,
+                                          controllerStateGripPosition, controllerStateGripRotation, controllerStateGrasped,
+                                          controllerStateMenuPressed, controllerStateSelectPressed, controllerStateSelectPressedAmount,
+                                          controllerStateThumbstickPressed, controllerStateThumbstickPosition, controllerStateTouchpadPressed,
+                                          controllerStateTouchpadTouched, controllerStateTouchpadPosition);
 
                 // Text label display
                 if (controllerState.Handedness.Equals(InteractionSourceHandedness.Left))
                 {
-                    LeftInfoTextPointerPosition.text = controllerState.Handedness.ToString();
-                    LeftInfoTextPointerRotation.text = controllerState.PointerRotation.ToString();
-                    LeftInfoTextGripPosition.text = controllerState.GripPosition.ToString();
-                    LeftInfoTextGripRotation.text = controllerState.GripRotation.ToString();
-                    LeftInfoTextGripGrasped.text = controllerState.Grasped.ToString();
-                    LeftInfoTextMenuPressed.text = controllerState.MenuPressed.ToString();
-                    LeftInfoTextTriggerPressed.text = controllerState.SelectPressed.ToString();
-                    LeftInfoTextTriggerPressedAmount.text = controllerState.SelectPressedAmount.ToString();
-                    LeftInfoTextThumbstickPressed.text = controllerState.ThumbstickPressed.ToString();
-                    LeftInfoTextThumbstickPosition.text = controllerState.ThumbstickPosition.ToString();
-                    LeftInfoTextTouchpadPressed.text = controllerState.TouchpadPressed.ToString();
-                    LeftInfoTextTouchpadTouched.text = controllerState.TouchpadTouched.ToString();
-                    LeftInfoTextTouchpadPosition.text = controllerState.TouchpadPosition.ToString();
+                    LeftInfoTextPointerPosition.text = controllerStateHandedness;
+                    LeftInfoTextPointerRotation.text = controllerStatePointerRotation;
+                    LeftInfoTextGripPosition.text = controllerStateGripPosition;
+                    LeftInfoTextGripRotation.text = controllerStateGripRotation;
+                    LeftInfoTextGripGrasped.text = controllerStateGrasped;
+                    LeftInfoTextMenuPressed.text = controllerStateMenuPressed;
+                    LeftInfoTextTriggerPressed.text = controllerStateSelectPressed;
+                    LeftInfoTextTriggerPressedAmount.text = controllerStateSelectPressedAmount;
+                    LeftInfoTextThumbstickPressed.text = controllerStateThumbstickPressed;
+                    LeftInfoTextThumbstickPosition.text = controllerStateThumbstickPosition;
+                    LeftInfoTextTouchpadPressed.text = controllerStateTouchpadPressed;
+                    LeftInfoTextTouchpadTouched.text = controllerStateTouchpadTouched;
+                    LeftInfoTextTouchpadPosition.text = controllerStateTouchpadPosition;
                 }
                 else if (controllerState.Handedness.Equals(InteractionSourceHandedness.Right))
                 {
-                    RightInfoTextPointerPosition.text = controllerState.PointerPosition.ToString();
-                    RightInfoTextPointerRotation.text = controllerState.PointerRotation.ToString();
-                    RightInfoTextGripPosition.text = controllerState.GripPosition.ToString();
-                    RightInfoTextGripRotation.text = controllerState.GripRotation.ToString();
-                    RightInfoTextGripGrasped.text = controllerState.Grasped.ToString();
-                    RightInfoTextMenuPressed.text = controllerState.MenuPressed.ToString();
-                    RightInfoTextTriggerPressed.text = controllerState.SelectPressed.ToString();
-                    RightInfoTextTriggerPressedAmount.text = controllerState.SelectPressedAmount.ToString();
-                    RightInfoTextThumbstickPressed.text = controllerState.ThumbstickPressed.ToString();
-                    RightInfoTextThumbstickPosition.text = controllerState.ThumbstickPosition.ToString();
-                    RightInfoTextTouchpadPressed.text = controllerState.TouchpadPressed.ToString();
-                    RightInfoTextTouchpadTouched.text = controllerState.TouchpadTouched.ToString();
-                    RightInfoTextTouchpadPosition.text = controllerState.TouchpadPosition.ToString();
+                    RightInfoTextPointerPosition.text = controllerStatePointerPosition;
+                    RightInfoTextPointerRotation.text = controllerStatePointerRotation;
+                    RightInfoTextGripPosition.text = controllerStateGripPosition;
+                    RightInfoTextGripRotation.text = controllerStateGripRotation;
+                    RightInfoTextGripGrasped.text = controllerStateGrasped;
+                    RightInfoTextMenuPressed.text = controllerStateMenuPressed;
+                    RightInfoTextTriggerPressed.text = controllerStateSelectPressed;
+                    RightInfoTextTriggerPressedAmount.text = controllerStateSelectPressedAmount;
+                    RightInfoTextThumbstickPressed.text = controllerStateThumbstickPressed;
+                    RightInfoTextThumbstickPosition.text = controllerStateThumbstickPosition;
+                    RightInfoTextTouchpadPressed.text = controllerStateTouchpadPressed;
+                    RightInfoTextTouchpadTouched.text = controllerStateTouchpadTouched;
+                    RightInfoTextTouchpadPosition.text = controllerStateTouchpadPosition;
                 }
             }
 #endif
