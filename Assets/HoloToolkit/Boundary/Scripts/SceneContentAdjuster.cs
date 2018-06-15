@@ -2,6 +2,8 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using UnityEngine;
+using System;
+using UnityEngine.XR.WSA;
 
 #if UNITY_2017_2_OR_NEWER
 using System.Collections;
@@ -54,7 +56,7 @@ namespace HoloToolkit.Unity.Boundary
         private int frameWaitHack = 0;
 #endif
 
-        private void Awake()
+        private void Start()
         {
             if (containerObject == null)
             {
@@ -67,11 +69,24 @@ namespace HoloToolkit.Unity.Boundary
             // TrackingSpaceType and not display type.
             if (XRDevice.isPresent)
             {
+#if UNITY_WSA
+                WorldManager.OnPositionalLocatorStateChanged += WorldManager_OnPositionalLocatorStateChanged;
+#else
                 StartCoroutine(SetContentHeight());
+#endif
                 return;
             }
 #endif
+
             Destroy(this);
+        }
+
+        private void WorldManager_OnPositionalLocatorStateChanged(PositionalLocatorState oldState, PositionalLocatorState newState)
+        {
+            if (newState == PositionalLocatorState.Active)
+            {
+                SetHeight();
+            }
         }
 
 #if UNITY_2017_2_OR_NEWER
@@ -84,6 +99,12 @@ namespace HoloToolkit.Unity.Boundary
                 yield return null;
             }
 
+            SetHeight();
+        }
+
+        private void SetHeight()
+        {
+            Debug.Log("test " + CameraCache.Main.transform.position + " " + XRDevice.GetTrackingSpaceType());
             if (alignmentType == AlignmentType.UsePresetPositions || alignmentType == AlignmentType.UsePresetXAndZWithHeadHeight)
             {
                 if (XRDevice.GetTrackingSpaceType() == TrackingSpaceType.RoomScale)
@@ -99,7 +120,7 @@ namespace HoloToolkit.Unity.Boundary
             if (alignmentType == AlignmentType.AlignWithHeadHeight || alignmentType == AlignmentType.UsePresetXAndZWithHeadHeight)
             {
                 contentPosition.x = containerObject.position.x;
-                contentPosition.y = containerObject.position.y + CameraCache.Main.transform.position.y;
+                contentPosition.y = CameraCache.Main.transform.position.y;
                 contentPosition.z = containerObject.position.z;
 
                 containerObject.position = contentPosition;
