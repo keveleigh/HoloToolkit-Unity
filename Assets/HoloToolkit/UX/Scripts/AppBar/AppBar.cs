@@ -257,6 +257,7 @@ namespace HoloToolkit.Unity.UX
             }
 
             lastTimeTapped = Time.time;
+
             base.InputClicked(obj, eventData);
 
             switch (obj.name)
@@ -361,8 +362,8 @@ namespace HoloToolkit.Unity.UX
             }
 
             // Show our buttons
-            baseRenderer.SetActive(true); 
-            
+            baseRenderer.SetActive(true);
+
             //calculate best follow position for AppBar
             Vector3 finalPosition = Vector3.zero;
             Vector3 headPosition = Camera.main.transform.position;

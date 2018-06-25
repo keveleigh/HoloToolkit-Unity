@@ -230,6 +230,7 @@ namespace HoloToolkit.Unity.Receivers
         }
 
         #region Global Listener Callbacks
+
         public void OnInputDown(InputEventData eventData)
         {
             if (Isinteractable(eventData.selectedObject))
@@ -341,9 +342,11 @@ namespace HoloToolkit.Unity.Receivers
                 NavigationCanceled(eventData.selectedObject, eventData);
             }
         }
+
         #endregion
 
         #region Protected Virtual Callback Functions
+
         protected virtual void FocusEnter(GameObject obj, PointerSpecificEventData eventData) { }
         protected virtual void FocusExit(GameObject obj, PointerSpecificEventData eventData) { }
 
@@ -364,7 +367,7 @@ namespace HoloToolkit.Unity.Receivers
         protected virtual void NavigationUpdated(GameObject obj, NavigationEventData eventData) { }
         protected virtual void NavigationCompleted(GameObject obj, NavigationEventData eventData) { }
         protected virtual void NavigationCanceled(GameObject obj, NavigationEventData eventData) { }
-        #endregion
 
+        #endregion
     }
 }
