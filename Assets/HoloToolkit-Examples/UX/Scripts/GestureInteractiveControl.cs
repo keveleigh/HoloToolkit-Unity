@@ -1,9 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
-using UnityEngine;
-using System.Collections;
 using HoloToolkit.Unity;
+using UnityEngine;
 
 namespace HoloToolkit.Examples.InteractiveElements
 {
@@ -43,7 +42,7 @@ namespace HoloToolkit.Examples.InteractiveElements
             Percentage = 0;
         }
     }
-    
+
     public class GestureInteractiveControl : MonoBehaviour
     {
         /// <summary>
@@ -63,13 +62,13 @@ namespace HoloToolkit.Examples.InteractiveElements
         /// </summary>
         [Tooltip("The distance in world space to compare the gesture's delta to")]
         public float MaxGestureDistance = 0.15f;
-        
+
         /// <summary>
         /// The Vector to align the gesture to, uses the dot product of the gesture direction and this vector.
         /// Use this to restrict the basic values that are returned to a specific direction or range of directions.
         /// </summary>
         [Tooltip("The vector to align the gesture to, only used when the Aligned GestureDataType is selected.")]
-        public Vector3 AlignmentVector = new Vector3(1,1,1);
+        public Vector3 AlignmentVector = Vector3.one;
 
         /// <summary>
         /// Flips the CurrentDirection based on the camera forward compared to Vector3.forward. For instance,
@@ -78,7 +77,7 @@ namespace HoloToolkit.Examples.InteractiveElements
         /// </summary>
         [Tooltip("Should we care if the Camera's forward is not Vector3.forward?")]
         public bool FlipDirectionOnCameraForward = false;
-        
+
         /// <summary>
         /// Current gesture state
         /// </summary>
@@ -156,7 +155,7 @@ namespace HoloToolkit.Examples.InteractiveElements
         virtual protected void Awake()
         {
             GestureState = GestureInteractive.GestureManipulationState.None;
-           
+
         }
 
         /// <summary>
@@ -218,7 +217,7 @@ namespace HoloToolkit.Examples.InteractiveElements
 
             return data;
         }
-        
+
         /// <summary>
         /// Get the current camera's world matrix in world space
         /// </summary>
@@ -269,7 +268,7 @@ namespace HoloToolkit.Examples.InteractiveElements
             {
                 rawVector.y = -rawVector.y;
             }
-            
+
             Vector3 newDirection = cameraWorld.MultiplyVector(rawVector);
 
             // replace the y
@@ -296,7 +295,7 @@ namespace HoloToolkit.Examples.InteractiveElements
             StartHeadPosition = new Vector3();
             StartHeadRay = Vector3.forward;
 
-            CurrentGesturePosition = gestureVector * MaxGestureDistance * (KeywordGestureTimeCounter/KeywordGestureTime);
+            CurrentGesturePosition = gestureVector * MaxGestureDistance * (KeywordGestureTimeCounter / KeywordGestureTime);
 
             ManipulationUpdate(StartGesturePosition, Vector3.up, StartHeadPosition, StartHeadRay, GestureInteractive.GestureManipulationState.Start);
         }
@@ -307,7 +306,7 @@ namespace HoloToolkit.Examples.InteractiveElements
         /// For instance: forward/backward or Min/Center/Max
         /// </summary>
         /// <param name="gestureValue"></param>
-        public virtual void setGestureValue(int gestureValue)
+        public virtual void SetGestureValue(int gestureValue)
         {
             // override to convert keyword index to vectors.
             switch (gestureValue)
@@ -408,7 +407,7 @@ namespace HoloToolkit.Examples.InteractiveElements
 
             return toFlip;
         }
-        
+
         /// <summary>
         /// Update all the simplified gesture values because an update has occurred
         /// incorporates the settings, such as data type, alignment vectors and max gesture distance.
@@ -416,11 +415,11 @@ namespace HoloToolkit.Examples.InteractiveElements
         protected void UpdateGesture()
         {
             DirectionVector = CurrentGesturePosition - StartGesturePosition;
-            CurrentDistance = DirectionVector.magnitude;
             bool flipDirection = Vector3.Dot(Vector3.forward, StartHeadRay) < 0 && FlipDirectionOnCameraForward;
             switch (GestureData)
             {
                 case GestureDataType.Raw:
+                default:
                     CurrentDistance = DirectionVector.magnitude;
                     break;
                 case GestureDataType.Camera:
@@ -432,8 +431,6 @@ namespace HoloToolkit.Examples.InteractiveElements
                     break;
                 case GestureDataType.Aligned:
                     CurrentDistance = Vector3.Dot(DirectionVector, AlignmentVector);
-                    break;
-                default:
                     break;
             }
 
@@ -459,7 +456,7 @@ namespace HoloToolkit.Examples.InteractiveElements
                 }
 
                 CurrentGesturePosition = KeywordGestureVector * MaxGestureDistance * (KeywordGestureTimeCounter / KeywordGestureTime);
-                
+
                 ManipulationUpdate(StartGesturePosition, Vector3.up, StartHeadPosition, StartHeadRay, state);
             }
         }

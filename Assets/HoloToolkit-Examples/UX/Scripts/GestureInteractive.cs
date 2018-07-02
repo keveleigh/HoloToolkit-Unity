@@ -320,7 +320,7 @@ namespace HoloToolkit.Examples.InteractiveElements
                 int index;
                 if (mKeywordDictionary.TryGetValue(args.text, out index))
                 {
-                    Control.setGestureValue(index);
+                    Control.SetGestureValue(index);
                 }
             }
         }
