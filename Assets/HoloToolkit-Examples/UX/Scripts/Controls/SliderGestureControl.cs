@@ -7,7 +7,7 @@ using UnityEngine;
 namespace HoloToolkit.Examples.InteractiveElements
 {
     /// <summary>
-    /// Updates slider UI based on gesture input
+    /// Updates slider UI based on gesture input.
     /// </summary>
     public class SliderGestureControl : GestureInteractiveControl
     {
@@ -27,7 +27,7 @@ namespace HoloToolkit.Examples.InteractiveElements
         public UnityEventFloat OnUpdateEvent;
 
         /// <summary>
-        /// The value of the slider
+        /// The raw value of the slider.
         /// </summary>
         public float SliderValue
         {
@@ -61,10 +61,21 @@ namespace HoloToolkit.Examples.InteractiveElements
         [Tooltip("Format the slider value and control decimal places if needed")]
         public string LabelFormat = "#.##";
 
-        // calculation variables
+        /// <summary>
+        /// The range of the slider.
+        /// </summary>
         private float mValueSpan;
+
+        /// <summary>
+        /// The percentage value of the slider at the start of the gesture.
+        /// </summary>
         private float mCachedValue;
+
+        /// <summary>
+        /// The current percentage value along the slider of the slider handle's position.
+        /// </summary>
         private float mDeltaValue;
+
         private Vector3 mStartCenter = new Vector3();
         private float mSliderMagnitude;
         private Vector3 mStartSliderPosition;
@@ -192,9 +203,9 @@ namespace HoloToolkit.Examples.InteractiveElements
         /// allows the slider to be automated or triggered by a key word
         /// </summary>
         /// <param name="gestureValue"></param>
-        public override void setGestureValue(int gestureValue)
+        public override void SetGestureValue(int gestureValue)
         {
-            //base.setGestureValue(gestureValue);
+            //base.SetGestureValue(gestureValue);
 
             if (GestureStarted)
             {
