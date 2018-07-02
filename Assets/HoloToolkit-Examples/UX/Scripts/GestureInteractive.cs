@@ -145,7 +145,10 @@ namespace HoloToolkit.Examples.InteractiveElements
 
             mStartHandPosition = handPosition;
             mCurrentHandPosition = handPosition;
-            Control.ManipulationUpdate(mStartHandPosition, mStartHandPosition, mStartHeadPosition, mStartHeadRay, GestureManipulationState.Start);
+            if (Control != null)
+            {
+                Control.ManipulationUpdate(mStartHandPosition, mStartHandPosition, mStartHeadPosition, mStartHeadRay, GestureManipulationState.Start);
+            }
             HandleCursor(true);
         }
 
@@ -209,12 +212,16 @@ namespace HoloToolkit.Examples.InteractiveElements
             Vector3 handPosition = GetCurrentHandPosition();
 
             mCurrentHandPosition = handPosition;
-            Control.ManipulationUpdate(
-                mStartHandPosition,
-                mCurrentHandPosition,
-                mStartHeadPosition,
-                mStartHeadRay,
-                lost ? GestureManipulationState.Lost : GestureManipulationState.None);
+
+            if (Control != null)
+            {
+                Control.ManipulationUpdate(
+                    mStartHandPosition,
+                    mCurrentHandPosition,
+                    mStartHeadPosition,
+                    mStartHeadRay,
+                    lost ? GestureManipulationState.Lost : GestureManipulationState.None);
+            }
 
             InputManager.Instance.ClearModalInputStack();
 
@@ -297,7 +304,7 @@ namespace HoloToolkit.Examples.InteractiveElements
         {
             base.Update();
 
-            if (mCurrentInputSource != null)
+            if (mCurrentInputSource != null && Control != null)
             {
                 mCurrentHandPosition = GetCurrentHandPosition();
                 Control.ManipulationUpdate(mStartHandPosition, mCurrentHandPosition, mStartHeadPosition, mStartHeadRay, GestureManipulationState.Update);
@@ -318,7 +325,7 @@ namespace HoloToolkit.Examples.InteractiveElements
             if ((!KeywordRequiresGaze || HasGaze) && mKeywordDictionary != null)
             {
                 int index;
-                if (mKeywordDictionary.TryGetValue(args.text, out index))
+                if (mKeywordDictionary.TryGetValue(args.text, out index) && Control != null)
                 {
                     Control.SetGestureValue(index);
                 }
