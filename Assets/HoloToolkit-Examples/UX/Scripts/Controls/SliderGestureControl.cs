@@ -64,33 +64,23 @@ namespace HoloToolkit.Examples.InteractiveElements
         /// <summary>
         /// The range of the slider.
         /// </summary>
-        private float mValueSpan;
+        private float valueSpan;
 
         /// <summary>
         /// The percentage value of the slider at the start of the gesture.
         /// </summary>
-        private float mCachedValue;
+        private float cachedPercentageValue;
 
-        /// <summary>
-        /// The current percentage value along the slider of the slider handle's position.
-        /// </summary>
-        private float mDeltaValue;
+        // Cached UI values
+        private Vector3 sliderHandleLocalPositionAtStart = Vector3.zero;
+        private float sliderBarWidth;
+        private Vector3 sliderFillScale = Vector3.one;
+        private float sliderFillWidth = 0.0f;
 
-        private Vector3 mStartCenter = new Vector3();
-        private float mSliderMagnitude;
-        private Vector3 mStartSliderPosition;
-
-        // cached UI values
-        private Vector3 mKnobVector;
-        private Vector3 mSliderFillScale;
-        private float mSliderWidth;
-
+        // Used for slider automation
         private float autoSliderTime = 0.25f;
         private float autoSliderTimerCounter = 0.5f;
-        private float autoSliderValue = 0;
-
-        private Vector3 mSliderVector;
-        private Quaternion mCachedRotation;
+        private float autoSliderValue = 0.0f;
 
         protected override void Awake()
         {
@@ -110,42 +100,27 @@ namespace HoloToolkit.Examples.InteractiveElements
                 return;
             }
 
-            if (Knob != null)
-            {
-                mStartCenter.z = Knob.transform.localPosition.z;
-            }
-
-            mCachedRotation = SliderBar.transform.rotation;
+            Quaternion initialRotation = SliderBar.transform.rotation;
 
             // with some better math below, I may be able to avoid rotating to get the proper size of the component
 
             SliderBar.transform.rotation = Quaternion.identity;
 
             // set the width of the slider 
-            mSliderMagnitude = SliderBar.transform.InverseTransformVector(SliderBar.GetComponent<Renderer>().bounds.size).x;
+            sliderBarWidth = SliderBar.transform.InverseTransformVector(SliderBar.GetComponent<Renderer>().bounds.size).x;
 
-            // set the center position
-            mStartSliderPosition = mStartCenter + Vector3.left * mSliderMagnitude / 2;
-
-            mValueSpan = MaxSliderValue - MinSliderValue;
             sliderValue = Mathf.Clamp(SliderValue, MinSliderValue, MaxSliderValue);
 
-            if (!Centered)
+            if (Knob != null)
             {
-                mDeltaValue = (SliderValue - MinSliderValue) / mValueSpan;
-            }
-            else
-            {
-                mValueSpan = (MaxSliderValue - MinSliderValue) / 2;
-                mDeltaValue = (SliderValue + mValueSpan) / 2 / mValueSpan;
+                // Cache the slider handle's initial Z value.
+                sliderHandleLocalPositionAtStart.z = Knob.transform.localPosition.z;
             }
 
-            mSliderFillScale = new Vector3(1, 1, 1);
-            mSliderWidth = mSliderMagnitude;
             if (SliderFill != null)
             {
-                mSliderFillScale = SliderFill.transform.localScale;
-                mSliderWidth = SliderFill.transform.InverseTransformVector(SliderFill.GetComponent<Renderer>().bounds.size).x;
+                sliderFillScale = SliderFill.transform.localScale;
+                sliderFillWidth = SliderFill.transform.InverseTransformVector(SliderFill.GetComponent<Renderer>().bounds.size).x;
             }
 
             if (CenteredDot != null && !Centered)
@@ -153,24 +128,23 @@ namespace HoloToolkit.Examples.InteractiveElements
                 CenteredDot.SetActive(false);
             }
 
-            SliderBar.transform.rotation = mCachedRotation;
+            SliderBar.transform.rotation = initialRotation;
 
-            UpdateVisuals();
-            mCachedValue = mDeltaValue;
+            valueSpan = MaxSliderValue - MinSliderValue;
+            cachedPercentageValue = (SliderValue - MinSliderValue) / valueSpan;
+            UpdateVisuals(cachedPercentageValue);
 
-            mSliderVector = SliderBar.transform.InverseTransformPoint(mStartCenter + SliderBar.transform.right * mSliderMagnitude / 2) - SliderBar.transform.InverseTransformPoint(mStartCenter - SliderBar.transform.right * mSliderMagnitude / 2);
-            AlignmentVector = SliderBar.transform.right;
-            AlignmentVector = mSliderVector;
+            if (GestureData == GestureDataType.Aligned)
+            {
+                AlignmentVector = SliderBar.transform.right;
+            }
         }
 
         public override void ManipulationUpdate(Vector3 startGesturePosition, Vector3 currentGesturePosition, Vector3 startHeadOrigin, Vector3 startHeadRay, GestureInteractive.GestureManipulationState gestureState)
         {
-            if (AlignmentVector != SliderBar.transform.right)
+            if (GestureData == GestureDataType.Aligned && AlignmentVector != SliderBar.transform.right)
             {
-                mSliderVector = SliderBar.transform.InverseTransformPoint(mStartCenter + SliderBar.transform.right * mSliderMagnitude / 2) - SliderBar.transform.InverseTransformPoint(mStartCenter - SliderBar.transform.right * mSliderMagnitude / 2);
                 AlignmentVector = SliderBar.transform.right;
-
-                mCachedRotation = SliderBar.transform.rotation;
             }
 
             base.ManipulationUpdate(startGesturePosition, currentGesturePosition, startHeadOrigin, startHeadRay, gestureState);
@@ -179,23 +153,16 @@ namespace HoloToolkit.Examples.InteractiveElements
             float delta = (CurrentDistance > 0) ? CurrentPercentage : -CurrentPercentage;
 
             // combine the delta with the current slider position so the slider does not start over every time
-            mDeltaValue = Mathf.Clamp01(delta + mCachedValue);
+            float newPercentageValue = Mathf.Clamp01(delta + cachedPercentageValue);
 
-            if (!Centered)
-            {
-                SliderValue = mDeltaValue * mValueSpan + MinSliderValue;
-            }
-            else
-            {
-                SliderValue = mDeltaValue * mValueSpan * 2 - mValueSpan;
-            }
+            UpdateSliderValue(newPercentageValue);
 
-            UpdateVisuals();
+            UpdateVisuals(newPercentageValue);
 
             if (gestureState == GestureInteractive.GestureManipulationState.None)
             {
                 // gesture ended - cache the current delta
-                mCachedValue = mDeltaValue;
+                cachedPercentageValue = newPercentageValue;
             }
         }
 
@@ -234,7 +201,7 @@ namespace HoloToolkit.Examples.InteractiveElements
         /// <param name="max"></param>
         public void SetSpan(float min, float max)
         {
-            mValueSpan = max - min;
+            valueSpan = max - min;
             MaxSliderValue = max;
             MinSliderValue = min;
         }
@@ -251,44 +218,40 @@ namespace HoloToolkit.Examples.InteractiveElements
             }
 
             SliderValue = Mathf.Clamp(value, MinSliderValue, MaxSliderValue);
-            mDeltaValue = SliderValue / MaxSliderValue;
-            UpdateVisuals();
-            mCachedValue = mDeltaValue;
+            cachedPercentageValue = (SliderValue - MinSliderValue) / valueSpan;
+            UpdateVisuals(cachedPercentageValue);
         }
 
         // update visuals
-        private void UpdateVisuals()
+        private void UpdateVisuals(float newPercentageValue)
         {
-            // set the knob position
-            mKnobVector = mStartSliderPosition + Vector3.right * mSliderMagnitude * mDeltaValue;
-            mKnobVector.z = mStartCenter.z;
-
             // TODO: Add snapping!
 
             if (Knob != null)
             {
-                Knob.transform.localPosition = mKnobVector;
+                // set the knob position
+                Knob.transform.localPosition = sliderHandleLocalPositionAtStart + Vector3.right * sliderBarWidth * (newPercentageValue - 0.5f);
             }
 
             // set the fill scale and position
             if (SliderFill != null)
             {
-                Vector3 scale = mSliderFillScale;
-                scale.x = mSliderFillScale.x * mDeltaValue;
+                Vector3 scale = sliderFillScale;
+                scale.x = sliderFillScale.x * newPercentageValue;
 
-                Vector3 position = Vector3.left * (mSliderWidth * 0.5f - mSliderWidth * mDeltaValue * 0.5f); // left justified;
+                Vector3 position = Vector3.left * (sliderFillWidth * 0.5f - sliderFillWidth * newPercentageValue * 0.5f); // left justified
 
                 if (Centered)
                 {
                     if (SliderValue < 0)
                     {
-                        position = Vector3.left * (mSliderWidth * 0.5f - mSliderWidth * 0.5f * (mDeltaValue + 0.5f)); // pinned to center, going left
-                        scale.x = mSliderFillScale.x * (1 - mDeltaValue / 0.5f) * 0.5f;
+                        position = Vector3.left * (sliderFillWidth * 0.5f - sliderFillWidth * 0.5f * (newPercentageValue + 0.5f)); // pinned to center, going left
+                        scale.x = sliderFillScale.x * (1 - newPercentageValue / 0.5f) * 0.5f;
                     }
                     else
                     {
-                        position = Vector3.right * ((mSliderWidth * 0.5f * (mDeltaValue - 0.5f))); // pinned to center, going right
-                        scale.x = mSliderFillScale.x * ((mDeltaValue - 0.5f) / 0.5f) * 0.5f;
+                        position = Vector3.right * ((sliderFillWidth * 0.5f * (newPercentageValue - 0.5f))); // pinned to center, going right
+                        scale.x = sliderFillScale.x * ((newPercentageValue - 0.5f) / 0.5f) * 0.5f;
                     }
                 }
 
@@ -302,7 +265,6 @@ namespace HoloToolkit.Examples.InteractiveElements
                 if (LabelFormat.IndexOf('.') > -1)
                 {
                     Label.text = SliderValue.ToString(LabelFormat);
-
                 }
                 else
                 {
@@ -330,21 +292,25 @@ namespace HoloToolkit.Examples.InteractiveElements
                 if (autoSliderTimerCounter >= autoSliderTime)
                 {
                     autoSliderTimerCounter = autoSliderTime;
-                    mCachedValue = autoSliderValue;
+                    cachedPercentageValue = autoSliderValue;
                 }
 
-                mDeltaValue = (autoSliderValue - mCachedValue) * autoSliderTimerCounter / autoSliderTime + mCachedValue;
+                float newPercentageValue = (autoSliderValue - cachedPercentageValue) * autoSliderTimerCounter / autoSliderTime + cachedPercentageValue;
 
-                if (!Centered)
-                {
-                    SliderValue = mDeltaValue * mValueSpan + MinSliderValue;
-                }
-                else
-                {
-                    SliderValue = mDeltaValue * mValueSpan * 2 - mValueSpan;
-                }
+                UpdateSliderValue(newPercentageValue);
+                UpdateVisuals(newPercentageValue);
+            }
+        }
 
-                UpdateVisuals();
+        private void UpdateSliderValue(float newPercentageValue)
+        {
+            if (!Centered)
+            {
+                SliderValue = newPercentageValue * valueSpan + MinSliderValue;
+            }
+            else
+            {
+                SliderValue = newPercentageValue * valueSpan - valueSpan * 0.5f;
             }
         }
     }
