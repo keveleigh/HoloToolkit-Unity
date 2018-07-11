@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4085006294760784}
-  - component: {fileID: 114357578567810392}
+  - component: {fileID: 114283598719554152}
   m_Layer: 0
   m_Name: Placard
   m_TagString: Untagged
@@ -116,6 +116,7 @@ MeshRenderer:
   m_MotionVectors: 2
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 19ca841be26cfb14a957c4a9408173bf, type: 2}
   m_StaticBatchInfo:
@@ -150,8 +151,9 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: b04a209f2bc50bb4ca31f7470ada2198, type: 2}
+  - {fileID: 2100000, guid: 55651ae5ac8b2804f94b620dd47797c3, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -197,9 +199,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1937578906433374}
-  m_Text: 'Fluent
-
-    Unlit'
+  m_Text: 
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -209,11 +209,11 @@ TextMesh:
   m_FontSize: 100
   m_FontStyle: 0
   m_RichText: 1
-  m_Font: {fileID: 12800000, guid: 2a056e2bb89e0134daaf49e5f183e5dc, type: 3}
+  m_Font: {fileID: 12800000, guid: 55651ae5ac8b2804f94b620dd47797c3, type: 3}
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
---- !u!114 &114357578567810392
+--- !u!114 &114283598719554152
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -221,8 +221,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1188282787330574}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac8d5b128a1d8204fb76c86f47b75912, type: 3}
+  m_Script: {fileID: 11500000, guid: 606b6837de4801e40886220804b02c54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pivotAxis: 1
+  pivotAxis: 0
   targetTransform: {fileID: 0}

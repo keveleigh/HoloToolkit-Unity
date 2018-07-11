@@ -13,13 +13,6 @@ namespace Microsoft.MixedReality.Toolkit.Internal.Utilities.UX
     [ExecuteInEditMode]
     public class HoverLight : MonoBehaviour
     {
-        [SerializeField]
-        [Range(0.0f, 1.0f)]
-        private float radius = 0.15f;
-
-        [SerializeField]
-        private Color color = new Color(0.3f, 0.3f, 0.3f, 1.0f);
-
         // Three hover lights are supported at this time.
         private const int hoverLightCount = 3;
         private const int hoverLightDataSize = 2;
@@ -28,31 +21,24 @@ namespace Microsoft.MixedReality.Toolkit.Internal.Utilities.UX
         private static int _HoverLightDataID;
         private static int lastHoverLightUpdate = -1;
 
-        public float Radius
-        {
-            get
-            {
-                return radius;
-            }
+        /// <summary>
+        /// Specifies the Radius of the Hoverlight effect
+        /// </summary>
+        public float Radius => radius;
 
-            set
-            {
-                radius = value;
-            }
-        }
+        [Tooltip("Specifies the radius of the Hoverlight effect")]
+        [SerializeField]
+        [Range(0.0f, 1.0f)]
+        private float radius = 0.15f;
 
-        public Color Color
-        {
-            get
-            {
-                return color;
-            }
+        /// <summary>
+        /// Specifies the highlight color
+        /// </summary>
+        public Color Color => color;
 
-            set
-            {
-                color = value;
-            }
-        }
+        [Tooltip("Specifies the highlight color")]
+        [SerializeField]
+        private Color color = new Color(0.3f, 0.3f, 0.3f, 1.0f);
 
         private void OnEnable()
         {
@@ -76,7 +62,7 @@ namespace Microsoft.MixedReality.Toolkit.Internal.Utilities.UX
             Initialize();
             UpdateHoverLights();
         }
-#endif
+#endif // UNITY_EDITOR
 
         private void LateUpdate()
         {
@@ -100,7 +86,7 @@ namespace Microsoft.MixedReality.Toolkit.Internal.Utilities.UX
             Gizmos.DrawIcon(transform.position + Vector3.back * Radius, string.Empty, false);
         }
 
-        private static void AddHoverLight(HoverLight light)
+        private void AddHoverLight(HoverLight light)
         {
             if (activeHoverLights.Count >= hoverLightCount)
             {
@@ -110,17 +96,17 @@ namespace Microsoft.MixedReality.Toolkit.Internal.Utilities.UX
             activeHoverLights.Add(light);
         }
 
-        private static void RemoveHoverLight(HoverLight light)
+        private void RemoveHoverLight(HoverLight light)
         {
             activeHoverLights.Remove(light);
         }
 
-        private static void Initialize()
+        private void Initialize()
         {
             _HoverLightDataID = Shader.PropertyToID("_HoverLightData");
         }
 
-        private static void UpdateHoverLights(bool forceUpdate = false)
+        private void UpdateHoverLights(bool forceUpdate = false)
         {
             if (lastHoverLightUpdate == -1)
             {
@@ -169,18 +155,4 @@ namespace Microsoft.MixedReality.Toolkit.Internal.Utilities.UX
             lastHoverLightUpdate = Time.frameCount;
         }
     }
-
-#if UNITY_EDITOR
-    [UnityEditor.CustomEditor(typeof(HoverLight))]
-    public class HoverLightEditor : UnityEditor.Editor
-    {
-        private bool HasFrameBounds() { return true; }
-
-        private Bounds OnGetFrameBounds()
-        {
-            HoverLight light = target as HoverLight;
-            return new Bounds(light.transform.position, Vector3.one * light.Radius);
-        }
-    }
-#endif
 }
