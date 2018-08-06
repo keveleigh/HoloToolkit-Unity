@@ -33,6 +33,7 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
             Both = Highlight | Overlay,
         }
 
+        private bool highlight = false;
         public bool Highlight
         {
             get
@@ -48,9 +49,6 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
                 }
             }
         }
-
-        [SerializeField]
-        private bool highlight = false;
 
         public HighlightedMaterialStyle Style
         {
@@ -110,9 +108,12 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
 
         private Dictionary<Renderer, List<Material>> materialsBeforeFocus;
 
-        #region Monobehavior Implementation
+        private int highlightColorPropertyId;
+        private int outlineColorPropertyId;
 
-        public virtual void OnEnable()
+        #region MonoBehaviour Implementation
+
+        protected virtual void OnEnable()
         {
             if (targetRenderers == null || targetRenderers.Length == 0)
             {
@@ -122,13 +123,18 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
             Refresh();
         }
 
-        public virtual void OnDisable()
+        protected virtual void Awake()
         {
-            Highlight = false;
-            Refresh();
+            highlightColorPropertyId = Shader.PropertyToID(highlightColorProperty);
+            outlineColorPropertyId = Shader.PropertyToID(outlineColorProperty);
         }
 
-        #endregion Monobehavior Implementation
+        protected virtual void OnDisable()
+        {
+            Highlight = false;
+        }
+
+        #endregion MonoBehaviour Implementation
 
         private void Refresh()
         {
@@ -178,7 +184,7 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
                 // And we haven't added it yet
                 if ((currentStyle & HighlightedMaterialStyle.Highlight) == 0)
                 {
-                    AddMaterialToRenderers(targetRenderers, highlightMaterial, highlightColorProperty, highlightColor);
+                    AddMaterialToRenderers(targetRenderers, highlightMaterial, highlightColorPropertyId, highlightColor);
                 }
             }
 
@@ -188,7 +194,7 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
                 // And we haven't added it yet
                 if ((currentStyle & HighlightedMaterialStyle.Overlay) == 0)
                 {
-                    AddMaterialToRenderers(targetRenderers, overlayMaterial, outlineColorProperty, outlineColor);
+                    AddMaterialToRenderers(targetRenderers, overlayMaterial, outlineColorPropertyId, outlineColor);
                 }
             }
 
@@ -208,9 +214,9 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
             currentStyle = HighlightedMaterialStyle.None;
         }
 
-        private static void AddMaterialToRenderers(Renderer[] renderers, Material material, string propName, Color color)
+        private static void AddMaterialToRenderers(Renderer[] renderers, Material material, int propertyId, Color color)
         {
-            material.SetColor(propName, color);
+            material.SetColor(propertyId, color);
             for (int i = 0; i < renderers.Length; i++)
             {
                 if (renderers[i] == null) { continue; }
@@ -225,15 +231,15 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
             }
         }
 
-        private static void RemoveMatFromRenderers(Renderer[] renderers, List<Material> materials)
+        private static void RemoveMaterialFromRenderers(Renderer[] renderers, List<Material> materials)
         {
             for (int i = 0; i < materials.Count; i++)
             {
-                RemoveMatFromRenderers(renderers, materials[i]);
+                RemoveMaterialFromRenderers(renderers, materials[i]);
             }
         }
 
-        private static void RemoveMatFromRenderers(Renderer[] renderers, Material material)
+        private static void RemoveMaterialFromRenderers(Renderer[] renderers, Material material)
         {
             if (material == null) { return; }
 
