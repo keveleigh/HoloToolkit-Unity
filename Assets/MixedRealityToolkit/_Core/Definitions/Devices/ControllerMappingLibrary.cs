@@ -20,22 +20,22 @@ namespace Microsoft.MixedReality.Toolkit.Internal.Definitions.Devices
         #region Constants
 
         /// <summary>
-        /// TOUCHPAD-THUMSTICK_LEFT_CONTROLLER_HORIZONTAL
+        /// TOUCHPAD-THUMBSTICK_LEFT_CONTROLLER_HORIZONTAL
         /// </summary>
         public const string MIXEDREALITY_AXIS1 = "MIXEDREALITY_AXIS1";
 
         /// <summary>
-        /// TOUCHPAD-THUMSTICK_LEFT_CONTROLLER_VERTICAL
+        /// TOUCHPAD-THUMBSTICK_LEFT_CONTROLLER_VERTICAL
         /// </summary>
         public const string MIXEDREALITY_AXIS2 = "MIXEDREALITY_AXIS2";
 
         /// <summary>
-        /// TOUCHPAD-THUMSTICK_RIGHT_CONTROLLER_HORIZONTAL
+        /// TOUCHPAD-THUMBSTICK_RIGHT_CONTROLLER_HORIZONTAL
         /// </summary>
         public const string MIXEDREALITY_AXIS4 = "MIXEDREALITY_AXIS4";
 
         /// <summary>
-        /// TOUCHPAD-THUMSTICK_RIGHT_CONTROLLER_VERTICAL
+        /// TOUCHPAD-THUMBSTICK_RIGHT_CONTROLLER_VERTICAL
         /// </summary>
         public const string MIXEDREALITY_AXIS5 = "MIXEDREALITY_AXIS5";
 
