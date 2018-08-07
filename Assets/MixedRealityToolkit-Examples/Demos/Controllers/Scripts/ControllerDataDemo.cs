@@ -39,41 +39,15 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos
         public TextMesh RightTouchpadTouchedText;
         public TextMesh RightTouchpadPositionText;
 
-        private Dictionary<uint, SourceState> sources = new Dictionary<uint, SourceState>(0);
-
-        private class SourceState
-        {
-            public Handedness Handedness;
-            public Vector3 PointerPosition;
-            public Quaternion PointerRotation;
-            public Vector3 GripPosition;
-            public Quaternion GripRotation;
-            public bool Grasped;
-            public bool MenuPressed;
-            public bool SelectPressed;
-            public float SelectPressedAmount;
-            public bool ThumbstickPressed;
-            public Vector2 ThumbstickPosition;
-            public bool TouchpadPressed;
-            public bool TouchpadTouched;
-            public Vector2 TouchpadPosition;
-        }
 
         void IMixedRealitySourceStateHandler.OnSourceDetected(SourceStateEventData eventData)
         {
             Debug.LogFormat("{0} Source Detected", eventData.Controller.ControllerHandedness);
-
-            if (!sources.ContainsKey(eventData.SourceId))
-            {
-                sources.Add(eventData.SourceId, new SourceState { Handedness = eventData.Controller.ControllerHandedness });
-            }
         }
 
         void IMixedRealitySourceStateHandler.OnSourceLost(SourceStateEventData eventData)
         {
             Debug.LogFormat("{0} Source Lost", eventData.Controller.ControllerHandedness);
-
-            sources.Remove(eventData.SourceId);
         }
 
         void IMixedRealityInputHandler.OnInputDown(InputEventData eventData)
@@ -153,7 +127,7 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos
 
         void IMixedRealitySpatialInputHandler.OnPositionChanged(InputEventData<Vector3> eventData)
         {
-            throw new System.NotImplementedException();
+            // Nothing
         }
 
         void IMixedRealityInputHandler.OnPositionInputChanged(InputEventData<Vector2> eventData)
@@ -171,7 +145,7 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos
 
         void IMixedRealitySpatialInputHandler.OnRotationChanged(InputEventData<Quaternion> eventData)
         {
-            throw new System.NotImplementedException();
+            // Nothing
         }
     }
 }
