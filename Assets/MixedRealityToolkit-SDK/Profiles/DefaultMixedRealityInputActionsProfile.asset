@@ -28,7 +28,7 @@ MonoBehaviour:
     description: Teleport Direction
     axisConstraint: 4
   - id: 6
-    description: Trigger Position
+    description: Trigger Press Amount
     axisConstraint: 3
   - id: 7
     description: Thumbstick Press
@@ -44,4 +44,4 @@ MonoBehaviour:
     axisConstraint: 4
   - id: 11
     description: Grip Press
-    axisConstraint: 3
+    axisConstraint: 2
