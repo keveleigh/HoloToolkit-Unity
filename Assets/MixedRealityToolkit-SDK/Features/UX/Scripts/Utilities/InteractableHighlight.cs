@@ -98,8 +98,12 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
         [SerializeField]
         private Material highlightMaterial = null;
 
+        private Material hightlightMaterialInstance;
+
         [SerializeField]
         private Material overlayMaterial = null;
+
+        private Material overlayMaterialInstance = null;
 
         [SerializeField]
         private HighlightedMaterialStyle targetStyle = HighlightedMaterialStyle.Highlight;
@@ -127,6 +131,9 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
         {
             highlightColorPropertyId = Shader.PropertyToID(highlightColorProperty);
             outlineColorPropertyId = Shader.PropertyToID(outlineColorProperty);
+
+            hightlightMaterialInstance = new Material(highlightMaterial);
+            overlayMaterialInstance = new Material(overlayMaterial);
         }
 
         protected virtual void OnDisable()
@@ -174,8 +181,8 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
 
                 preFocusMaterials.AddRange(targetRenderers[i].sharedMaterials);
                 // Remove any references to outline and highlight materials
-                preFocusMaterials.Remove(highlightMaterial);
-                preFocusMaterials.Remove(overlayMaterial);
+                preFocusMaterials.Remove(hightlightMaterialInstance);
+                preFocusMaterials.Remove(overlayMaterialInstance);
             }
 
             // If we're using a highlight
@@ -184,7 +191,7 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
                 // And we haven't added it yet
                 if ((currentStyle & HighlightedMaterialStyle.Highlight) == 0)
                 {
-                    AddMaterialToRenderers(targetRenderers, highlightMaterial, highlightColorPropertyId, highlightColor);
+                    AddMaterialToRenderers(targetRenderers, hightlightMaterialInstance, highlightColorPropertyId, highlightColor);
                 }
             }
 
@@ -194,7 +201,7 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
                 // And we haven't added it yet
                 if ((currentStyle & HighlightedMaterialStyle.Overlay) == 0)
                 {
-                    AddMaterialToRenderers(targetRenderers, overlayMaterial, outlineColorPropertyId, outlineColor);
+                    AddMaterialToRenderers(targetRenderers, overlayMaterialInstance, outlineColorPropertyId, outlineColor);
                 }
             }
 
