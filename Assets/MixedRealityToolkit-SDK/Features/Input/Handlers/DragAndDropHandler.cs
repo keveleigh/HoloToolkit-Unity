@@ -16,7 +16,7 @@ namespace Microsoft.MixedReality.Toolkit.SDK.Input.Handlers
     /// Dragging is done by calculating the angular delta and z-delta between the current and previous hand positions,
     /// and then repositioning the object based on that.
     /// </summary>
-    public class DragAndDropHandler : BaseFocusHandler, IMixedRealitySourceStateHandler, IMixedRealityPointerHandler
+    public class DragAndDropHandler : BaseInputHandler, IMixedRealitySourceStateHandler, IMixedRealityPointerHandler
     {
         private enum RotationModeEnum
         {
@@ -106,11 +106,11 @@ namespace Microsoft.MixedReality.Toolkit.SDK.Input.Handlers
 
         void IMixedRealityPointerHandler.OnPointerUp(MixedRealityPointerEventData eventData)
         {
-            if (eventData.SourceId == currentInputSource.SourceId)
+            if (eventData.SourceId == currentInputSource?.SourceId)
             {
-                eventData.Use(); // Mark the event as used, so it doesn't fall through to other handlers.
-
                 StopDragging();
+
+                eventData.Use(); // Mark the event as used, so it doesn't fall through to other handlers.
             }
         }
 
@@ -128,8 +128,6 @@ namespace Microsoft.MixedReality.Toolkit.SDK.Input.Handlers
                 return;
             }
 
-            eventData.Use(); // Mark the event as used, so it doesn't fall through to other handlers.
-
             currentInputSource = eventData.InputSource;
             currentPointer = eventData.Pointer;
 
@@ -139,6 +137,8 @@ namespace Microsoft.MixedReality.Toolkit.SDK.Input.Handlers
                     : hostTransform.position;
 
             StartDragging(initialDraggingPosition);
+
+            eventData.Use(); // Mark the event as used, so it doesn't fall through to other handlers.
         }
 
         void IMixedRealityPointerHandler.OnPointerClicked(MixedRealityPointerEventData eventData) { }

@@ -1166,7 +1166,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 293671886}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0b28a07c726444828baefad41711e26d, type: 3}
   m_Name: 
@@ -1177,7 +1177,7 @@ MonoBehaviour:
   outlineColorProperty: _Color
   highlightColor: {r: 0, g: 1, b: 0, a: 1}
   outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  highlightMaterial: {fileID: 0}
+  highlightMaterial: {fileID: 2100000, guid: 53ea63593b32415faf734536616f5fb3, type: 2}
   overlayMaterial: {fileID: 0}
   targetStyle: 1
 --- !u!114 &293671893
@@ -1191,7 +1191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 473359eee3cb4956b21600fc27d4aa7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  focusEnabled: 1
+  isFocusRequired: 1
   dragAction:
     id: 0
     description: None
@@ -1823,7 +1823,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 473359eee3cb4956b21600fc27d4aa7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  focusEnabled: 1
+  isFocusRequired: 1
   dragAction:
     id: 0
     description: None
@@ -1839,7 +1839,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 435771003}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0b28a07c726444828baefad41711e26d, type: 3}
   m_Name: 
@@ -1848,9 +1848,9 @@ MonoBehaviour:
   targetRenderers: []
   highlightColorProperty: _Color
   outlineColorProperty: _Color
-  highlightColor: {r: 0, g: 1, b: 0, a: 1}
+  highlightColor: {r: 0.3158779, g: 0, b: 1, a: 1}
   outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  highlightMaterial: {fileID: 0}
+  highlightMaterial: {fileID: 2100000, guid: 71d573ea4cb045cdadc98e56044f6d2c, type: 2}
   overlayMaterial: {fileID: 0}
   targetStyle: 1
 --- !u!23 &435771008
@@ -3274,11 +3274,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 473359eee3cb4956b21600fc27d4aa7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  focusEnabled: 1
+  isFocusRequired: 1
   dragAction:
-    id: 0
-    description: None
-    axisConstraint: 0
+    id: 1
+    description: Select
+    axisConstraint: 2
   hostTransform: {fileID: 0}
   distanceScale: 2
   rotationMode: 0
@@ -3290,7 +3290,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 783134315}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0b28a07c726444828baefad41711e26d, type: 3}
   m_Name: 
@@ -3299,9 +3299,9 @@ MonoBehaviour:
   targetRenderers: []
   highlightColorProperty: _Color
   outlineColorProperty: _Color
-  highlightColor: {r: 0, g: 1, b: 0, a: 1}
+  highlightColor: {r: 1, g: 0, b: 0.022117615, a: 1}
   outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  highlightMaterial: {fileID: 0}
+  highlightMaterial: {fileID: 2100000, guid: 71d471797c0e430783230146721c3fcb, type: 2}
   overlayMaterial: {fileID: 0}
   targetStyle: 1
 --- !u!23 &783134320
