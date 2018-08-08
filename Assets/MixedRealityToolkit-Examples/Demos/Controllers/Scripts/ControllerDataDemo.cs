@@ -130,12 +130,12 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos
             if (eventData.MixedRealityInputAction == GripPoseAction)
             {
                 (eventData.Handedness == Handedness.Left ? LeftGripPositionText : RightGripPositionText).text = eventData.InputData.Position.ToString();
-                (eventData.Handedness == Handedness.Left ? LeftGripRotationText : RightGripRotationText).text = eventData.InputData.Rotation.ToString();
+                (eventData.Handedness == Handedness.Left ? LeftGripRotationText : RightGripRotationText).text = eventData.InputData.Rotation.eulerAngles.ToString();
             }
             else if (eventData.MixedRealityInputAction == PointerPoseAction)
             {
                 (eventData.Handedness == Handedness.Left ? LeftPointerPositionText : RightPointerPositionText).text = eventData.InputData.Position.ToString();
-                (eventData.Handedness == Handedness.Left ? LeftPointerRotationText : RightPointerRotationText).text = eventData.InputData.Rotation.ToString();
+                (eventData.Handedness == Handedness.Left ? LeftPointerRotationText : RightPointerRotationText).text = eventData.InputData.Rotation.eulerAngles.ToString();
             }
         }
 
