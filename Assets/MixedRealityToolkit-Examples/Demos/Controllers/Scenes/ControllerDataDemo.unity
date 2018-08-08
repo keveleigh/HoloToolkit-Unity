@@ -2407,6 +2407,50 @@ MonoBehaviour:
   RightTouchpadPressedText: {fileID: 1914582923}
   RightTouchpadTouchedText: {fileID: 13818378}
   RightTouchpadPositionText: {fileID: 1306325248}
+  PointerPoseAction:
+    id: 4
+    description: Pointer Pose
+    axisConstraint: 7
+  GripPoseAction:
+    id: 3
+    description: Grip Pose
+    axisConstraint: 7
+  GripGraspedAction:
+    id: 11
+    description: Grip Press
+    axisConstraint: 2
+  MenuPressedAction:
+    id: 2
+    description: Menu
+    axisConstraint: 2
+  TriggerPressedAction:
+    id: 1
+    description: Select
+    axisConstraint: 2
+  TriggerPressedAmountAction:
+    id: 6
+    description: Trigger Position
+    axisConstraint: 3
+  ThumbstickPressedAction:
+    id: 7
+    description: Thumbstick Press
+    axisConstraint: 2
+  ThumbstickPositionAction:
+    id: 5
+    description: Teleport Direction
+    axisConstraint: 4
+  TouchpadPressedAction:
+    id: 9
+    description: Touchpad Press
+    axisConstraint: 2
+  TouchpadTouchedAction:
+    id: 8
+    description: Touchpad Touch
+    axisConstraint: 2
+  TouchpadPositionAction:
+    id: 10
+    description: Touchpad Position
+    axisConstraint: 4
 --- !u!1 &630688233
 GameObject:
   m_ObjectHideFlags: 0

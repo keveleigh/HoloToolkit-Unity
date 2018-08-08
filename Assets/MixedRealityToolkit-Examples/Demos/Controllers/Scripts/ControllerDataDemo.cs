@@ -1,11 +1,11 @@
 ﻿// Copyright(c) Microsoft Corporation.All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
+using Microsoft.MixedReality.Toolkit.Internal.Definitions.InputSystem;
 using Microsoft.MixedReality.Toolkit.Internal.Definitions.Utilities;
 using Microsoft.MixedReality.Toolkit.Internal.EventDatum.Input;
 using Microsoft.MixedReality.Toolkit.Internal.Interfaces.InputSystem.Handlers;
 using Microsoft.MixedReality.Toolkit.SDK.Input;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Microsoft.MixedReality.Toolkit.Examples.Demos
@@ -39,6 +39,17 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos
         public TextMesh RightTouchpadTouchedText;
         public TextMesh RightTouchpadPositionText;
 
+        public MixedRealityInputAction PointerPoseAction;
+        public MixedRealityInputAction GripPoseAction;
+        public MixedRealityInputAction GripGraspedAction;
+        public MixedRealityInputAction MenuPressedAction;
+        public MixedRealityInputAction TriggerPressedAction;
+        public MixedRealityInputAction TriggerPressedAmountAction;
+        public MixedRealityInputAction ThumbstickPressedAction;
+        public MixedRealityInputAction ThumbstickPositionAction;
+        public MixedRealityInputAction TouchpadPressedAction;
+        public MixedRealityInputAction TouchpadTouchedAction;
+        public MixedRealityInputAction TouchpadPositionAction;
 
         void IMixedRealitySourceStateHandler.OnSourceDetected(SourceStateEventData eventData)
         {
@@ -52,76 +63,79 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos
 
         void IMixedRealityInputHandler.OnInputDown(InputEventData eventData)
         {
-            switch (eventData.MixedRealityInputAction.Description)
+            if (eventData.MixedRealityInputAction == MenuPressedAction)
             {
-                case "Menu":
-                    (eventData.Handedness == Handedness.Left ? LeftMenuPressedText : RightMenuPressedText).text = "True";
-                    break;
-                case "Select":
-                    (eventData.Handedness == Handedness.Left ? LeftTriggerPressedText : RightTriggerPressedText).text = "True";
-                    break;
-                case "Touchpad Touch":
-                    (eventData.Handedness == Handedness.Left ? LeftTouchpadTouchedText : RightTouchpadTouchedText).text = "True";
-                    break;
-                case "Grip Press":
-                    (eventData.Handedness == Handedness.Left ? LeftGripGraspedText : RightGripGraspedText).text = "True";
-                    break;
-                case "Touchpad Press":
-                    (eventData.Handedness == Handedness.Left ? LeftTouchpadPressedText : RightTouchpadPressedText).text = "True";
-                    break;
-                case "Thumbstick Press":
-                    (eventData.Handedness == Handedness.Left ? LeftThumbstickPressedText : RightThumbstickPressedText).text = "True";
-                    break;
+                (eventData.Handedness == Handedness.Left ? LeftMenuPressedText : RightMenuPressedText).text = "True";
+            }
+            else if (eventData.MixedRealityInputAction == TriggerPressedAction)
+            {
+                (eventData.Handedness == Handedness.Left ? LeftTriggerPressedText : RightTriggerPressedText).text = "True";
+            }
+            else if (eventData.MixedRealityInputAction == TouchpadTouchedAction)
+            {
+                (eventData.Handedness == Handedness.Left ? LeftTouchpadTouchedText : RightTouchpadTouchedText).text = "True";
+            }
+            else if (eventData.MixedRealityInputAction == GripGraspedAction)
+            {
+                (eventData.Handedness == Handedness.Left ? LeftGripGraspedText : RightGripGraspedText).text = "True";
+            }
+            else if (eventData.MixedRealityInputAction == TouchpadPressedAction)
+            {
+                (eventData.Handedness == Handedness.Left ? LeftTouchpadPressedText : RightTouchpadPressedText).text = "True";
+            }
+            else if (eventData.MixedRealityInputAction == ThumbstickPressedAction)
+            {
+                (eventData.Handedness == Handedness.Left ? LeftThumbstickPressedText : RightThumbstickPressedText).text = "True";
             }
         }
 
         void IMixedRealityInputHandler.OnInputPressed(InputEventData<float> eventData)
         {
-            switch (eventData.MixedRealityInputAction.Description)
+            if (eventData.MixedRealityInputAction == TriggerPressedAmountAction)
             {
-                case "Trigger Position":
-                    (eventData.Handedness == Handedness.Left ? LeftTriggerPressedAmountText : RightTriggerPressedAmountText).text = eventData.InputData.ToString();
-                    break;
+                (eventData.Handedness == Handedness.Left ? LeftTriggerPressedAmountText : RightTriggerPressedAmountText).text = eventData.InputData.ToString();
             }
         }
 
         void IMixedRealityInputHandler.OnInputUp(InputEventData eventData)
         {
-            switch (eventData.MixedRealityInputAction.Description)
+            if (eventData.MixedRealityInputAction == MenuPressedAction)
             {
-                case "Menu":
-                    (eventData.Handedness == Handedness.Left ? LeftMenuPressedText : RightMenuPressedText).text = "False";
-                    break;
-                case "Select":
-                    (eventData.Handedness == Handedness.Left ? LeftTriggerPressedText : RightTriggerPressedText).text = "False";
-                    break;
-                case "Touchpad Touch":
-                    (eventData.Handedness == Handedness.Left ? LeftTouchpadTouchedText : RightTouchpadTouchedText).text = "False";
-                    break;
-                case "Grip Press":
-                    (eventData.Handedness == Handedness.Left ? LeftGripGraspedText : RightGripGraspedText).text = "False";
-                    break;
-                case "Touchpad Press":
-                    (eventData.Handedness == Handedness.Left ? LeftTouchpadPressedText : RightTouchpadPressedText).text = "False";
-                    break;
-                case "Thumbstick Press":
-                    (eventData.Handedness == Handedness.Left ? LeftThumbstickPressedText : RightThumbstickPressedText).text = "False";
-                    break;
+                (eventData.Handedness == Handedness.Left ? LeftMenuPressedText : RightMenuPressedText).text = "False";
+            }
+            else if (eventData.MixedRealityInputAction == TriggerPressedAction)
+            {
+                (eventData.Handedness == Handedness.Left ? LeftTriggerPressedText : RightTriggerPressedText).text = "False";
+            }
+            else if (eventData.MixedRealityInputAction == TouchpadTouchedAction)
+            {
+                (eventData.Handedness == Handedness.Left ? LeftTouchpadTouchedText : RightTouchpadTouchedText).text = "False";
+            }
+            else if (eventData.MixedRealityInputAction == GripGraspedAction)
+            {
+                (eventData.Handedness == Handedness.Left ? LeftGripGraspedText : RightGripGraspedText).text = "False";
+            }
+            else if (eventData.MixedRealityInputAction == TouchpadPressedAction)
+            {
+                (eventData.Handedness == Handedness.Left ? LeftTouchpadPressedText : RightTouchpadPressedText).text = "False";
+            }
+            else if (eventData.MixedRealityInputAction == ThumbstickPressedAction)
+            {
+                (eventData.Handedness == Handedness.Left ? LeftThumbstickPressedText : RightThumbstickPressedText).text = "False";
             }
         }
 
         void IMixedRealitySpatialInputHandler.OnPoseInputChanged(InputEventData<MixedRealityPose> eventData)
         {
-            switch (eventData.MixedRealityInputAction.Description)
+            if (eventData.MixedRealityInputAction == GripPoseAction)
             {
-                case "Grip Pose":
-                    (eventData.Handedness == Handedness.Left ? LeftGripPositionText : RightGripPositionText).text = eventData.InputData.Position.ToString();
-                    (eventData.Handedness == Handedness.Left ? LeftGripRotationText : RightGripRotationText).text = eventData.InputData.Rotation.ToString();
-                    break;
-                case "Pointer Pose":
-                    (eventData.Handedness == Handedness.Left ? LeftPointerPositionText : RightPointerPositionText).text = eventData.InputData.Position.ToString();
-                    (eventData.Handedness == Handedness.Left ? LeftPointerRotationText : RightPointerRotationText).text = eventData.InputData.Rotation.ToString();
-                    break;
+                (eventData.Handedness == Handedness.Left ? LeftGripPositionText : RightGripPositionText).text = eventData.InputData.Position.ToString();
+                (eventData.Handedness == Handedness.Left ? LeftGripRotationText : RightGripRotationText).text = eventData.InputData.Rotation.ToString();
+            }
+            else if (eventData.MixedRealityInputAction == PointerPoseAction)
+            {
+                (eventData.Handedness == Handedness.Left ? LeftPointerPositionText : RightPointerPositionText).text = eventData.InputData.Position.ToString();
+                (eventData.Handedness == Handedness.Left ? LeftPointerRotationText : RightPointerRotationText).text = eventData.InputData.Rotation.ToString();
             }
         }
 
@@ -132,14 +146,13 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos
 
         void IMixedRealityInputHandler.OnPositionInputChanged(InputEventData<Vector2> eventData)
         {
-            switch (eventData.MixedRealityInputAction.Description)
+            if (eventData.MixedRealityInputAction == ThumbstickPositionAction)
             {
-                case "Teleport":
-                    (eventData.Handedness == Handedness.Left ? LeftThumbstickPositionText : RightThumbstickPositionText).text = eventData.InputData.ToString();
-                    break;
-                case "Touchpad Position":
-                    (eventData.Handedness == Handedness.Left ? LeftTouchpadPositionText : RightTouchpadPositionText).text = eventData.InputData.ToString();
-                    break;
+                (eventData.Handedness == Handedness.Left ? LeftThumbstickPositionText : RightThumbstickPositionText).text = eventData.InputData.ToString();
+            }
+            else if (eventData.MixedRealityInputAction == TouchpadPositionAction)
+            {
+                (eventData.Handedness == Handedness.Left ? LeftTouchpadPositionText : RightTouchpadPositionText).text = eventData.InputData.ToString();
             }
         }
 

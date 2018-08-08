@@ -28,5 +28,20 @@ MonoBehaviour:
     description: Teleport Direction
     axisConstraint: 4
   - id: 6
-    description: Trigger
+    description: Trigger Position
+    axisConstraint: 3
+  - id: 7
+    description: Thumbstick Press
+    axisConstraint: 2
+  - id: 8
+    description: Touchpad Touch
+    axisConstraint: 2
+  - id: 9
+    description: Touchpad Press
+    axisConstraint: 2
+  - id: 10
+    description: Touchpad Position
+    axisConstraint: 4
+  - id: 11
+    description: Grip Press
     axisConstraint: 3
