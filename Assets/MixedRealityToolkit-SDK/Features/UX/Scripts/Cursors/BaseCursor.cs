@@ -60,6 +60,9 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Cursors
         protected GameObject TargetedObject = null;
 
         private uint visibleHandsCount = 0;
+
+        [SerializeField]
+        [Tooltip("Set this to specify if the Cursor should start visible or invisible in the scene.")]
         private bool isVisible = true;
 
         private Vector3 targetPosition;
@@ -221,14 +224,13 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Cursors
 
         #region MonoBehaviour Implementation
 
-        private void Awake()
+        protected virtual void Awake()
         {
             // Use the setter to update visibility of the cursor at startup based on user preferences
             IsVisible = isVisible;
-            SetVisibility(isVisible);
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             UpdateCursorState();
             UpdateCursorTransform();
@@ -249,7 +251,7 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Cursors
             OnCursorStateChange(CursorStateEnum.Contextual);
         }
 
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             UnregisterManagers();
         }

@@ -53,8 +53,10 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Cursors
         private Vector3 targetScale;
         private Vector3 initialScale;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             initialScale = transform.localScale;
         }
 
