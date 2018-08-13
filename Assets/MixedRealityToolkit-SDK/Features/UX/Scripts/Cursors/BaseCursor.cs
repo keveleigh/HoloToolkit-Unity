@@ -122,6 +122,10 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Cursors
             {
                 PrimaryCursorVisual.gameObject.SetActive(visible);
             }
+            else
+            {
+                gameObject.SetActive(visible);
+            }
         }
 
         /// <inheritdoc />
