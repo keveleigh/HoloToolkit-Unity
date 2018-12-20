@@ -1,19 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
-using System.Collections.Generic;
-using UnityEngine;
-using System.Linq;
-using UnityEngine.Assertions;
-using Microsoft.MixedReality.Toolkit.Core.EventDatum.Input;
-using Microsoft.MixedReality.Toolkit.SDK.UX;
-using Microsoft.MixedReality.Toolkit.SDK.UX.Utilities;
 using Microsoft.MixedReality.Toolkit.Core.Definitions.Utilities;
-using Microsoft.MixedReality.Toolkit.Core.Services;
+using Microsoft.MixedReality.Toolkit.Core.EventDatum.Input;
 using Microsoft.MixedReality.Toolkit.Core.Interfaces.InputSystem;
-using Microsoft.MixedReality.Toolkit.Core.Utilities.Physics;
 using Microsoft.MixedReality.Toolkit.Core.Interfaces.InputSystem.Handlers;
+using Microsoft.MixedReality.Toolkit.Core.Services;
+using Microsoft.MixedReality.Toolkit.Core.Utilities.Physics;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
 {
@@ -24,12 +22,9 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
     /// See Assets/HoloToolkit-Examples/Input/Readme/README_TwoHandManipulationTest.md
     /// for instructions on how to use the script.
     /// </summary>
-    /// 
-
-
     public class ManipulationHandler : MonoBehaviour, IMixedRealitySourceStateHandler, IMixedRealityInputHandler, IMixedRealitySpatialInputHandler
     {
-       private enum HandSupportType
+        private enum HandSupportType
         {
             OneHandedOnly = 0,
             TwoHandedOnly,
@@ -105,7 +100,7 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
         private readonly Dictionary<uint, Vector3> m_handsPoseMap = new Dictionary<uint, Vector3>();
         #endregion
 
-        #region Monobehaviour Functions
+        #region MonoBehaviour Functions
         /// <summary>
         /// Private Methods
         /// </summary>
@@ -138,7 +133,7 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
                 }
                 else
                 {
-                   inputPosition = m_handsPoseMap[key];
+                    inputPosition = m_handsPoseMap[key];
                 }
 
                 m_handsPressedLocationsMap[key] = inputPosition;
@@ -149,7 +144,7 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
                 UpdateStateMachine();
             }
         }
-        #endregion Monobehaviour Functions
+        #endregion MonoBehaviour Functions
 
         #region Private Methods
         /// <summary>
@@ -341,7 +336,7 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
             }
             else
             {
-                eventData.InputSource.Pointers[0].TryGetPointerPosition(out inputPosition);   
+                eventData.InputSource.Pointers[0].TryGetPointerPosition(out inputPosition);
             }
             m_handsPressedLocationsMap[eventData.SourceId] = inputPosition;
 
@@ -360,14 +355,14 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
         }
 
         /// <summary>
-        /// from IMixedRealitySpacialInputHandler
+        /// from IMixedRealitySpatialInputHandler
         /// </summary>
         /// <param name="eventData"></param>
         public void OnPoseInputChanged(InputEventData<MixedRealityPose> eventData)
         {
             if (debugText)
             {
-           //    debugText.text = "On pose changed " + eventData.MixedRealityInputAction.Description + " " + Time.unscaledDeltaTime.ToString();
+                //debugText.text = "On pose changed " + eventData.MixedRealityInputAction.Description + " " + Time.unscaledDeltaTime.ToString();
             }
             if (eventData.InputSource.SourceName.Contains("Hand"))
             {
@@ -387,32 +382,19 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
         #endregion Event Handlers
 
         #region Unused Event Handlers
-        /// <summary>
-        /// OnSourceDetected Event Handler
-        /// </summary>
+
         public void OnSourceDetected(SourceStateEventData eventData) { }
-        public void OnInputPressed(InputEventData<float> eventData)
-        {
-        }
+        public void OnInputPressed(InputEventData<float> eventData) { }
+        public void OnPositionInputChanged(InputEventData<Vector2> eventData) { }
+        public void OnPositionChanged(InputEventData<Vector3> eventData) { }
+        public void OnRotationChanged(InputEventData<Quaternion> eventData) { }
 
-        public void OnPositionInputChanged(InputEventData<Vector2> eventData)
-        {
-        }
-
-        public void OnPositionChanged(InputEventData<Vector3> eventData)
-        {
-        }
-
-        public void OnRotationChanged(InputEventData<Quaternion> eventData)
-        {
-        }
         #endregion Unused Event Handlers
 
         #region Private Event Handlers
+
         private void OnTwoHandManipulationUpdated()
         {
-            
-#if UNITY_2017_2_OR_NEWER
             var targetRotation = hostTransform.rotation;
             var targetPosition = hostTransform.position;
             var targetScale = hostTransform.localScale;
@@ -433,7 +415,6 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
             hostTransform.position = targetPosition;
             hostTransform.rotation = targetRotation;
             hostTransform.localScale = targetScale;
-#endif // UNITY_2017_2_OR_NEWER
         }
 
         private void OnOneHandMoveUpdated()
@@ -445,14 +426,11 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
 
         private void OnTwoHandManipulationEnded()
         {
-#if UNITY_2017_2_OR_NEWER
             // This implementation currently does nothing
-#endif // UNITY_2017_2_OR_NEWER
         }
 
         private void OnTwoHandManipulationStarted(State newState)
         {
-#if UNITY_2017_2_OR_NEWER
             if ((newState & State.Rotating) > 0)
             {
                 m_rotateLogic.Setup(m_handsPressedLocationsMap, hostTransform);
@@ -465,7 +443,6 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
             {
                 m_scaleLogic.Setup(m_handsPressedLocationsMap, hostTransform);
             }
-#endif // UNITY_2017_2_OR_NEWER
         }
 
         private void OnOneHandMoveStarted()
@@ -484,6 +461,7 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
         {
             MixedRealityToolkit.InputSystem.PopModalInputHandler();
         }
+
         #endregion Private Event Handlers
     }
 }
