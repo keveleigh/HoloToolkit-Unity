@@ -114,15 +114,7 @@ namespace Microsoft.MixedReality.Toolkit.Core.Devices
                         controllerMappings[i].Handedness == ControllerHandedness &&
                         controllerMappings[i].Interactions.Length > 0)
                     {
-                        MixedRealityInteractionMapping[] profileInteractions = controllerMappings[i].Interactions;
-                        MixedRealityInteractionMapping[] newInteractions = new MixedRealityInteractionMapping[profileInteractions.Length];
-
-                        for (int j = 0; j < profileInteractions.Length; i++)
-                        {
-                            newInteractions[j] = new MixedRealityInteractionMapping(profileInteractions[j]);
-                        }
-
-                        AssignControllerMappings(newInteractions);
+                        AssignControllerMappings(controllerMappings[i].Interactions);
                         break;
                     }
 
