@@ -22,7 +22,7 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
     /// See Assets/HoloToolkit-Examples/Input/Readme/README_TwoHandManipulationTest.md
     /// for instructions on how to use the script.
     /// </summary>
-    public class ManipulationHandler : MonoBehaviour, IMixedRealitySourceStateHandler, IMixedRealityInputHandler, IMixedRealitySpatialInputHandler
+    public class ManipulationHandler : MonoBehaviour, IMixedRealitySourceStateHandler, IMixedRealityInputHandler, IMixedRealityInputHandler<MixedRealityPose>
     {
         private enum HandSupportType
         {
@@ -358,7 +358,7 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
         /// from IMixedRealitySpatialInputHandler
         /// </summary>
         /// <param name="eventData"></param>
-        public void OnPoseInputChanged(InputEventData<MixedRealityPose> eventData)
+        public void OnInputChanged(InputEventData<MixedRealityPose> eventData)
         {
             if (debugText)
             {
@@ -384,10 +384,10 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
         #region Unused Event Handlers
 
         public void OnSourceDetected(SourceStateEventData eventData) { }
+
         public void OnInputPressed(InputEventData<float> eventData) { }
+
         public void OnPositionInputChanged(InputEventData<Vector2> eventData) { }
-        public void OnPositionChanged(InputEventData<Vector3> eventData) { }
-        public void OnRotationChanged(InputEventData<Quaternion> eventData) { }
 
         #endregion Unused Event Handlers
 
