@@ -31,9 +31,9 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
     {
        private enum HandSupportType
         {
-            oneHandedOnly = 0,
-            twoHandedOnly,
-            oneAndTwoHanded
+            OneHandedOnly = 0,
+            TwoHandedOnly,
+            OneAndTwoHanded
         }
 
         #region fields
@@ -62,7 +62,7 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
         private RotationConstraintType constraintOnRotation = RotationConstraintType.None;
 
         [SerializeField]
-        private HandSupportType handSupportType = HandSupportType.oneAndTwoHanded;
+        private HandSupportType handSupportType = HandSupportType.OneAndTwoHanded;
 
         [System.Flags]
         private enum State
@@ -180,11 +180,11 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Utilities
                         newState = State.Start;
                     }
                     else
-                        if (handsPressedCount == 1 && handSupportType != HandSupportType.twoHandedOnly)
+                        if (handsPressedCount == 1 && handSupportType != HandSupportType.TwoHandedOnly)
                     {
                         newState = State.Moving;
                     }
-                    else if (handsPressedCount > 1 && handSupportType != HandSupportType.oneHandedOnly)
+                    else if (handsPressedCount > 1 && handSupportType != HandSupportType.OneHandedOnly)
                     {
                         switch (ManipulationMode)
                         {
