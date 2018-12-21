@@ -237,27 +237,6 @@ namespace Microsoft.MixedReality.Toolkit.SDK.Input
             }
 
             #endregion IMixedRealityPointer Implementation
-
-            /// <summary>
-            /// Press this pointer. This sends a pointer down event across the input system.
-            /// </summary>
-            /// <param name="mixedRealityInputAction">The input action that corresponds to the pressed button or axis.</param>
-            /// <param name="handedness">Optional handedness of the source that pressed the pointer.</param>
-            public void RaisePointerDown(MixedRealityInputAction mixedRealityInputAction, Handedness handedness = Handedness.None, IMixedRealityInputSource inputSource = null)
-            {
-                MixedRealityToolkit.InputSystem.RaisePointerDown(this, mixedRealityInputAction, handedness, inputSource);
-            }
-
-            /// <summary>
-            /// Release this pointer. This sends pointer clicked and pointer up events across the input system.
-            /// </summary>
-            /// <param name="mixedRealityInputAction">The input action that corresponds to the released button or axis.</param>
-            /// <param name="handedness">Optional handedness of the source that released the pointer.</param>
-            public void RaisePointerUp(MixedRealityInputAction mixedRealityInputAction, Handedness handedness = Handedness.None, IMixedRealityInputSource inputSource = null)
-            {
-                MixedRealityToolkit.InputSystem.RaisePointerClicked(this, mixedRealityInputAction, 0, handedness, inputSource);
-                MixedRealityToolkit.InputSystem.RaisePointerUp(this, mixedRealityInputAction, handedness, inputSource);
-            }
         }
 
         #endregion InternalGazePointer Class
@@ -363,7 +342,8 @@ namespace Microsoft.MixedReality.Toolkit.SDK.Input
             {
                 if (eventData.InputSource.Pointers[i].PointerId == GazePointer.PointerId)
                 {
-                    gazePointer.RaisePointerUp(eventData.MixedRealityInputAction, eventData.Handedness, eventData.InputSource);
+                    MixedRealityToolkit.InputSystem.RaisePointerClicked(gazePointer, eventData.MixedRealityInputAction, 0, eventData.InputSource);
+                    MixedRealityToolkit.InputSystem.RaisePointerUp(gazePointer, eventData.MixedRealityInputAction, eventData.InputSource);
                     return;
                 }
             }
@@ -375,7 +355,7 @@ namespace Microsoft.MixedReality.Toolkit.SDK.Input
             {
                 if (eventData.InputSource.Pointers[i].PointerId == GazePointer.PointerId)
                 {
-                    gazePointer.RaisePointerDown(eventData.MixedRealityInputAction, eventData.Handedness, eventData.InputSource);
+                    MixedRealityToolkit.InputSystem.RaisePointerDown(gazePointer, eventData.MixedRealityInputAction, eventData.InputSource);
                     return;
                 }
             }

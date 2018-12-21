@@ -150,7 +150,7 @@ namespace Microsoft.MixedReality.Toolkit.SDK.Input.Handlers
                     ? focusDetails.Point
                     : hostTransform.position;
 
-            isDraggingWithSourcePose = currentPointer == MixedRealityToolkit.InputSystem.GazeProvider.GazePointer;
+            isDraggingWithSourcePose = currentPointer.PointerId == MixedRealityToolkit.InputSystem.GazeProvider.GazePointer.PointerId;
 
             StartDragging(initialDraggingPosition);
         }
