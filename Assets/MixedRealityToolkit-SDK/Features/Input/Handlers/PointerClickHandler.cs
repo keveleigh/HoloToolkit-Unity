@@ -36,6 +36,7 @@ namespace Microsoft.MixedReality.Toolkit.SDK.Input.Handlers
             if (onPointerUpActionEvent.InputAction == eventData.MixedRealityInputAction)
             {
                 onPointerUpActionEvent.UnityEvent.Invoke();
+                eventData.Use();
             }
         }
 
@@ -47,6 +48,7 @@ namespace Microsoft.MixedReality.Toolkit.SDK.Input.Handlers
             if (onPointerDownActionEvent.InputAction == eventData.MixedRealityInputAction)
             {
                 onPointerDownActionEvent.UnityEvent.Invoke();
+                eventData.Use();
             }
         }
 
@@ -58,6 +60,7 @@ namespace Microsoft.MixedReality.Toolkit.SDK.Input.Handlers
             if (onPointerClickedActionEvent.InputAction == eventData.MixedRealityInputAction)
             {
                 onPointerClickedActionEvent.UnityEvent.Invoke();
+                eventData.Use();
             }
         }
 
