@@ -98,7 +98,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
 
                 if (BaseCursor != null)
                 {
-                    BaseCursor.DefaultCursorDistance = PointerExtent;
+                    BaseCursor.DefaultCursorDistance = DefaultPointerExtent;
                     BaseCursor.Pointer = this;
                     BaseCursor.SetVisibilityOnSourceDetected = setCursorVisibilityOnSourceDetected;
 
@@ -277,7 +277,23 @@ namespace Microsoft.MixedReality.Toolkit.Input
 
                 return pointerExtent;
             }
-            set { pointerExtent = value; }
+            set
+            {
+                pointerExtent = value;
+                overrideGlobalPointerExtent = false;
+            }
+        }
+
+        [SerializeField]
+        private float defaultPointerExtent = 10f;
+
+        /// <summary>
+        /// The length of the pointer when nothing is hit.
+        /// </summary>
+        public float DefaultPointerExtent
+        {
+            get { return Mathf.Min(defaultPointerExtent, PointerExtent); }
+            set { defaultPointerExtent = value; }
         }
 
         /// <inheritdoc />
@@ -355,6 +371,8 @@ namespace Microsoft.MixedReality.Toolkit.Input
             return true;
         }
 
+        #endregion IMixedRealityPointer Implementation
+
         #region IEquality Implementation
 
         private static bool Equals(IMixedRealityPointer left, IMixedRealityPointer right)
@@ -402,8 +420,6 @@ namespace Microsoft.MixedReality.Toolkit.Input
         }
 
         #endregion IEquality Implementation
-
-        #endregion IMixedRealityPointer Implementation
 
         #region IMixedRealityInputHandler Implementation
 

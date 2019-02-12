@@ -13,6 +13,7 @@ namespace Microsoft.MixedReality.Toolkit.Input.Editor
         private SerializedProperty setCursorVisibilityOnSourceDetected;
         private SerializedProperty raycastOrigin;
         private SerializedProperty pointerExtent;
+        private SerializedProperty defaultPointerExtent;
         private SerializedProperty activeHoldAction;
         private SerializedProperty pointerAction;
         private SerializedProperty pointerOrientation;
@@ -31,6 +32,7 @@ namespace Microsoft.MixedReality.Toolkit.Input.Editor
             setCursorVisibilityOnSourceDetected = serializedObject.FindProperty("setCursorVisibilityOnSourceDetected");
             raycastOrigin = serializedObject.FindProperty("raycastOrigin");
             pointerExtent = serializedObject.FindProperty("pointerExtent");
+            defaultPointerExtent = serializedObject.FindProperty("defaultPointerExtent");
             activeHoldAction = serializedObject.FindProperty("activeHoldAction");
             pointerAction = serializedObject.FindProperty("pointerAction");
             pointerOrientation = serializedObject.FindProperty("pointerOrientation");
@@ -56,6 +58,7 @@ namespace Microsoft.MixedReality.Toolkit.Input.Editor
                 EditorGUILayout.PropertyField(setCursorVisibilityOnSourceDetected);
                 EditorGUILayout.PropertyField(raycastOrigin);
                 EditorGUILayout.PropertyField(pointerExtent);
+                EditorGUILayout.PropertyField(defaultPointerExtent);
                 EditorGUILayout.PropertyField(pointerOrientation);
                 EditorGUILayout.PropertyField(pointerAction);
 

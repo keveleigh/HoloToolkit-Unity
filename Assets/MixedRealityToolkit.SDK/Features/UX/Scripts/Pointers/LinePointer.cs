@@ -160,18 +160,18 @@ namespace Microsoft.MixedReality.Toolkit.Input
         public override void OnPostRaycast()
         {
             // Use the results from the last update to set our NavigationResult
-            float clearWorldLength = 0f;
             gravityDistorter.enabled = false;
             Gradient lineColor = LineColorNoTarget;
 
+            lineBase.enabled = IsInteractionEnabled;
             if (IsInteractionEnabled)
             {
-                lineBase.enabled = true;
-
                 if (IsSelectPressed)
                 {
                     lineColor = LineColorSelected;
                 }
+
+                float clearWorldLength = 0.0f;
 
                 // If we hit something
                 if (Result.CurrentPointerTarget != null)
@@ -207,12 +207,10 @@ namespace Microsoft.MixedReality.Toolkit.Input
                 }
                 else
                 {
-                    lineBase.LineEndClamp = 1f;
+                    clearWorldLength = DefaultPointerExtent;
                 }
-            }
-            else
-            {
-                lineBase.enabled = false;
+
+                lineBase.LineEndClamp = lineBase.GetNormalizedLengthFromWorldLength(clearWorldLength, LineCastResolution);
             }
 
             if (IsFocusLocked)
