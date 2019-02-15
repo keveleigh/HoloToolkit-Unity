@@ -51,12 +51,11 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos
             solverHandler = spawnedObject.GetComponent<SolverHandler>();
         }
 
+        void IMixedRealityPointerHandler.OnPointerUp(MixedRealityPointerEventData eventData) { }
 
-        public void OnPointerUp(MixedRealityPointerEventData eventData) { }
+        void IMixedRealityPointerHandler.OnPointerDown(MixedRealityPointerEventData eventData) { }
 
-        public void OnPointerDown(MixedRealityPointerEventData eventData) { }
-
-        public void OnPointerClicked(MixedRealityPointerEventData eventData)
+        void IMixedRealityPointerHandler.OnPointerClicked(MixedRealityPointerEventData eventData)
         {
             if (eventData.MixedRealityInputAction != selectAction)
             {

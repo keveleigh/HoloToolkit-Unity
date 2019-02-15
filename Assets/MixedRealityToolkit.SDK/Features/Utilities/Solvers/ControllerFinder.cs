@@ -53,7 +53,7 @@ namespace Microsoft.MixedReality.Toolkit.SDK.Utilities.Solvers
 
         #region IMixedRealitySourceStateHandler Implementation
 
-        public void OnSourceDetected(SourceStateEventData eventData)
+        void IMixedRealitySourceStateHandler.OnSourceDetected(SourceStateEventData eventData)
         {
             if (eventData.Controller?.ControllerHandedness == handedness)
             {
@@ -61,7 +61,7 @@ namespace Microsoft.MixedReality.Toolkit.SDK.Utilities.Solvers
             }
         }
 
-        public void OnSourceLost(SourceStateEventData eventData)
+        void IMixedRealitySourceStateHandler.OnSourceLost(SourceStateEventData eventData)
         {
             if (eventData.Controller?.ControllerHandedness == handedness)
             {

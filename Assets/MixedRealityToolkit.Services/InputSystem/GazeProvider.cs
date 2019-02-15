@@ -356,7 +356,7 @@ namespace Microsoft.MixedReality.Toolkit.Services.InputSystem
 
         #region IMixedRealityInputHandler Implementation
 
-        public void OnInputUp(InputEventData eventData)
+        void IMixedRealityInputHandler.OnInputUp(InputEventData eventData)
         {
             for (int i = 0; i < eventData.InputSource.Pointers.Length; i++)
             {
@@ -368,7 +368,7 @@ namespace Microsoft.MixedReality.Toolkit.Services.InputSystem
             }
         }
 
-        public void OnInputDown(InputEventData eventData)
+        void IMixedRealityInputHandler.OnInputDown(InputEventData eventData)
         {
             for (int i = 0; i < eventData.InputSource.Pointers.Length; i++)
             {
@@ -381,10 +381,10 @@ namespace Microsoft.MixedReality.Toolkit.Services.InputSystem
         }
 
         [Obsolete]
-        public void OnInputPressed(InputEventData<float> eventData) { }
+        void IMixedRealityInputHandler.OnInputPressed(InputEventData<float> eventData) { }
 
         [Obsolete]
-        public void OnPositionInputChanged(InputEventData<Vector2> eventData) { }
+        void IMixedRealityInputHandler.OnPositionInputChanged(InputEventData<Vector2> eventData) { }
 
         #endregion IMixedRealityInputHandler Implementation
 

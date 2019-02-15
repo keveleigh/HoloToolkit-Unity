@@ -124,22 +124,22 @@ namespace Microsoft.MixedReality.Toolkit.SDK.UX.Cursors
         #region IMixedRealityTeleportHandler Implementation
 
         /// <inheritdoc />
-        public void OnTeleportRequest(TeleportEventData eventData)
+        void IMixedRealityTeleportHandler.OnTeleportRequest(TeleportEventData eventData)
         {
             OnCursorStateChange(CursorStateEnum.Observe);
         }
 
         /// <inheritdoc />
-        public void OnTeleportStarted(TeleportEventData eventData)
+        void IMixedRealityTeleportHandler.OnTeleportStarted(TeleportEventData eventData)
         {
             OnCursorStateChange(CursorStateEnum.Release);
         }
 
         /// <inheritdoc />
-        public void OnTeleportCompleted(TeleportEventData eventData) { }
+        void IMixedRealityTeleportHandler.OnTeleportCompleted(TeleportEventData eventData) { }
 
         /// <inheritdoc />
-        public void OnTeleportCanceled(TeleportEventData eventData)
+        void IMixedRealityTeleportHandler.OnTeleportCanceled(TeleportEventData eventData)
         {
             OnCursorStateChange(CursorStateEnum.Release);
         }

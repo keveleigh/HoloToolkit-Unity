@@ -29,7 +29,7 @@ namespace Microsoft.MixedReality.Toolkit.SDK.Input.Handlers
         #region IMixedRealityPointerHandler Implementation
 
         /// <inheritdoc />
-        public void OnPointerUp(MixedRealityPointerEventData eventData)
+        void IMixedRealityPointerHandler.OnPointerUp(MixedRealityPointerEventData eventData)
         {
             if (onPointerUpActionEvent.InputAction == MixedRealityInputAction.None) { return; }
 
@@ -40,7 +40,7 @@ namespace Microsoft.MixedReality.Toolkit.SDK.Input.Handlers
         }
 
         /// <inheritdoc />
-        public void OnPointerDown(MixedRealityPointerEventData eventData)
+        void IMixedRealityPointerHandler.OnPointerDown(MixedRealityPointerEventData eventData)
         {
             if (onPointerDownActionEvent.InputAction == MixedRealityInputAction.None) { return; }
 
@@ -51,7 +51,7 @@ namespace Microsoft.MixedReality.Toolkit.SDK.Input.Handlers
         }
 
         /// <inheritdoc />
-        public void OnPointerClicked(MixedRealityPointerEventData eventData)
+        void IMixedRealityPointerHandler.OnPointerClicked(MixedRealityPointerEventData eventData)
         {
             if (onPointerClickedActionEvent.InputAction == MixedRealityInputAction.None) { return; }
 

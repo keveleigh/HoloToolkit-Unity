@@ -84,7 +84,7 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos
         #region IMixedRealityBoundaryHandler Implementation
 
         /// <inheritdoc />
-        public void OnBoundaryVisualizationChanged(BoundaryEventData eventData)
+        void IMixedRealityBoundaryHandler.OnBoundaryVisualizationChanged(BoundaryEventData eventData)
         {
             Debug.Log("[BoundaryVisualizationDemo] Boundary visualization changed.");
         }

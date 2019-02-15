@@ -48,7 +48,7 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos
         /// When the user clicks the pointer (select button) or air-taps on the object, 
         /// change the filter setting and the material.
         /// </summary>
-        public void OnPointerClicked(MixedRealityPointerEventData eventData)
+        void IMixedRealityPointerHandler.OnPointerClicked(MixedRealityPointerEventData eventData)
         {
             // Only proceed if the effect script is attached.
             if (loFiEffect == null) { return; }
@@ -82,14 +82,12 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos
         /// <summary>
         /// This script does not handle pointer down events.
         /// </summary>
-        public void OnPointerDown(MixedRealityPointerEventData eventData)
-        { }
+        void IMixedRealityPointerHandler.OnPointerDown(MixedRealityPointerEventData eventData) { }
 
         /// <summary>
         /// This script does not handle pointer up events.
         /// </summary>
-        public void OnPointerUp(MixedRealityPointerEventData eventData)
-        { }
+        void IMixedRealityPointerHandler.OnPointerUp(MixedRealityPointerEventData eventData) { }
 
         /// <summary>
         /// Sets the appropriate material based on the source quality setting.
