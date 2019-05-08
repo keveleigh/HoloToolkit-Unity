@@ -3,6 +3,7 @@
 
 using Microsoft.MixedReality.Toolkit.Editor;
 using Microsoft.MixedReality.Toolkit.Utilities.Editor;
+using System.Text;
 using UnityEditor;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace Microsoft.MixedReality.Toolkit.Input.Editor
         private static readonly GUIContent AddButtonContent = new GUIContent("+ Add a New Action", "Add New Action");
         private static readonly GUIContent ActionContent = new GUIContent("Action", "The Name of the Action.");
         private static readonly GUIContent AxisConstraintContent = new GUIContent("Axis Constraint", "Optional Axis Constraint for this input source.");
+        private static readonly GUIContent GenerateActionsClassContent = new GUIContent("Generate Actions Class", "Generate Actions Class");
 
         private static Vector2 scrollPosition = Vector2.zero;
 
@@ -64,6 +66,37 @@ namespace Microsoft.MixedReality.Toolkit.Input.Editor
             CheckProfileLock(target);
 
             serializedObject.Update();
+
+            if (GUILayout.Button(GenerateActionsClassContent, EditorStyles.miniButton))
+            {
+                MixedRealityInputActionsProfile profile = target as MixedRealityInputActionsProfile;
+
+                StringBuilder stringBuilder = new StringBuilder("using Microsoft.MixedReality.Toolkit.Input;\nusing Microsoft.MixedReality.Toolkit.Utilities;\n\npublic class MixedRealityInputActions\n{\n");
+
+                for (int i = 0; i < profile.InputActions.Length; i++)
+                {
+                    MixedRealityInputAction inputAction = profile.InputActions[i];
+                    stringBuilder.Append($"    public static MixedRealityInputAction {inputAction.Description.Replace(" ", "")} {{ get; }} = new MixedRealityInputAction({inputAction.Id}, \"{inputAction.Description}\", AxisConstraint.{inputAction.AxisConstraint});\n");
+                }
+
+                stringBuilder.Append("}\n");
+
+                System.IO.File.WriteAllText("Assets/Testing.cs", stringBuilder.ToString());
+
+                //string localPath = folderPath + "/" + assetName + ScriptExtension;
+                //string absolutePath = System.IO.Path.Combine(Application.dataPath, localPath);
+                //creationLog.Add("Creating " + absolutePath);
+                //try
+                //{
+                //    System.IO.File.WriteAllText(localPath, contents);
+                //}
+                //catch (Exception e)
+                //{
+                //    Result = CreateResult.Error;
+                //    creationLog.Add(e.ToString());
+                //}
+            }
+
             RenderList(inputActionList);
             serializedObject.ApplyModifiedProperties();
         }
