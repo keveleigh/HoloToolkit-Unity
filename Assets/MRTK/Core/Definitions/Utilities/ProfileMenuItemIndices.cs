@@ -1,5 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT License.﻿
+// Licensed under the MIT License.
 
 namespace Microsoft.MixedReality.Toolkit.Utilities
 {
@@ -29,6 +29,7 @@ namespace Microsoft.MixedReality.Toolkit.Utilities
         EyeTracking,
         MouseInput,
         SceneSystem,
+        ControllerDefinition,
 
         Assembly = 99,
     }

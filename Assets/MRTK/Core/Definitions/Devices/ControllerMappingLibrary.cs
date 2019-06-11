@@ -253,6 +253,16 @@ namespace Microsoft.MixedReality.Toolkit.Input
             return GetControllerTextureCached(controllerType, handedness, "_scaled");
         }
 
+        public static Texture2D GetControllerTextureScaled(string controllerImagePath, Handedness handedness)
+        {
+            return GetControllerTextureInternal(controllerImagePath, handedness, "_scaled");
+        }
+
+        public static Texture2D GetGenericControllerTextureScaled()
+        {
+            return GetControllerTextureInternal("Textures/Generic_controller", Handedness.None, "_scaled");
+        }
+
         private static Texture2D GetControllerTextureCached(Type controllerType, Handedness handedness, string suffix)
         {
             Texture2D texture;

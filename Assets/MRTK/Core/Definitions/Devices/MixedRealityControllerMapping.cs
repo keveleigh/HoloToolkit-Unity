@@ -236,6 +236,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// <summary>
         /// Synchronizes the input actions of the same physical controller of a different concrete type.
         /// </summary>
+        /// <param name="otherControllerMapping">The mapping to synchronize actions from.</param>
         internal void SynchronizeInputActions(MixedRealityInteractionMapping[] otherControllerMapping)
         {
             if (otherControllerMapping.Length != interactions.Length)
