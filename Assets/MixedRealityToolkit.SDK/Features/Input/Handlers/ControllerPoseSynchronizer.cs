@@ -159,18 +159,6 @@ namespace Microsoft.MixedReality.Toolkit.Input
         #region IMixedRealityInputHandler Implementation
 
         /// <inheritdoc />
-        public virtual void OnInputUp(InputEventData eventData) { }
-
-        /// <inheritdoc />
-        public virtual void OnInputDown(InputEventData eventData) { }
-
-        /// <inheritdoc />
-        public virtual void OnInputChanged(InputEventData<float> eventData) { }
-
-        /// <inheritdoc />
-        public virtual void OnInputChanged(InputEventData<Vector2> eventData) { }
-
-        /// <inheritdoc />
         public virtual void OnInputChanged(InputEventData<Vector3> eventData)
         {
             if (eventData.SourceId == Controller?.InputSource.SourceId)

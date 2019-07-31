@@ -9,10 +9,8 @@ namespace Microsoft.MixedReality.Toolkit.Input
     /// <summary>
     /// Basic interface for synchronizing to a controller pose.
     /// </summary>
-    public interface IMixedRealityControllerPoseSynchronizer : IMixedRealitySourcePoseHandler,
-        IMixedRealityInputHandler,
-        IMixedRealityInputHandler<float>,
-        IMixedRealityInputHandler<Vector2>,
+    public interface IMixedRealityControllerPoseSynchronizer :
+        IMixedRealitySourcePoseHandler,
         IMixedRealityInputHandler<Vector3>,
         IMixedRealityInputHandler<Quaternion>,
         IMixedRealityInputHandler<MixedRealityPose>
