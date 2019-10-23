@@ -28,7 +28,7 @@ namespace Microsoft.MixedReality.Toolkit.SpatialAwareness
         }
 
         /// <summary>
-        /// constructor
+        /// Constructor
         /// </summary>
         protected BaseSpatialAwarenessObject()
         {

@@ -74,7 +74,7 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
 
         #region IMixedRealityCapabilityCheck Implementation
 
-        /// <inheritdoc/ >
+        /// <inheritdoc />
         public bool CheckCapability(MixedRealityCapability capability)
         {
             if (capability != MixedRealityCapability.SpatialAwarenessMesh)
@@ -141,28 +141,6 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
         /// </summary>
         private GameObject ObservedObjectParent => observedObjectParent != null ? observedObjectParent : (observedObjectParent = SpatialAwarenessSystem?.CreateSpatialAwarenessObservationParent("XRSDKSpatialMeshObserver"));
 
-        /// <inheritdoc />
-        protected override void Dispose(bool disposing)
-        {
-            if (disposed) { return; }
-
-            base.Dispose(disposing);
-
-            if (IsRunning)
-            {
-                Suspend();
-            }
-
-            if (disposing)
-            {
-                CleanupObservedObjects();
-            }
-
-            DisposeObserver();
-
-            disposed = true;
-        }
-
         /// <summary>
         /// The XRMeshSubsystem providing the spatial data.
         /// </summary>
@@ -199,7 +177,8 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
         /// <inheritdoc />
         public SpatialAwarenessMeshDisplayOptions DisplayOption
         {
-            get { return displayOption; }
+            get => displayOption;
+			
             set
             {
                 displayOption = value;
@@ -212,7 +191,8 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
         /// <inheritdoc />
         public SpatialAwarenessMeshLevelOfDetail LevelOfDetail
         {
-            get { return levelOfDetail; }
+            get => levelOfDetail;
+			
             set
             {
                 if (value != SpatialAwarenessMeshLevelOfDetail.Custom)
@@ -362,18 +342,9 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
         }
 
         /// <summary>
-        /// Ensures that the surface observer has been stopped and destroyed.
-        /// </summary>
-        private void CleanupObserver()
-        {
-            // Destroys all observed objects and the observer.
-            Dispose(true);
-        }
-
-        /// <summary>
         /// Cleans up the objects created during observation.
         /// </summary>
-        private void CleanupObservedObjects()
+        protected override void CleanupObservedObjects()
         {
             if (Application.isPlaying)
             {
@@ -408,7 +379,7 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
         /// <summary>
         /// Implements proper cleanup of the SurfaceObserver.
         /// </summary>
-        private void DisposeObserver()
+        protected override void DisposeObserver()
         {
             if (observer != null)
             {
@@ -422,10 +393,7 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
         /// </summary>
         private void UpdateObserver()
         {
-            if (SpatialAwarenessSystem == null || observer == null)
-            {
-                return;
-            }
+            if (SpatialAwarenessSystem == null || observer == null) { return; }
 
             // Only update the observer if it is running.
             if (IsRunning && (outstandingMeshObject == null))
