@@ -89,6 +89,28 @@ namespace Microsoft.MixedReality.Toolkit.SpatialObjectMeshObserver
             VisibleMaterial = profile.VisibleMaterial;
         }
 
+        #region BaseSpatialObserver Implementation
+
+        /// <inheritdoc />
+        protected override void CreateObserver()
+        {
+            if (StartupBehavior == AutoStartBehavior.AutoStart)
+            {
+                Resume();
+            }
+        }
+
+        /// <inheritdoc />
+        protected override void CleanupObserver()
+        {
+            if (IsRunning)
+            {
+                Suspend();
+            }
+        }
+
+        #endregion BaseSpatialObserver Implementation
+
         #region IMixedRealityCapabilityCheck Implementation
 
         /// <inheritdoc />
@@ -101,8 +123,6 @@ namespace Microsoft.MixedReality.Toolkit.SpatialObjectMeshObserver
 
         #region IMixedRealityDataProvider Implementation
 
-        bool autoResume = false;
-
         /// <inheritdoc />
         public override void Initialize()
         {
@@ -110,55 +130,15 @@ namespace Microsoft.MixedReality.Toolkit.SpatialObjectMeshObserver
 
             ReadProfile();
 
-            if (StartupBehavior == AutoStartBehavior.AutoStart)
-            {
-                Resume();
-            }
+            base.Initialize();
         }
 
+        /// <inheritdoc />
         public override void Update()
         {
             if (!IsRunning) { return; }
 
             SendMeshObjects();
-        }
-
-        /// <inheritdoc />
-        public override void Reset()
-        {
-            CleanupObserver();
-            Initialize();
-        }
-
-        /// <inheritdoc />
-        public override void Enable()
-        {
-            // Resume iff we are not running and had been disabled while running.
-            if (!IsRunning && autoResume)
-            {
-                Resume();
-            }
-        }
-
-        /// <inheritdoc />
-        public override void Disable()
-        {
-            // Remember if we are currently running when Disable is called.
-            autoResume = IsRunning;
-
-            // If we are disabled while running...
-            if (IsRunning)
-            {
-                // Suspend the observer
-                Suspend();
-            }
-        }
-
-        /// <inheritdoc />
-        public override void Destroy()
-        {
-            Disable();
-            CleanupObserver();
         }
 
         #endregion IMixedRealityDataProvider Implementation
@@ -379,19 +359,6 @@ namespace Microsoft.MixedReality.Toolkit.SpatialObjectMeshObserver
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// Stop the observer and releases resources.
-        /// </summary>
-        private void CleanupObserver()
-        {
-            if (IsRunning)
-            {
-                Suspend();
-            }
-
-            ClearObservations();
         }
 
         /// <summary>
