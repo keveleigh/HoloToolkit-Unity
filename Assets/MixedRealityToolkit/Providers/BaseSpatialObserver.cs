@@ -55,6 +55,35 @@ namespace Microsoft.MixedReality.Toolkit.SpatialAwareness
         /// </summary>
         protected IMixedRealitySpatialAwarenessSystem SpatialAwarenessSystem { get; private set; }
 
+        /// <summary>
+        /// Creates the surface observer and handles the desired startup behavior.
+        /// </summary>
+        protected abstract void CreateObserver();
+
+        /// <summary>
+        /// Ensures that the surface observer has been stopped and destroyed.
+        /// </summary>
+        protected abstract void CleanupObserver();
+
+        #region BaseService Implementation
+
+        /// <inheritdoc />
+        protected override void Dispose(bool disposing)
+        {
+            if (disposed) { return; }
+
+            base.Dispose(disposing);
+
+            if (disposing)
+            {
+                CleanupObservationsAndObserver();
+            }
+
+            disposed = true;
+        }
+
+        #endregion BaseService Implementation
+
         #region IMixedRealityEventSource Implementation
 
         /// <inheritdoc />
@@ -100,6 +129,59 @@ namespace Microsoft.MixedReality.Toolkit.SpatialAwareness
 
         #endregion IMixedRealityEventSource Implementation
 
+        #region IMixedRealityDataProvider Implementation
+
+        bool autoResume = false;
+
+        /// <summary>
+        /// Creates the observer.
+        /// </summary>
+        public override void Initialize()
+        {
+            CreateObserver();
+        }
+
+        /// <summary>
+        /// Suspends the observer, clears observations, cleans up the observer, then reinitializes.
+        /// </summary>
+        public override void Reset()
+        {
+            CleanupObservationsAndObserver();
+            Initialize();
+        }
+
+        /// <inheritdoc />
+        public override void Enable()
+        {
+            // Resume iff we are not running and had been disabled while running.
+            if (!IsRunning && autoResume)
+            {
+                Resume();
+            }
+        }
+
+        /// <inheritdoc />
+        public override void Disable()
+        {
+            // Remember if we are currently running when Disable is called.
+            autoResume = IsRunning;
+
+            // If we are disabled while running...
+            if (IsRunning)
+            {
+                // Suspend the observer
+                Suspend();
+            }
+        }
+
+        /// <inheritdoc />
+        public override void Destroy()
+        {
+            CleanupObservationsAndObserver();
+        }
+
+        #endregion IMixedRealityDataProvider Implementation
+
         #region IMixedRealitySpatialAwarenessObserver Implementation
 
         /// <inheritdoc />
@@ -138,5 +220,24 @@ namespace Microsoft.MixedReality.Toolkit.SpatialAwareness
         public virtual void ClearObservations() { }
 
         #endregion IMixedRealitySpatialAwarenessObserver Implementation
+
+        #region Helpers
+
+        /// <summary>
+        /// Destroys all observed objects and the observer.
+        /// </summary>
+        private void CleanupObservationsAndObserver()
+        {
+            if (IsRunning)
+            {
+                Suspend();
+            }
+
+            // Destroys all observed objects and the observer.
+            ClearObservations();
+            CleanupObserver();
+        }
+
+        #endregion Helpers
     }
 }
