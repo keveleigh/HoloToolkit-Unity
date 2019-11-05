@@ -58,12 +58,12 @@ namespace Microsoft.MixedReality.Toolkit.SpatialAwareness
         /// <summary>
         /// Creates the surface observer and handles the desired startup behavior.
         /// </summary>
-        protected abstract void CreateObserver();
+        protected virtual void CreateObserver() { }
 
         /// <summary>
         /// Ensures that the surface observer has been stopped and destroyed.
         /// </summary>
-        protected abstract void CleanupObserver();
+        protected virtual void CleanupObserver() { }
 
         #region BaseService Implementation
 
