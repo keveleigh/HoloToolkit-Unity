@@ -37,6 +37,70 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
             BaseMixedRealityProfile profile = null) : base(spatialAwarenessSystem, name, priority, profile)
         { }
 
+        #region BaseSpatialObserver Implementation
+
+        /// <summary>
+        /// Creates the XRMeshSubsystem and handles the desired startup behavior.
+        /// </summary>
+        protected override void CreateObserver()
+        {
+            if (SpatialAwarenessSystem == null) { return; }
+
+            if (observer == null &&
+                XRGeneralSettings.Instance != null &&
+                XRGeneralSettings.Instance.Manager != null &&
+                XRGeneralSettings.Instance.Manager.activeLoader != null)
+            {
+                observer = XRGeneralSettings.Instance.Manager.activeLoader.GetLoadedSubsystem<XRMeshSubsystem>();
+
+                if (observer != null)
+                {
+                    ConfigureObserverVolume();
+
+                    if (StartupBehavior == AutoStartBehavior.AutoStart)
+                    {
+                        Resume();
+                    }
+                }
+                else
+                {
+                    Debug.Log("Observer is null :(");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Implements proper cleanup of the SurfaceObserver.
+        /// </summary>
+        protected override void CleanupObserver()
+        {
+            if (IsRunning)
+            {
+                Suspend();
+            }
+
+            if (observer != null)
+            {
+                observer.Destroy();
+                observer = null;
+            }
+        }
+
+        #endregion BaseSpatialObserver Implementation
+
+        #region BaseSpatialMeshObserver Implementation
+
+        /// <inheritdoc />
+        protected override int LookupTriangleDensity(SpatialAwarenessMeshLevelOfDetail levelOfDetail)
+        {
+            // For non - custom levels, the enum value is the appropriate triangles per cubic meter.
+            int level = (int)levelOfDetail;
+            observer.meshDensity = level / (float)SpatialAwarenessMeshLevelOfDetail.Fine; // For now, map Coarse to 0.0 and Fine to 1.0
+            return level;
+        }
+
+        #endregion BaseSpatialMeshObserver Implementation
+
         #region IMixedRealityCapabilityCheck Implementation
 
         /// <inheritdoc />
@@ -55,31 +119,7 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
 
         #endregion IMixedRealityCapabilityCheck Implementation
 
-        #region IMixedRealityDataProvider implementation
-
-        /// <inheritdoc />
-        public override void Initialize()
-        {
-            meshEventData = new MixedRealitySpatialAwarenessEventData<SpatialAwarenessMeshObject>(EventSystem.current);
-
-            CreateObserver();
-
-            if (observer == null)
-            {
-                Debug.Log("Observer is null :(");
-                return;
-            }
-
-            // Apply the initial observer volume settings.
-            ConfigureObserverVolume();
-        }
-
-        /// <inheritdoc />
-        public override void Reset()
-        {
-            CleanupObserver();
-            Initialize();
-        }
+        #region IMixedRealityDataProvider Implementation
 
         /// <inheritdoc />
         public override void Update()
@@ -87,15 +127,9 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
             UpdateObserver();
         }
 
-        /// <inheritdoc />
-        public override void Destroy()
-        {
-            CleanupObserver();
-        }
+        #endregion IMixedRealityDataProvider Implementation
 
-        #endregion IMixedRealityDataProvider implementation
-
-        #region IMixedRealitySpatialAwarenessObserver implementation
+        #region IMixedRealitySpatialAwarenessObserver Implementation
 
         /// <summary>
         /// The XRMeshSubsystem providing the spatial data.
@@ -111,8 +145,8 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
 
         /// <summary> 
         /// To prevent too many meshes from being generated at the same time, we will 
-        /// only request one mesh to be created at a time.  This variable will track 
-        /// if a mesh creation request is in flight. 
+        /// only request one mesh to be created at a time. This variable will track 
+        /// if a mesh creation request is in flight.
         /// </summary> 
         private SpatialAwarenessMeshObject outstandingMeshObject = null;
 
@@ -127,15 +161,6 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
         /// The time at which the surface observer was last asked for updated data.
         /// </summary>
         private float lastUpdated = 0;
-
-        /// <inheritdoc />
-        protected override int LookupTriangleDensity(SpatialAwarenessMeshLevelOfDetail levelOfDetail)
-        {
-            // For non - custom levels, the enum value is the appropriate triangles per cubic meter.
-            int level = (int)levelOfDetail;
-            observer.meshDensity = level / (float)SpatialAwarenessMeshLevelOfDetail.Fine; // For now, map Coarse to 0.0 and Fine to 1.0
-            return level;
-        }
 
         /// <inheritdoc/>
         public override void Resume()
@@ -169,48 +194,33 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
             meshWorkQueue.Clear();
         }
 
-        /// <summary>
-        /// Creates the XRMeshSubsystem and handles the desired startup behavior.
-        /// </summary>
-        private void CreateObserver()
+        /// <inheritdoc />
+        public override void ClearObservations()
         {
-            if (SpatialAwarenessSystem == null) { return; }
+            bool wasRunning = false;
 
-            if (observer == null &&
-                XRGeneralSettings.Instance != null &&
-                XRGeneralSettings.Instance.Manager != null &&
-                XRGeneralSettings.Instance.Manager.activeLoader != null)
-            {
-                observer = XRGeneralSettings.Instance.Manager.activeLoader.GetLoadedSubsystem<XRMeshSubsystem>();
-
-                if (observer != null)
-                {
-                    ConfigureObserverVolume();
-
-                    if (StartupBehavior == AutoStartBehavior.AutoStart)
-                    {
-                        Resume();
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Implements proper cleanup of the SurfaceObserver.
-        /// </summary>
-        protected override void CleanupObserver()
-        {
             if (IsRunning)
             {
+                wasRunning = true;
+                Debug.Log("Cannot clear observations while the observer is running. Suspending this observer.");
                 Suspend();
             }
 
-            if (observer != null)
+            IReadOnlyList<int> observations = new List<int>(Meshes.Keys);
+            foreach (int meshId in observations)
             {
-                observer.Destroy();
-                observer = null;
+                RemoveMeshObject(meshId);
+            }
+
+            if (wasRunning)
+            {
+                Resume();
             }
         }
+
+        #endregion IMixedRealitySpatialAwarenessObserver Implementation
+
+        #region Helpers
 
         /// <summary>
         /// Requests updates from the surface observer.
@@ -515,30 +525,6 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
             }
         }
 
-        /// <inheritdoc />
-        public override void ClearObservations()
-        {
-            bool wasRunning = false;
-
-            if (IsRunning)
-            {
-                wasRunning = true;
-                Debug.Log("Cannot clear observations while the observer is running. Suspending this observer.");
-                Suspend();
-            }
-
-            IReadOnlyList<int> observations = new List<int>(Meshes.Keys);
-            foreach (int meshId in observations)
-            {
-                RemoveMeshObject(meshId);
-            }
-
-            if (wasRunning)
-            {
-                Resume();
-            }
-        }
-
-        #endregion IMixedRealitySpatialAwarenessObserver implementation
+        #endregion Helpers
     }
 }
