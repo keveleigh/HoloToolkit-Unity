@@ -229,6 +229,20 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Editor
         }
 
         /// <summary>
+        /// Gets the package manifest of this project.
+        /// </summary>
+        /// <returns>
+        /// A <see href="https://docs.microsoft.com/en-us/dotnet/api/system.io.fileinfo"/>FileInfo</see> object that describes the package manifest.
+        /// </returns>
+        public static FileInfo GetPackageManifest()
+        {
+            string packageManifestName = @"Packages\manifest.json";
+
+            DirectoryInfo projectRoot = new DirectoryInfo(Application.dataPath).Parent;
+            return new FileInfo(Path.Combine(projectRoot.FullName, packageManifestName));
+        }
+
+        /// <summary>
         /// Gets the assembly definition file that best matches the folder name pattern and the file names.
         /// </summary>
         /// <param name="root"><see href="https://docs.microsoft.com/en-us/dotnet/api/system.io.directoryinfo"/>DirectoryInfo</see> that describes the package cache root folder.</param>

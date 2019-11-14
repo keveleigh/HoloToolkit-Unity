@@ -20,6 +20,7 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Editor
             {MRConfig.VirtualRealitySupported, true },
             {MRConfig.SinglePassInstancing, true },
             {MRConfig.SpatialAwarenessLayer, true },
+            {MRConfig.EnableRemoting, true },
             // UWP Capabilities
             {MRConfig.MicrophoneCapability, true },
             {MRConfig.InternetClientCapability, true },
@@ -144,6 +145,7 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Editor
             }
             RenderToggle(MRConfig.SinglePassInstancing, "Set Single Pass Instanced rendering path");
             RenderToggle(MRConfig.SpatialAwarenessLayer, "Set Default Spatial Awareness Layer");
+            RenderToggle(MRConfig.EnableRemoting, "Enable Holographic Remoting");
 
             EditorGUILayout.Space();
 

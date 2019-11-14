@@ -5,6 +5,7 @@ using Microsoft.MixedReality.Toolkit.Editor;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Serialization;
 using UnityEditor;
 using UnityEngine;
 
@@ -32,6 +33,7 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Editor
             VirtualRealitySupported,
             SinglePassInstancing,
             SpatialAwarenessLayer,
+            EnableRemoting,
 
             // WSA Capabilities
             SpatialPerceptionCapability = 1000,
@@ -60,6 +62,7 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Editor
             { Configurations.VirtualRealitySupported,  () => { return PlayerSettings.virtualRealitySupported; } },
             { Configurations.SinglePassInstancing,  () => { return MixedRealityOptimizeUtils.IsSinglePassInstanced(); } },
             { Configurations.SpatialAwarenessLayer,  () => { return HasSpatialAwarenessLayer(); } },
+            { Configurations.EnableRemoting,  () => { return EnableRemoting(); } },
 
             // UWP Capabilities
             { Configurations.SpatialPerceptionCapability,  () => { return PlayerSettings.WSA.GetCapability(PlayerSettings.WSACapability.SpatialPerception); } },
@@ -256,6 +259,74 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Editor
                 {
                     Debug.LogWarning(string.Format($"Can't modify project layers. It's possible the format of the layers and tags data has changed in this version of Unity. Set layer {SpatialAwarenessDefaultLayer} to \"Spatial Awareness\" manually via Project Settings > Tags and Layers window."));
                 }
+            }
+        }
+
+        /// <summary>
+        /// Tries to import MSBuildForUnity and restore the DotNetAdapter NuGet package.
+        /// </summary>
+        public static bool EnableRemoting()
+        {
+            //FileInfo manifest = EditorProjectUtilities.GetPackageManifest();
+
+            string packageManifestName = @"Packages\manifest.json";
+            DirectoryInfo projectRoot = new DirectoryInfo(Application.dataPath).Parent;
+            string manifestPath = Path.Combine(projectRoot.FullName, packageManifestName);
+
+
+            if (File.Exists(manifestPath))
+            {
+                string text = File.ReadAllText(manifestPath);
+
+                Manifest loadedManifest = JsonUtility.FromJson<Manifest>(text);
+                Debug.Log(loadedManifest.dependencies?.Count);
+            }
+
+            return false;
+        }
+
+        private const string ScopedRegistryEntry = @"
+    {
+      ""name"": ""Super Spatials"",
+      ""url"": ""https://pkgs.dev.azure.com/aipmr/MixedRealityToolkit-Unity-CI/_packaging/Microsoft.Test.UPM/npm/registry/"",
+      ""scopes"": [
+        ""com.upmtests""
+      ]
+    }";
+
+        [Serializable]
+        private class Manifest
+        {
+            public string registry = null;
+            public string[] testables = null;
+            public ScopedRegistry[] scopedRegistries = null;
+            public List<KeyValuePair<string, string>> dependencies = null;
+            //public object @lock = null;
+        }
+
+        [Serializable]
+        private class ScopedRegistry
+        {
+            public string name = null;
+            public string url = null;
+            public string[] scopes = null;
+        }
+
+        [Serializable]
+        private class Dependency
+        {
+            public string key = null;
+            public string value = null;
+
+            public override string ToString()
+            {
+                return $"\"{key}\": \"{value}\"";
+            }
+
+            [OnDeserializing]
+            private void OnDeserializingMethod(StreamingContext context)
+            {
+                Debug.Log("TESTING");
             }
         }
 
