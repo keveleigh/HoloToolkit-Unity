@@ -2,6 +2,8 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using Microsoft.MixedReality.Toolkit.Editor;
+using System;
+using System.Runtime.InteropServices;
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEngine;
@@ -110,6 +112,31 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Editor
                     Debug.LogWarning("<b>Audio Spatializer Plugin</b> not currently set to <i>" + MSFT_AudioSpatializerPlugin + "</i>. Switch to <i>" + MSFT_AudioSpatializerPlugin + "</i> under <i>Project Settings</i> > <i>Audio</i> > <i>Spatializer Plugin</i>");
                 }
             }
+        }
+
+        [MenuItem("MyMenu/Do Something")]
+        static void FixCompilation()
+        {
+            Debug.Log(IsDotNetWinRTAdapterPresent);
+
+            //if (!IsDotNetWinRTAdapterPresent)
+            //{
+            //    AssetDatabase.ImportPackage(MixedRealityToolkitFiles.GetFiles(MixedRealityToolkitModuleType.Tools, "NuGetForUnity")[0], false);
+            //}
+        }
+
+        private static bool IsDotNetWinRTAdapterPresent
+        {
+            get
+            {
+                return NativeMethods.LoadLibrary("Microsoft.Windows.MixedReality.DotNetWinRT") != IntPtr.Zero;
+            }
+        }
+
+        private static class NativeMethods
+        {
+            [DllImport("kernel32.dll")]
+            public static extern IntPtr LoadLibrary(string dllToLoad);
         }
     }
 }
