@@ -295,7 +295,7 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
         /// <summary>
         /// Layer used to tell the (non-floor) boundary objects to not accept raycasts
         /// </summary>
-        private int ignoreRaycastLayerValue = 2;
+        private readonly int ignoreRaycastLayerValue = 2;
 
         private MixedRealityBoundaryVisualizationProfile boundaryVisualizationProfile = null;
 
@@ -578,7 +578,7 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
         }
 
         /// <inheritdoc/>
-        public Edge[] Bounds { get; private set; } = new Edge[0];
+        public Edge[] Bounds { get; private set; } = System.Array.Empty<Edge>();
 
         /// <inheritdoc/>
         public float? FloorHeight { get; private set; } = null;
@@ -761,8 +761,10 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
             lineVertices.Add(lineVertices[0]);
 
             // We use an empty object and attach a line renderer.
-            currentTrackedAreaObject = new GameObject("Tracked Area");
-            currentTrackedAreaObject.layer = ignoreRaycastLayerValue;
+            currentTrackedAreaObject = new GameObject("Tracked Area")
+            {
+                layer = ignoreRaycastLayerValue
+            };
             currentTrackedAreaObject.AddComponent<LineRenderer>();
             currentTrackedAreaObject.transform.Translate(new Vector3(
                 MixedRealityPlayspace.Position.x,
@@ -810,8 +812,10 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
                 return null;
             }
 
-            currentBoundaryWallObject = new GameObject("Tracked Area Walls");
-            currentBoundaryWallObject.layer = BoundaryWallsPhysicsLayer;
+            currentBoundaryWallObject = new GameObject("Tracked Area Walls")
+            {
+                layer = BoundaryWallsPhysicsLayer
+            };
 
             // Create and parent the child objects
             float wallDepth = boundaryObjectThickness;
@@ -900,7 +904,7 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
         private void CalculateBoundaryBounds()
         {
             // Reset the bounds
-            Bounds = new Edge[0];
+            Bounds = System.Array.Empty<Edge>();
             FloorHeight = null;
             rectangularBounds = null;
 
