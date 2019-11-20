@@ -1,0 +1,18 @@
+{
+    "name": "Microsoft.MixedReality.Toolkit.Providers.XRSDK",
+    "references": [
+        "Microsoft.MixedReality.Toolkit",
+        "Unity.XR.WindowsMixedReality",
+        "Unity.XR.ARSubsystems",
+        "Unity.XR.Management"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
