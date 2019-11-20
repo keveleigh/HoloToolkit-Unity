@@ -14,29 +14,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isCustomProfile: 0
   targetExperienceScale: 3
-  enableCameraSystem: 0
-  cameraProfile: {fileID: 0}
+  enableCameraSystem: 1
+  cameraProfile: {fileID: 11400000, guid: c77108355d57ca148a8d773a001b9f11, type: 2}
   cameraSystemType:
     reference: Microsoft.MixedReality.Toolkit.CameraSystem.MixedRealityCameraSystem,
       Microsoft.MixedReality.Toolkit.Services.CameraSystem
-  enableInputSystem: 0
+  enableInputSystem: 1
   inputSystemProfile: {fileID: 11400000, guid: 4080e8a1e5549c34fb424e03835795ac, type: 2}
   inputSystemType:
     reference: Microsoft.MixedReality.Toolkit.Input.MixedRealityInputSystem, Microsoft.MixedReality.Toolkit.Services.InputSystem
   enableBoundarySystem: 1
   boundarySystemType:
-    reference: Microsoft.MixedReality.Toolkit.XRSDK.XRSDKBoundarySystem, Microsoft.MixedReality.Toolkit.Providers.XRSDK
+    reference: Microsoft.MixedReality.Toolkit.Boundary.XRSDKBoundarySystem, Microsoft.MixedReality.Toolkit.Providers.XRSDK
   boundaryVisualizationProfile: {fileID: 11400000, guid: 6d28cce596b44bd3897ca86f8b24e076,
     type: 2}
-  enableTeleportSystem: 0
+  enableTeleportSystem: 1
   teleportSystemType:
     reference: Microsoft.MixedReality.Toolkit.Teleport.MixedRealityTeleportSystem,
       Microsoft.MixedReality.Toolkit.Services.TeleportSystem
-  enableSpatialAwarenessSystem: 0
+  enableSpatialAwarenessSystem: 1
   spatialAwarenessSystemType:
     reference: Microsoft.MixedReality.Toolkit.SpatialAwareness.MixedRealitySpatialAwarenessSystem,
       Microsoft.MixedReality.Toolkit.Services.SpatialAwarenessSystem
-  spatialAwarenessSystemProfile: {fileID: 0}
+  spatialAwarenessSystemProfile: {fileID: 11400000, guid: 2f8932c6c78438e4d9bff23af5c710be,
+    type: 2}
   diagnosticsSystemProfile: {fileID: 11400000, guid: 478436bd1083882479a52d067e98e537,
     type: 2}
   enableDiagnosticsSystem: 0
