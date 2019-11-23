@@ -6,12 +6,12 @@ using Microsoft.MixedReality.Toolkit.Utilities;
 using Microsoft.MixedReality.Toolkit.XRSDK.Input;
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.XR.Management;
 
 #if WINDOWS_UWP
+using System.Runtime.InteropServices;
 using UnityEngine.XR.WindowsMR;
 using Windows.Perception.People;
 using Windows.Perception.Spatial;
@@ -101,7 +101,6 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.Windows
         {
             handMeshObserver = await sourceState.Source.TryCreateHandMeshObserverAsync();
         }
-#endif // WINDOWS_UWP
 
         private XRInputSubsystem inputSubsystem;
         private XRInputSubsystem InputSubsystem
@@ -119,6 +118,7 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.Windows
                 return inputSubsystem;
             }
         }
+#endif // WINDOWS_UWP
 
         #region Update data functions
 
@@ -185,6 +185,15 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.Windows
 #if WINDOWS_UWP
             if (!CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.EnableHandMeshVisualization)
             {
+                // if hand mesh visualization is disabled make sure to destroy our hand mesh observer if it has already been created
+                if (handMeshObserver != null)
+                {
+                    // Notify that hand mesh has been updated (cleared)
+                    HandMeshInfo handMeshInfo = new HandMeshInfo();
+                    CoreServices.InputSystem?.RaiseHandMeshUpdated(InputSource, ControllerHandedness, handMeshInfo);
+                    hasRequestedHandMeshObserver = false;
+                    handMeshObserver = null;
+                }
                 return;
             }
 
@@ -263,18 +272,6 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.Windows
 
                             CoreServices.InputSystem?.RaiseHandMeshUpdated(InputSource, ControllerHandedness, handMeshInfo);
                         }
-                    }
-                }
-                else
-                {
-                    // if hand mesh visualization is disabled make sure to destroy our hand mesh observer if it has already been created
-                    if (handMeshObserver != null)
-                    {
-                        // Notify that hand mesh has been updated (cleared)
-                        HandMeshInfo handMeshInfo = new HandMeshInfo();
-                        CoreServices.InputSystem?.RaiseHandMeshUpdated(InputSource, ControllerHandedness, handMeshInfo);
-                        hasRequestedHandMeshObserver = false;
-                        handMeshObserver = null;
                     }
                 }
             }
