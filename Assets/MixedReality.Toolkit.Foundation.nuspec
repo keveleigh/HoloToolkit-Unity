@@ -8,6 +8,7 @@
     <licenseUrl>https://github.com/Microsoft/MixedRealityToolkit-Unity/blob/mrtk_development/License.txt</licenseUrl>
     <projectUrl>https://aka.ms/MRTK</projectUrl>
     <iconUrl>https://microsoft.github.io/MixedRealityToolkit-Unity/Documentation/Images/MRTK_Logo_NuGet.png</iconUrl>
+    <icon>MRTKLogo_64x64.png</icon>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>The Mixed Reality Toolkit is a collection of scripts and components intended to accelerate development of applications targeting Microsoft HoloLens and Windows Mixed Reality headsets.</description>
     <copyright>© Microsoft Corporation. All rights reserved.</copyright>
@@ -59,5 +60,8 @@
     -->
     <file src="link.xml" target="" />
     <file src="link.xml.meta" target="" />
+
+    <!--Add the NuGet icon-->
+    <file src="..\MRTKLogo_64x64.png" target="" />
   </files>
 </package>

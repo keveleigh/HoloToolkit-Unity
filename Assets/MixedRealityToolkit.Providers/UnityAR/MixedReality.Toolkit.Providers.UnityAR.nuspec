@@ -8,6 +8,7 @@
     <licenseUrl>https://github.com/Microsoft/MixedRealityToolkit-Unity/blob/mrtk_development/License.txt</licenseUrl>
     <projectUrl>https://aka.ms/MRTK</projectUrl>
     <iconUrl>https://microsoft.github.io/MixedRealityToolkit-Unity/Documentation/Images/MRTK_Logo_NuGet.png</iconUrl>
+    <icon>MRTKLogo_64x64.png</icon>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>Mixed Reality Toolkit provider adding support for mobile (phones and tablets) AR devices. NOTE: This package requires Unity's Package Manager AR Foundation as well as AR Core and/or AR Kit packages.</description>
     <copyright>© Microsoft Corporation. All rights reserved.</copyright>
@@ -29,5 +30,8 @@
     <file src="..\..\..\Plugins\**\Microsoft.MixedReality.Toolkit.Providers.UnityAR.*" target="Plugins\" />
     <!-- The following line is commented out because of a path length issue -->
     <!-- <file src="..\..\..\..\Assets\MixedRealityToolkit.Providers\UnityAR\**\*.cs" target="contentFiles\any\any\.PkgSrc\MRTK\MixedRealityToolkit.Providers\UnityAR" /> -->
+
+    <!--Add the NuGet icon-->
+    <file src="..\..\..\MRTKLogo_64x64.png" target="" />
   </files>
 </package>
