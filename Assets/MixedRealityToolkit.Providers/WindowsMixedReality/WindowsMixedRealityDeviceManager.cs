@@ -8,6 +8,7 @@ using Microsoft.MixedReality.Toolkit.Windows.Utilities;
 using UnityEngine;
 using System;
 using Microsoft.MixedReality.Toolkit.Utilities.Editor;
+using UnityEditor;
 
 #if UNITY_WSA
 using System.Collections.Generic;
@@ -326,6 +327,19 @@ namespace Microsoft.MixedReality.Toolkit.WindowsMixedReality.Input
                 "Microsoft.Windows.MixedReality.DotNetWinRT.dll", 
                 UnityEditor.BuildTargetGroup.WSA, 
                 new string[] { "DOTNETWINRT_PRESENT" });
+
+            MixedRealityOptimizeUtils.IsDepthBufferFormat24bitCallback += MixedRealityOptimizeUtils_IsDepthBufferFormat24bitCallback;
+        }
+
+        private bool MixedRealityOptimizeUtils_IsDepthBufferFormat24bitCallback()
+        {
+#if UNITY_2019_1_OR_NEWER
+            return PlayerSettings.VRWindowsMixedReality.depthBufferFormat == PlayerSettings.VRWindowsMixedReality.DepthBufferFormat.DepthBufferFormat16Bit;
+#else
+            var playerSettings = GetSettingsObject("PlayerSettings");
+            var property = playerSettings?.FindProperty("vrSettings.hololens.depthFormat");
+            return property != null && property.intValue == 0;
+#endif
 #endif // UNITY_EDITOR
         }
 

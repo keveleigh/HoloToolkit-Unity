@@ -3,6 +3,7 @@
 
 using System;
 using System.Reflection;
+using System.Security.Policy;
 using UnityEditor;
 using UnityEngine;
 
@@ -61,7 +62,7 @@ namespace Microsoft.MixedReality.Toolkit.Utilities
             }
             else if (IsBuildTargetUWP())
             {
-#if UNITY_2019
+#if UNITY_2019_1_OR_NEWER
                 PlayerSettings.VRWindowsMixedReality.depthBufferSharingEnabled = enableDepthBuffer;
 #else
                 var playerSettings = GetSettingsObject("PlayerSettings");
@@ -70,17 +71,6 @@ namespace Microsoft.MixedReality.Toolkit.Utilities
                     property => property.boolValue = enableDepthBuffer);
 #endif
             }
-        }
-
-        public static bool IsWMRDepthBufferFormat16bit()
-        {
-#if UNITY_2019_1_OR_NEWER
-            return PlayerSettings.VRWindowsMixedReality.depthBufferFormat == PlayerSettings.VRWindowsMixedReality.DepthBufferFormat.DepthBufferFormat16Bit;
-#else
-            var playerSettings = GetSettingsObject("PlayerSettings");
-            var property = playerSettings?.FindProperty("vrSettings.hololens.depthFormat");
-            return property != null && property.intValue == 0;
-#endif
         }
 
         public static void SetDepthBufferFormat(bool set16BitDepthBuffer)
@@ -92,13 +82,13 @@ namespace Microsoft.MixedReality.Toolkit.Utilities
 
             var playerSettings = GetSettingsObject("PlayerSettings");
 #if UNITY_2019
-        PlayerSettings.VRWindowsMixedReality.depthBufferFormat = set16BitDepthBuffer ? 
-            PlayerSettings.VRWindowsMixedReality.DepthBufferFormat.DepthBufferFormat16Bit :
-            PlayerSettings.VRWindowsMixedReality.DepthBufferFormat.DepthBufferFormat24Bit;
+            PlayerSettings.VRWindowsMixedReality.depthBufferFormat = set16BitDepthBuffer ?
+                PlayerSettings.VRWindowsMixedReality.DepthBufferFormat.DepthBufferFormat16Bit :
+                PlayerSettings.VRWindowsMixedReality.DepthBufferFormat.DepthBufferFormat24Bit;
 
-        ChangeProperty(playerSettings, 
-                "vrSettings.lumin.depthFormat", 
-                property => property.intValue = depthFormat);
+            ChangeProperty(playerSettings,
+                    "vrSettings.lumin.depthFormat",
+                    property => property.intValue = depthFormat);
 #else
             ChangeProperty(playerSettings,
                 "vrSettings.hololens.depthFormat",
@@ -176,5 +166,22 @@ namespace Microsoft.MixedReality.Toolkit.Utilities
             var lightmapSettings = getLightmapSettingsMethod.Invoke(null, null) as UnityEngine.Object;
             return new SerializedObject(lightmapSettings);
         }
+
+        public static event Func<bool> IsDepthBufferFormat24bitCallback;
+
+        public static bool IsDepthBufferFormat24bit
+        {
+            get
+            {
+                if (IsDepthBufferFormat24bitCallback != null)
+                {
+                    return IsDepthBufferFormat24bitCallback();
+                }
+                return false;
+            }
+        }
+
+        //public static event SetDepthBufferSharing(bool settowhat);
+
     }
 }
