@@ -8,8 +8,8 @@ using UnityEngine.XR.Management;
 
 public class XRSDKAnchor : MonoBehaviour
 {
-    private XRReferencePointSubsystem referencePointSubsystem;
-    private XRReferencePoint referencePoint;
+    private XRAnchorSubsystem anchorSubsystem;
+    private XRAnchor currentAnchor;
     private Material material;
 
     private void Awake()
@@ -18,11 +18,11 @@ public class XRSDKAnchor : MonoBehaviour
             XRGeneralSettings.Instance.Manager != null &&
             XRGeneralSettings.Instance.Manager.activeLoader != null)
         {
-            referencePointSubsystem = XRGeneralSettings.Instance.Manager.activeLoader.GetLoadedSubsystem<XRReferencePointSubsystem>();
+            anchorSubsystem = XRGeneralSettings.Instance.Manager.activeLoader.GetLoadedSubsystem<XRAnchorSubsystem>();
 
-            if (referencePointSubsystem != null)
+            if (anchorSubsystem != null)
             {
-                if (referencePointSubsystem.TryAddReferencePoint(new Pose(transform.position, transform.rotation), out referencePoint))
+                if (anchorSubsystem.TryAddAnchor(new Pose(transform.position, transform.rotation), out currentAnchor))
                 {
                     Debug.Log("Successfully created anchor.");
                 }
@@ -38,27 +38,27 @@ public class XRSDKAnchor : MonoBehaviour
 
     private void Update()
     {
-        if (referencePointSubsystem == null)
+        if (anchorSubsystem == null)
         {
             return;
         }
 
-        TrackableChanges<XRReferencePoint> currentReferencePoints = referencePointSubsystem.GetChanges(Allocator.Temp);
+        TrackableChanges<XRAnchor> currentAnchors = anchorSubsystem.GetChanges(Allocator.Temp);
 
-        foreach (XRReferencePoint rp in currentReferencePoints.added)
+        foreach (XRAnchor anchor in currentAnchors.added)
         {
-            if (rp.trackableId == referencePoint.trackableId)
+            if (anchor.trackableId == currentAnchor.trackableId)
             {
                 material.color = Color.blue;
-                transform.position = rp.pose.position;
-                transform.rotation = rp.pose.rotation;
+                transform.position = anchor.pose.position;
+                transform.rotation = anchor.pose.rotation;
                 return;
             }
         }
 
-        foreach (XRReferencePoint rp in currentReferencePoints.updated)
+        foreach (XRAnchor rp in currentAnchors.updated)
         {
-            if (rp.trackableId == referencePoint.trackableId)
+            if (rp.trackableId == currentAnchor.trackableId)
             {
                 material.color = Color.green;
                 transform.position = rp.pose.position;
@@ -67,9 +67,9 @@ public class XRSDKAnchor : MonoBehaviour
             }
         }
 
-        foreach (TrackableId trackableId in currentReferencePoints.removed)
+        foreach (TrackableId trackableId in currentAnchors.removed)
         {
-            if (trackableId == referencePoint.trackableId)
+            if (trackableId == currentAnchor.trackableId)
             {
                 material.color = Color.red;
                 return;
@@ -79,9 +79,9 @@ public class XRSDKAnchor : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (referencePointSubsystem != null)
+        if (anchorSubsystem != null)
         {
-            if (referencePointSubsystem.TryRemoveReferencePoint(referencePoint.trackableId))
+            if (anchorSubsystem.TryRemoveAnchor(currentAnchor.trackableId))
             {
                 Debug.Log("Successfully removed anchor.");
             }
