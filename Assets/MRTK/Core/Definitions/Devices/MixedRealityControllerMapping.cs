@@ -13,7 +13,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
     /// Used to define a controller or other input device's physical buttons, and other attributes.
     /// </summary>
     [Serializable]
-    public struct MixedRealityControllerMapping
+    public struct MixedRealityControllerMapping : IMixedRealityControllerMapping
     {
         /// <summary>
         /// Constructor.

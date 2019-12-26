@@ -1,5 +1,5 @@
-﻿// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT License.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using Microsoft.MixedReality.Toolkit.Utilities;
 using System;
@@ -38,14 +38,9 @@ namespace Microsoft.MixedReality.Toolkit.Input
         [MenuItem("Mixed Reality Toolkit/Utilities/Update/Controller Mapping Profiles")]
         private static void UpdateAllControllerMappingProfiles()
         {
-            string[] guids = AssetDatabase.FindAssets("t:MixedRealityControllerMappingProfile");
-            string[] assetPaths = new string[guids.Length];
-            for (int i = 0; i < guids.Length; i++)
+            foreach (string guid in AssetDatabase.FindAssets("t:MixedRealityControllerMappingProfile"))
             {
-                string guid = guids[i];
-                assetPaths[i] = AssetDatabase.GUIDToAssetPath(guid);
-
-                MixedRealityControllerMappingProfile asset = AssetDatabase.LoadAssetAtPath(assetPaths[i], typeof(MixedRealityControllerMappingProfile)) as MixedRealityControllerMappingProfile;
+                MixedRealityControllerMappingProfile asset = AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(guid), typeof(MixedRealityControllerMappingProfile)) as MixedRealityControllerMappingProfile;
 
                 List<MixedRealityControllerMapping> updatedMappings = new List<MixedRealityControllerMapping>();
 
@@ -65,9 +60,10 @@ namespace Microsoft.MixedReality.Toolkit.Input
                 }
 
                 asset.mixedRealityControllerMappings = updatedMappings.ToArray();
+                EditorUtility.SetDirty(asset);
             }
-            AssetDatabase.ForceReserializeAssets(assetPaths);
         }
+
 
         private static Type[] controllerMappingTypes;
 
