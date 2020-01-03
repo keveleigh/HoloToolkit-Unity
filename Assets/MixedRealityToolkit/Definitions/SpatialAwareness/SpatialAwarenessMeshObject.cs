@@ -30,7 +30,7 @@ namespace Microsoft.MixedReality.Toolkit.SpatialAwareness
         /// <summary>
         /// Constructor.
         /// </summary>
-        private SpatialAwarenessMeshObject() : base() { }
+        public SpatialAwarenessMeshObject() : base() { }
 
         /// <summary>
         /// Creates a <see cref="SpatialAwarenessMeshObject"/>.

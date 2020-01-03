@@ -15,7 +15,17 @@ namespace Microsoft.MixedReality.Toolkit.SpatialAwareness
         /// <summary>
         /// Constructor.
         /// </summary>
-        public SpatialAwarenessPlanarObject() : base() { }
+        public SpatialAwarenessPlanarObject(Vector3 size, int layer, string name, int planeId) : base()
+        {
+            Id = planeId;
+            GameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            GameObject.layer = layer;
+            GameObject.transform.localScale = size;
+
+            Filter = newMesh.GameObject.GetComponent<MeshFilter>();
+            Renderer = newMesh.GameObject.GetComponent<MeshRenderer>();
+            Collider = newMesh.GameObject.GetComponent<BoxCollider>();
+        }
 
         /// <summary>
         /// Creates a <see cref="SpatialAwarenessPlanarObject"/>.
@@ -25,18 +35,7 @@ namespace Microsoft.MixedReality.Toolkit.SpatialAwareness
         /// </returns>
         public static SpatialAwarenessPlanarObject CreateSpatialObject(Vector3 size, int layer, string name, int planeId)
         {
-            SpatialAwarenessPlanarObject newMesh = new SpatialAwarenessPlanarObject();
-            
-            newMesh.Id = planeId;
-            newMesh.GameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            newMesh.GameObject.layer = layer;
-            newMesh.GameObject.transform.localScale = size;
-
-            newMesh.Filter = newMesh.GameObject.GetComponent<MeshFilter>();
-            newMesh.Renderer = newMesh.GameObject.GetComponent<MeshRenderer>();
-            newMesh.Collider = newMesh.GameObject.GetComponent<BoxCollider>();
-
-            return newMesh;
+            return new SpatialAwarenessPlanarObject(size, layer, name, planeId);
         }
     }
 }

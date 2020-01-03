@@ -25,6 +25,7 @@ namespace Microsoft.MixedReality.Toolkit.SpatialAwareness
         ///<summary>
         /// Cleans up this spatial object.
         /// </summary>
+        [Obsolete("This method will be removed in a future version of MRTK. Use ")]
         void CleanObject();
     }
 }
