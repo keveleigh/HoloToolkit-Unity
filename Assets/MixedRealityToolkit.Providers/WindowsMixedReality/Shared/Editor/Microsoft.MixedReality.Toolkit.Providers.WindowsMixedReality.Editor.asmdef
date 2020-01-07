@@ -7,6 +7,7 @@
         "Microsoft.MixedReality.Toolkit.Editor.Utilities",
         "Microsoft.MixedReality.Toolkit.Providers.WindowsMixedReality.Shared"
     ],
+    "optionalUnityReferences": [],
     "includePlatforms": [
         "Editor"
     ],
@@ -15,21 +16,5 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [
-        "LEGACY_XR_WMR",
-        "!XR_SDK_WMR"
-    ],
-    "versionDefines": [
-        {
-            "name": "com.unity.xr.windowsmr.metro",
-            "expression": "0.0.0",
-            "define": "LEGACY_XR_WMR"
-        },
-        {
-            "name": "com.unity.xr.windowsmr",
-            "expression": "0.0.0",
-            "define": "XR_SDK_WMR"
-        }
-    ],
-    "noEngineReferences": false
+    "defineConstraints": []
 }
