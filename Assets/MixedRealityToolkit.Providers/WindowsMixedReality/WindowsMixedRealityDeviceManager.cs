@@ -327,9 +327,10 @@ namespace Microsoft.MixedReality.Toolkit.WindowsMixedReality.Input
 #if UNITY_2019_1_OR_NEWER
             return PlayerSettings.VRWindowsMixedReality.depthBufferFormat == PlayerSettings.VRWindowsMixedReality.DepthBufferFormat.DepthBufferFormat16Bit;
 #else
-            var playerSettings = GetSettingsObject("PlayerSettings");
-            var property = playerSettings?.FindProperty("vrSettings.hololens.depthFormat");
-            return property != null && property.intValue == 0;
+            //var playerSettings = GetSettingsObject("PlayerSettings");
+            //var property = playerSettings?.FindProperty("vrSettings.hololens.depthFormat");
+            //return property != null && property.intValue == 0;
+            return false;
 #endif
 #endif // UNITY_EDITOR
         }
