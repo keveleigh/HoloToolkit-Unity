@@ -12,5 +12,23 @@
     "autoReferenced": true,
     "defineConstraints": [
         "UNITY_2019_3_OR_NEWER"
-    ]
+    ],
+    "versionDefines": [
+        {
+            "name": "com.unity.xr.windowsmr",
+            "expression": "",
+            "define": "WMR_ENABLED"
+        },
+        {
+            "name": "com.unity.xr.management",
+            "expression": "",
+            "define": "XR_MANAGEMENT_ENABLED"
+        },
+        {
+            "name": "com.unity.xr.arsubsystems",
+            "expression": "",
+            "define": "ARSUBSYSTEMS_ENABLED"
+        }
+    ],
+    "noEngineReferences": false
 }
