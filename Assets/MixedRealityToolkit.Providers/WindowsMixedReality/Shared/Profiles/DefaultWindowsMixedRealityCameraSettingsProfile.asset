@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: DefaultWindowsMixedRealityCameraSettingsProfile
   m_EditorClassIdentifier: 
   isCustomProfile: 0
-  renderFromPVCameraForMixedRealityCapture: 1
+  renderFromPVCameraForMixedRealityCapture: 0
   reprojectionMethod: 0

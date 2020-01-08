@@ -120,9 +120,7 @@ PlayerSettings:
     16:9: 1
     Others: 1
   bundleVersion: 2.3.0
-  preloadedAssets:
-  - {fileID: 9183204811808029427, guid: a15d65e08e820424bacea8167feed5bc, type: 2}
-  - {fileID: 4758867062403484079, guid: e87c4adbc19a7dc44844c0fa7d94ab00, type: 2}
+  preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 0
@@ -690,7 +688,7 @@ PlayerSettings:
     1: 
     4: 
     7: 
-    14: master;DOTNETWINRT_PRESENT
+    14: DOTNETWINRT_PRESENT
   platformArchitecture:
     iOS: 1
   scriptingBackend:
@@ -711,7 +709,7 @@ PlayerSettings:
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: Microsoft.MixedReality.Toolkit
-  metroPackageVersion: 2.3.1.0
+  metroPackageVersion: 2.3.0.0
   metroCertificatePath: Assets/WSATestCertificate.pfx
   metroCertificatePassword: 
   metroCertificateSubject: Microsoft
@@ -746,7 +744,7 @@ PlayerSettings:
       HumanInterfaceDevice: False
       InputInjectionBrokered: False
       InternetClient: True
-      InternetClientServer: True
+      InternetClientServer: False
       Location: False
       LowLevelDevices: False
       Microphone: True
@@ -757,7 +755,7 @@ PlayerSettings:
       PhoneCallHistoryPublic: False
       PicturesLibrary: False
       PointOfService: False
-      PrivateNetworkClientServer: True
+      PrivateNetworkClientServer: False
       Proximity: False
       RecordedCallsFolder: False
       RemoteSystem: False
