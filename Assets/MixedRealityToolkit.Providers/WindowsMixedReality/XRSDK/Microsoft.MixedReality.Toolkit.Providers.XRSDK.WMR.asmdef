@@ -7,7 +7,11 @@
         "GUID:e40ba710768534012815d3193fa296cb",
         "GUID:a37fab06e2e557e46930b8f918e51980"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor",
+        "WSA",
+        "WindowsStandalone64"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
@@ -19,17 +23,17 @@
     "versionDefines": [
         {
             "name": "com.unity.xr.windowsmr",
-            "expression": "0.0.0",
+            "expression": "",
             "define": "WMR_ENABLED"
         },
         {
             "name": "com.unity.xr.management",
-            "expression": "0.0.0",
+            "expression": "",
             "define": "XR_MANAGEMENT_ENABLED"
         },
         {
             "name": "com.unity.xr.arsubsystems",
-            "expression": "0.0.0",
+            "expression": "",
             "define": "ARSUBSYSTEMS_ENABLED"
         }
     ],
