@@ -119,9 +119,7 @@ PlayerSettings:
     16:9: 1
     Others: 1
   bundleVersion: 2.3.0
-  preloadedAssets:
-  - {fileID: 9183204811808029427, guid: a15d65e08e820424bacea8167feed5bc, type: 2}
-  - {fileID: 4758867062403484079, guid: e87c4adbc19a7dc44844c0fa7d94ab00, type: 2}
+  preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 0
@@ -152,7 +150,7 @@ PlayerSettings:
       dashSupport: 0
       lowOverheadMode: 0
       protectedContext: 0
-      v2Signing: 1
+      v2Signing: 0
     enable360StereoCapture: 0
   isWsaHolographicRemotingEnabled: 0
   enableFrameTimingStats: 0
@@ -167,10 +165,10 @@ PlayerSettings:
     Android: com.Microsoft.MixedReality.Toolkit
     Standalone: Microsoft.MixedReality.Toolkit
     Tizen: com.Microsoft.MixedReality.Toolkit
-    iPhone: com.Microsoft.MixedReality.Toolkit
+    iOS: com.Microsoft.MixedReality.Toolkit
     tvOS: com.Microsoft.MixedReality.Toolkit
   buildNumber:
-    iPhone: 0
+    iOS: 0
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 24
   AndroidTargetSdkVersion: 0
@@ -264,7 +262,7 @@ PlayerSettings:
   AndroidTargetArchitectures: 5
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: '{inproject}: '
+  AndroidKeystoreName: 
   AndroidKeyaliasName: 
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 1
@@ -414,13 +412,16 @@ PlayerSettings:
     m_GraphicsJobMode: 0
   - m_BuildTarget: XboxOnePlayer
     m_GraphicsJobMode: 0
-  m_BuildTargetGraphicsAPIs: []
+  m_BuildTargetGraphicsAPIs:
+  - m_BuildTarget: AndroidPlayer
+    m_APIs: 0b00000008000000
+    m_Automatic: 0
   m_BuildTargetVRSettings:
   - m_BuildTarget: Android
     m_Enabled: 0
     m_Devices: []
-  - m_BuildTarget: Windows Store Apps
-    m_Enabled: 0
+  - m_BuildTarget: Metro
+    m_Enabled: 1
     m_Devices:
     - WindowsMR
   - m_BuildTarget: N3DS
@@ -718,13 +719,13 @@ PlayerSettings:
     1: 
     4: 
     7: 
-    14: master;DOTNETWINRT_PRESENT
+    14: DOTNETWINRT_PRESENT
   platformArchitecture:
     iOS: 1
   scriptingBackend:
+    Metro: 1
     Standalone: 1
     WebPlayer: 0
-    Windows Store Apps: 1
   il2cppCompilerConfiguration: {}
   managedStrippingLevel: {}
   incrementalIl2cppBuild: {}
@@ -734,12 +735,12 @@ PlayerSettings:
   gcIncremental: 0
   gcWBarrierValidation: 0
   apiCompatibilityLevelPerPlatform:
+    Metro: 3
     Standalone: 3
-    Windows Store Apps: 3
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: Microsoft.MixedReality.Toolkit
-  metroPackageVersion: 2.3.1.0
+  metroPackageVersion: 2.3.0.0
   metroCertificatePath: Assets/WSATestCertificate.pfx
   metroCertificatePassword: 
   metroCertificateSubject: Microsoft
@@ -775,7 +776,7 @@ PlayerSettings:
       HumanInterfaceDevice: False
       InputInjectionBrokered: False
       InternetClient: True
-      InternetClientServer: True
+      InternetClientServer: False
       Location: False
       LowLevelDevices: False
       Microphone: True
@@ -786,7 +787,7 @@ PlayerSettings:
       PhoneCallHistoryPublic: False
       PicturesLibrary: False
       PointOfService: False
-      PrivateNetworkClientServer: True
+      PrivateNetworkClientServer: False
       Proximity: False
       RecordedCallsFolder: False
       RemoteSystem: False

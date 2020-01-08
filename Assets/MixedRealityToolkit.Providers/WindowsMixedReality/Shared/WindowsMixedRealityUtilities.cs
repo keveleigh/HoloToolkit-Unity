@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
-#if (UNITY_WSA && DOTNETWINRT_PRESENT) || WINDOWS_UWP
+#if (UNITY_WSA && DOTNETWINRT_PRESENT) || ENABLE_WINMD_SUPPORT
 using System;
 using System.Runtime.InteropServices;
-#if WINDOWS_UWP
+#if ENABLE_WINMD_SUPPORT
 using Windows.Perception.Spatial;
 #if DOTNETWINRT_PRESENT
 using Microsoft.Windows.Graphics.Holographic;
@@ -68,7 +68,7 @@ namespace Microsoft.MixedReality.Toolkit.WindowsMixedReality
                 {
 #if ENABLE_DOTNET
                     spatialCoordinateSystem = GetSpatialCoordinateSystem(UtilitiesProvider.ISpatialCoordinateSystemPtr);
-#elif WINDOWS_UWP
+#elif ENABLE_WINMD_SUPPORT
                     spatialCoordinateSystem = Marshal.GetObjectForIUnknown(UtilitiesProvider.ISpatialCoordinateSystemPtr) as SpatialCoordinateSystem;
 #elif DOTNETWINRT_PRESENT
                     spatialCoordinateSystem = SpatialCoordinateSystem.FromNativePtr(UtilitiesProvider.ISpatialCoordinateSystemPtr);
