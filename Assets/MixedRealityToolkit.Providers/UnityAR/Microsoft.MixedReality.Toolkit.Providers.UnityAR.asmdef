@@ -1,9 +1,12 @@
 {
     "name": "Microsoft.MixedReality.Toolkit.Providers.UnityAR",
+    "allowUnsafeCode": false,
+    "autoReferenced": true,
+    "overrideReferences": false,
+    "defineConstraints": [],
     "references": [
         "Microsoft.MixedReality.Toolkit",
-        "Microsoft.MixedReality.Toolkit.Async",
-        "Unity.XR.ARFoundation"
+        "Microsoft.MixedReality.Toolkit.Async"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [
@@ -11,10 +14,5 @@
         "Editor",
         "iOS"
     ],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": []
+    "excludePlatforms": []
 }
