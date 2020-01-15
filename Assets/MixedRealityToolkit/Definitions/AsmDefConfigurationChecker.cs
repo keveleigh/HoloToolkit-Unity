@@ -22,12 +22,12 @@ namespace Microsoft.MixedReality.Toolkit
         private string asmDefFileName = string.Empty;
 
         [SerializeField]
+        [Tooltip("References to add for Unity 2019.")]
         private string[] references = Array.Empty<string>();
 
-#if UNITY_2019_3_OR_NEWER
         [SerializeField]
+        [Tooltip("Version defines to add for Unity 2019.")]
         private VersionDefine[] versionDefines = Array.Empty<VersionDefine>();
-#endif // UNITY_2019_3_OR_NEWER
 
 #if UNITY_EDITOR
         /// <summary>
