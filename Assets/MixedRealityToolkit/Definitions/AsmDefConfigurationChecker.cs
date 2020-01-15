@@ -8,7 +8,6 @@ using UnityEngine;
 #if UNITY_EDITOR
 using System.Collections.Generic;
 using System.IO;
-using UnityEditor;
 #endif // UNITY_EDITOR
 
 namespace Microsoft.MixedReality.Toolkit
@@ -44,8 +43,7 @@ namespace Microsoft.MixedReality.Toolkit
         /// - Save the Microsoft.MixedReality.Toolkit.Providers.XRSDK.WMR.asmdef file
         /// This will result in Unity reloading the assembly with the appropriate dependencies.
         /// </remarks>
-        [InitializeOnLoadMethod]
-        private void UpdateAsmDef()
+        private void Awake()
         {
             FileInfo[] asmDefFiles = FileUtilities.FindFilesInAssets(asmDefFileName);
 
