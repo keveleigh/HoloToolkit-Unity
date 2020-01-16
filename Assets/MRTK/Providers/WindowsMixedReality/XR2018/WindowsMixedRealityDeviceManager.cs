@@ -322,6 +322,27 @@ namespace Microsoft.MixedReality.Toolkit.WindowsMixedReality.Input
 
         #region IMixedRealityDeviceManager Interface
 
+        /// <inheritdoc/>
+        public override void Initialize()
+        {
+            base.Initialize();
+
+#if UNITY_EDITOR
+            MixedRealityOptimizeUtils.IsDepthBufferFormat24bitCallback += MixedRealityOptimizeUtils_IsDepthBufferFormat24bitCallback;
+        }
+
+        private bool MixedRealityOptimizeUtils_IsDepthBufferFormat24bitCallback()
+        {
+#if UNITY_2019_1_OR_NEWER
+            return PlayerSettings.VRWindowsMixedReality.depthBufferFormat == PlayerSettings.VRWindowsMixedReality.DepthBufferFormat.DepthBufferFormat16Bit;
+#else
+            var playerSettings = GetSettingsObject("PlayerSettings");
+            var property = playerSettings?.FindProperty("vrSettings.hololens.depthFormat");
+            return property != null && property.intValue == 0;
+#endif
+#endif // UNITY_EDITOR
+        }
+
 #if (UNITY_WSA && DOTNETWINRT_PRESENT) || WINDOWS_UWP
         private IMixedRealityGazeProviderHeadOverride mixedRealityGazeProviderHeadOverride = null;
 #endif // (UNITY_WSA && DOTNETWINRT_PRESENT) || WINDOWS_UWP

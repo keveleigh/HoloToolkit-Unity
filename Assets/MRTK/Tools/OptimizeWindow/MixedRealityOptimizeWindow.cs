@@ -447,7 +447,7 @@ namespace Microsoft.MixedReality.Toolkit.Editor
 
         private void RenderDepthBufferFormatSection()
         {
-            bool is16BitDepthFormat = MixedRealityOptimizeUtils.IsWMRDepthBufferFormat16bit();
+            bool is16BitDepthFormat = !MixedRealityOptimizeUtils.IsDepthBufferFormat24bit;
             BuildSection("Depth Buffer Format", DepthBufferFormat_URL, GetTitleIcon(is16BitDepthFormat), () =>
             {
                 EditorGUILayout.LabelField("If sharing the depth buffer with the underlying mixed reality platform, it is generally recommended to utilize a 16-bit depth format buffer to save on performance.", EditorStyles.wordWrappedLabel);

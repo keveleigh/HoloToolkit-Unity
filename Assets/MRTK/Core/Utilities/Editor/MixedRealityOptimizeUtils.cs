@@ -100,26 +100,24 @@ namespace Microsoft.MixedReality.Toolkit.Utilities
 #endif // !UNITY_2020_1_OR_NEWER
         }
 
-        public static bool IsWMRDepthBufferFormat16bit()
+        [Obsolete("Use IsDepthBufferFormat24bit instead.")]
+        public static bool IsWMRDepthBufferFormat16bit() => IsDepthBufferFormat24bit;
+
+        public static event Func<bool> IsDepthBufferFormat24bitCallback;
+
+        public static bool IsDepthBufferFormat24bit
         {
-#if !UNITY_2020_1_OR_NEWER
-            if (XRSettingsUtilities.IsLegacyXRActive)
+            get
             {
-#if UNITY_2019_1_OR_NEWER
-                // Ensure compatibility with the pre-2019.3 XR architecture for customers / platforms
-                // with legacy requirements.
-#pragma warning disable 0618
-                return PlayerSettings.VRWindowsMixedReality.depthBufferFormat == PlayerSettings.VRWindowsMixedReality.DepthBufferFormat.DepthBufferFormat16Bit;
-#pragma warning restore 0618
-#else
-                var playerSettings = GetSettingsObject("PlayerSettings");
-                var property = playerSettings?.FindProperty("vrSettings.hololens.depthFormat");
-                return property != null && property.intValue == 0;
-#endif // UNITY_2019_1_OR_NEWER
+                if (IsDepthBufferFormat24bitCallback != null)
+                {
+                    return IsDepthBufferFormat24bitCallback();
+                }
+                return false;
             }
-#endif // !UNITY_2020_1_OR_NEWER
-            return true;
         }
+
+        //public static event SetDepthBufferSharing(bool settowhat);
 
         public static void SetDepthBufferFormat(bool set16BitDepthBuffer)
         {
