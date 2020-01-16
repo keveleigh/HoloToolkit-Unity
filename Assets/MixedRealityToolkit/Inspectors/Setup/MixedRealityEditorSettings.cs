@@ -91,7 +91,7 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Editor
                     Debug.LogWarning("<b>Depth Buffer Sharing</b> is not enabled to improve hologram stabilization. See <i>Mixed Reality Toolkit</i> > <i>Utilities</i> > <i>Optimize Window</i> tool for more information to improve performance");
                 }
 
-                if (!MixedRealityOptimizeUtils.IsWMRDepthBufferFormat16bit())
+                if (MixedRealityOptimizeUtils.IsDepthBufferFormat24bit)
                 {
                     // If depth format is 24-bit, advise to consider 16-bit for performance.
                     Debug.LogWarning("<b>Depth Buffer Sharing</b> has 24-bit depth format selected. Consider using 16-bit for performance. See <i>Mixed Reality Toolkit</i> > <i>Utilities</i> > <i>Optimize Window</i> tool for more information to improve performance");

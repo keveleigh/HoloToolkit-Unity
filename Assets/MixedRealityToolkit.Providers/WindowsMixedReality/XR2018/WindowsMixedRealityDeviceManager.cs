@@ -6,6 +6,7 @@ using Microsoft.MixedReality.Toolkit.Input;
 using Microsoft.MixedReality.Toolkit.Windows.Input;
 using Microsoft.MixedReality.Toolkit.Windows.Utilities;
 using System;
+using UnityEditor;
 using UnityEngine;
 
 #if UNITY_WSA
@@ -311,6 +312,27 @@ namespace Microsoft.MixedReality.Toolkit.WindowsMixedReality.Input
         #endregion Gesture Settings
 
         #region IMixedRealityDeviceManager Interface
+
+        /// <inheritdoc/>
+        public override void Initialize()
+        {
+            base.Initialize();
+
+#if UNITY_EDITOR
+            MixedRealityOptimizeUtils.IsDepthBufferFormat24bitCallback += MixedRealityOptimizeUtils_IsDepthBufferFormat24bitCallback;
+        }
+
+        private bool MixedRealityOptimizeUtils_IsDepthBufferFormat24bitCallback()
+        {
+#if UNITY_2019_1_OR_NEWER
+            return PlayerSettings.VRWindowsMixedReality.depthBufferFormat == PlayerSettings.VRWindowsMixedReality.DepthBufferFormat.DepthBufferFormat16Bit;
+#else
+            var playerSettings = GetSettingsObject("PlayerSettings");
+            var property = playerSettings?.FindProperty("vrSettings.hololens.depthFormat");
+            return property != null && property.intValue == 0;
+#endif
+#endif // UNITY_EDITOR
+        }
 
         /// <inheritdoc/>
         public override void Enable()
