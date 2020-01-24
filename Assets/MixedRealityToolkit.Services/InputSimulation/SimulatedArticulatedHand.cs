@@ -25,9 +25,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// Constructor.
         /// </summary>
         public SimulatedArticulatedHand(TrackingState trackingState, Handedness controllerHandedness, IMixedRealityInputSource inputSource = null, MixedRealityInteractionMapping[] interactions = null)
-                : base(trackingState, controllerHandedness, inputSource, interactions)
-        {
-        }
+                : base(trackingState, controllerHandedness, inputSource, interactions) { }
 
         /// <summary>
         /// The Windows Mixed Reality Controller default interactions.

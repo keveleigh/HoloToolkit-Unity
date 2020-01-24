@@ -19,9 +19,7 @@ namespace Microsoft.MixedReality.Toolkit.Input.UnityInput
         /// Constructor.
         /// </summary>
         public XboxController(TrackingState trackingState, Handedness controllerHandedness, IMixedRealityInputSource inputSource = null, MixedRealityInteractionMapping[] interactions = null)
-            : base(trackingState, controllerHandedness, inputSource, interactions)
-        {
-        }
+            : base(trackingState, controllerHandedness, inputSource, interactions) { }
 
         /// <summary>
         /// Default interactions for Xbox Controller using Unity Input System.

@@ -45,9 +45,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
             Handedness controllerHandedness, 
             IMixedRealityInputSource inputSource = null, 
             MixedRealityInteractionMapping[] interactions = null)
-                : base(trackingState, controllerHandedness, inputSource, interactions)
-        {
-        }
+                : base(trackingState, controllerHandedness, inputSource, interactions) { }
 
         /// Lazy-init settings based on profile.
         /// This cannot happen in the constructor because the profile may not exist yet.

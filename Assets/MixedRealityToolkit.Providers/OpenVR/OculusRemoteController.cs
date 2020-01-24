@@ -17,9 +17,7 @@ namespace Microsoft.MixedReality.Toolkit.OpenVR.Input
         /// Constructor.
         /// </summary>
         public OculusRemoteController(TrackingState trackingState, Handedness controllerHandedness, IMixedRealityInputSource inputSource = null, MixedRealityInteractionMapping[] interactions = null)
-                : base(trackingState, controllerHandedness, inputSource, interactions)
-        {
-        }
+                : base(trackingState, controllerHandedness, inputSource, interactions) { }
 
         /// <inheritdoc />
         public override MixedRealityInteractionMapping[] DefaultInteractions => new[]
@@ -30,9 +28,6 @@ namespace Microsoft.MixedReality.Toolkit.OpenVR.Input
         };
 
         /// <inheritdoc />
-        public override void SetupDefaultInteractions(Handedness controllerHandedness)
-        {
-            AssignControllerMappings(DefaultInteractions);
-        }
+        public override void SetupDefaultInteractions(Handedness controllerHandedness) => AssignControllerMappings(DefaultInteractions);
     }
 }

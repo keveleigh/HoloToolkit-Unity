@@ -33,9 +33,7 @@ namespace Microsoft.MixedReality.Toolkit.WindowsMixedReality.Input
         /// Constructor.
         /// </summary>
         public WindowsMixedRealityController(TrackingState trackingState, Handedness controllerHandedness, IMixedRealityInputSource inputSource = null, MixedRealityInteractionMapping[] interactions = null)
-                : base(trackingState, controllerHandedness, inputSource, interactions)
-        {
-        }
+                : base(trackingState, controllerHandedness, inputSource, interactions) { }
 
         /// <summary>
         /// The Windows Mixed Reality Controller default interactions.

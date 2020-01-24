@@ -20,24 +20,12 @@ namespace Microsoft.MixedReality.Toolkit.WindowsMixedReality.Input
         /// Constructor.
         /// </summary>
         protected BaseWindowsMixedRealitySource(TrackingState trackingState, Handedness sourceHandedness, IMixedRealityInputSource inputSource = null, MixedRealityInteractionMapping[] interactions = null)
-                : base(trackingState, sourceHandedness, inputSource, interactions)
-        {
-        }
+                : base(trackingState, sourceHandedness, inputSource, interactions) { }
 
         /// <inheritdoc />
-        public override MixedRealityInteractionMapping[] DefaultLeftHandedInteractions => DefaultInteractions;
-
-        /// <inheritdoc />
-        public override MixedRealityInteractionMapping[] DefaultRightHandedInteractions => DefaultInteractions;
-
-        /// <inheritdoc />
-        public override void SetupDefaultInteractions(Handedness controllerHandedness)
-        {
-            AssignControllerMappings(DefaultInteractions);
-        }
+        public override void SetupDefaultInteractions(Handedness controllerHandedness) => AssignControllerMappings(DefaultInteractions);
 
 #if UNITY_WSA
-
         /// <summary>
         /// The last updated source state reading for this Windows Mixed Reality Source.
         /// </summary>

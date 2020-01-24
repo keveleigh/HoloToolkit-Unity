@@ -40,12 +40,6 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.Input
         protected Quaternion CurrentControllerRotation = Quaternion.identity;
 
         /// <inheritdoc />
-        public override MixedRealityInteractionMapping[] DefaultLeftHandedInteractions => DefaultInteractions;
-
-        /// <inheritdoc />
-        public override MixedRealityInteractionMapping[] DefaultRightHandedInteractions => DefaultInteractions;
-
-        /// <inheritdoc />
         public override void SetupDefaultInteractions(Handedness controllerHandedness)
         {
             AssignControllerMappings(DefaultInteractions);
