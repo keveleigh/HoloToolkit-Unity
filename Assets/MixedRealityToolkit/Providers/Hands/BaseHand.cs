@@ -105,29 +105,6 @@ namespace Microsoft.MixedReality.Toolkit.Input
             return Vector3.zero;
         }
 
-        private float DistanceSqrPointToLine(Vector3 lineStart, Vector3 lineEnd, Vector3 point)
-        {
-            if (lineStart == lineEnd)
-            {
-                return (point - lineStart).magnitude;
-            }
-
-            float lineSegmentMagnitude = (lineEnd - lineStart).magnitude;
-            Vector3 ray = (lineEnd - lineStart);
-            ray *= (1.0f / lineSegmentMagnitude);
-            float dot = Vector3.Dot(point - lineStart, ray);
-            if (dot <= 0)
-            {
-                return (point - lineStart).sqrMagnitude;
-            }
-            if (dot >= lineSegmentMagnitude)
-            {
-                return (point - lineEnd).sqrMagnitude;
-            }
-            return ((lineStart + (ray * dot)) - point).sqrMagnitude;
-        }
-
         #endregion Private InputSource Helpers
-
     }
 }
