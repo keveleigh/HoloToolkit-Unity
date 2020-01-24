@@ -43,6 +43,8 @@ namespace Microsoft.MixedReality.Toolkit.Teleport
         /// </summary>
         private GameObject eventSystemReference = null;
 
+        public bool IsTeleportEnabled { get; private set; }
+
         #region IMixedRealityService Implementation
 
         /// <inheritdoc/>
@@ -82,6 +84,22 @@ namespace Microsoft.MixedReality.Toolkit.Teleport
 #endif // UNITY_EDITOR
 
             teleportEventData = new TeleportEventData(EventSystem.current);
+        }
+
+        /// <inheritdoc />
+        public override void Enable()
+        {
+            base.Enable();
+            CoreServices.InputSystem?.RegisterHandler<IMixedRealityInputHandler<float>>(this);
+            IsTeleportEnabled = true;
+        }
+
+        /// <inheritdoc />
+        public override void Disable()
+        {
+            base.Disable();
+            CoreServices.InputSystem?.UnregisterHandler<IMixedRealityInputHandler<float>>(this);
+            IsTeleportEnabled = false;
         }
 
         /// <inheritdoc />

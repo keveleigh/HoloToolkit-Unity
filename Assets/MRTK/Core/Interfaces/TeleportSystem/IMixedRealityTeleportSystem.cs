@@ -6,11 +6,13 @@ using Microsoft.MixedReality.Toolkit.Input;
 namespace Microsoft.MixedReality.Toolkit.Teleport
 {
     /// <summary>
-    /// Manager interface for a Teleport system in the Mixed Reality Toolkit
-    /// All replacement systems for providing Teleportation functionality should derive from this interface
+    /// Manager interface for a teleport system.
+    /// All replacement systems for providing teleportation functionality should derive from this interface.
     /// </summary>
     public interface IMixedRealityTeleportSystem : IMixedRealityEventSystem
     {
+        bool IsTeleportEnabled { get; }
+
         /// <summary>
         /// The duration of the teleport in seconds.
         /// </summary>

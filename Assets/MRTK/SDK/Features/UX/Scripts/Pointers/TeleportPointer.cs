@@ -198,7 +198,7 @@ namespace Microsoft.MixedReality.Toolkit.Teleport
         #region IMixedRealityPointer Implementation
 
         /// <inheritdoc />
-        public override bool IsInteractionEnabled => !isTeleportRequestActive && TeleportRequestRaised && MixedRealityToolkit.IsTeleportSystemEnabled;
+        public override bool IsInteractionEnabled => !isTeleportRequestActive && TeleportRequestRaised && MixedRealityToolkit.IsTeleportSystemEnabled && CoreServices.TeleportSystem.IsTeleportEnabled;
 
         [SerializeField]
         [Range(0f, 360f)]
