@@ -35,14 +35,16 @@ namespace Microsoft.MixedReality.Toolkit.Input
         public virtual MixedRealityInteractionMapping[] DefaultInteractions { get; } = null;
 
         /// <summary>
-        /// The Default Left Handed interactions for this controller.
+        /// The default left handed interactions for this controller.
         /// </summary>
-        public virtual MixedRealityInteractionMapping[] DefaultLeftHandedInteractions { get; } = null;
+        /// <remarks>By default, this points to DefaultInteractions.</remarks>
+        public virtual MixedRealityInteractionMapping[] DefaultLeftHandedInteractions { get; } => DefaultInteractions;
 
         /// <summary>
-        /// The Default Right Handed interactions for this controller.
+        /// The default right handed interactions for this controller.
         /// </summary>
-        public virtual MixedRealityInteractionMapping[] DefaultRightHandedInteractions { get; } = null;
+        /// <remarks>By default, this points to DefaultInteractions.</remarks>
+        public virtual MixedRealityInteractionMapping[] DefaultRightHandedInteractions { get; } => DefaultInteractions;
 
         #region IMixedRealityController Implementation
 
@@ -85,10 +87,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// Sets up the configuration based on the Mixed Reality Controller Mapping Profile.
         /// </summary>
         [Obsolete("The second parameter is no longer used. This method now reads from the controller's input source.")]
-        public bool SetupConfiguration(Type controllerType, InputSourceType inputSourceType = InputSourceType.Controller)
-        {
-            return SetupConfiguration(controllerType);
-        }
+        public bool SetupConfiguration(Type controllerType, InputSourceType inputSourceType = InputSourceType.Controller) => SetupConfiguration(controllerType);
 
         /// <summary>
         /// Sets up the configuration based on the Mixed Reality Controller Mapping Profile.
