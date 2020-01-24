@@ -11,7 +11,7 @@ namespace Microsoft.MixedReality.Toolkit.Teleport
     /// <summary>
     /// The Mixed Reality Toolkit's implementation of the <see cref="Microsoft.MixedReality.Toolkit.Teleport.IMixedRealityTeleportSystem"/>.
     /// </summary>
-    public class MixedRealityTeleportSystem : BaseCoreSystem, IMixedRealityTeleportSystem
+    public class MixedRealityTeleportSystem : BaseCoreSystem, IMixedRealityTeleportSystem, IMixedRealityInputHandler<float>
     {
         /// <summary>
         /// Constructor.
@@ -33,6 +33,8 @@ namespace Microsoft.MixedReality.Toolkit.Teleport
 
         private bool isTeleporting = false;
         private bool isProcessingTeleportRequest = false;
+        private uint currentTeleportRequestSourceId = 0;
+        private Vector2 currentInputPosition = Vector2.zero;
 
         private Vector3 targetPosition = Vector3.zero;
         private Vector3 targetRotation = Vector3.zero;
@@ -41,6 +43,126 @@ namespace Microsoft.MixedReality.Toolkit.Teleport
         /// Used to clean up event system when shutting down, if this system created one.
         /// </summary>
         private GameObject eventSystemReference = null;
+
+        public bool IsTeleportEnabled { get; private set; }
+
+        #region IMixedRealityInputHandler<float> Implementation
+
+        /// <inheritdoc />
+        public virtual void OnInputChanged(InputEventData<float> eventData)
+        {
+            // Don't process input if we've got an active teleport request in progress and this is a different source.
+            if (isProcessingTeleportRequest && eventData.SourceId != currentTeleportRequestSourceId)
+            {
+                return;
+            }
+
+            currentInputPosition = eventData.InputData;
+
+            if (currentInputPosition.sqrMagnitude > InputThresholdSquared)
+            {
+                // Get the angle of the pointer input
+                float angle = Mathf.Atan2(currentInputPosition.x, currentInputPosition.y) * Mathf.Rad2Deg;
+
+                // Offset the angle so it's 'forward' facing
+                angle += angleOffset;
+                PointerOrientation = angle;
+
+                if (!TeleportRequestRaised)
+                {
+                    float absoluteAngle = Mathf.Abs(angle);
+
+                    if (absoluteAngle < teleportActivationAngle)
+                    {
+                        TeleportRequestRaised = true;
+
+                        CoreServices.TeleportSystem?.RaiseTeleportRequest(this, TeleportHotSpot);
+                    }
+                    else if (canMove)
+                    {
+                        // wrap the angle value.
+                        if (absoluteAngle > 180f)
+                        {
+                            absoluteAngle = Mathf.Abs(absoluteAngle - 360f);
+                        }
+
+                        // Calculate the offset rotation angle from the 90 degree mark.
+                        // Half the rotation activation angle amount to make sure the activation angle stays centered at 90.
+                        float offsetRotationAngle = 90f - rotateActivationAngle;
+
+                        // subtract it from our current angle reading
+                        offsetRotationAngle = absoluteAngle - offsetRotationAngle;
+
+                        // if it's less than zero, then we don't have activation
+                        if (offsetRotationAngle > 0)
+                        {
+                            // check to make sure we're still under our activation threshold.
+                            if (offsetRotationAngle < 2 * rotateActivationAngle)
+                            {
+                                canMove = false;
+                                // Rotate the camera by the rotation amount.  If our angle is positive then rotate in the positive direction, otherwise in the opposite direction.
+                                MixedRealityPlayspace.RotateAround(CameraCache.Main.transform.position, Vector3.up, angle >= 0.0f ? rotationAmount : -rotationAmount);
+                            }
+                            else // We may be trying to strafe backwards.
+                            {
+                                // Calculate the offset rotation angle from the 180 degree mark.
+                                // Half the strafe activation angle to make sure the activation angle stays centered at 180f
+                                float offsetStrafeAngle = 180f - backStrafeActivationAngle;
+                                // subtract it from our current angle reading
+                                offsetStrafeAngle = absoluteAngle - offsetStrafeAngle;
+
+                                // Check to make sure we're still under our activation threshold.
+                                if (offsetStrafeAngle > 0 && offsetStrafeAngle <= backStrafeActivationAngle)
+                                {
+                                    canMove = false;
+                                    var height = MixedRealityPlayspace.Position.y;
+                                    var newPosition = -CameraCache.Main.transform.forward * strafeAmount + MixedRealityPlayspace.Position;
+                                    newPosition.y = height;
+                                    MixedRealityPlayspace.Position = newPosition;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (!canTeleport && !TeleportRequestRaised)
+                {
+                    // Reset the move flag when the user stops moving the joystick
+                    // but hasn't yet started teleport request.
+                    canMove = true;
+                }
+
+                if (canTeleport)
+                {
+                    canTeleport = false;
+                    TeleportRequestRaised = false;
+
+                    if (TeleportSurfaceResult == TeleportSurfaceResult.Valid ||
+                        TeleportSurfaceResult == TeleportSurfaceResult.HotSpot)
+                    {
+                        CoreServices.TeleportSystem?.RaiseTeleportStarted(this, TeleportHotSpot);
+                    }
+                }
+
+                if (TeleportRequestRaised)
+                {
+                    canTeleport = false;
+                    TeleportRequestRaised = false;
+                    CoreServices.TeleportSystem?.RaiseTeleportCanceled(this, TeleportHotSpot);
+                }
+            }
+
+            if (TeleportRequestRaised &&
+                TeleportSurfaceResult == TeleportSurfaceResult.Valid ||
+                TeleportSurfaceResult == TeleportSurfaceResult.HotSpot)
+            {
+                canTeleport = true;
+            }
+        }
+
+        #endregion IMixedRealityInputHandler<float> Implementation
 
         #region IMixedRealityService Implementation
 
@@ -81,6 +203,22 @@ namespace Microsoft.MixedReality.Toolkit.Teleport
 #endif // UNITY_EDITOR
 
             teleportEventData = new TeleportEventData(EventSystem.current);
+        }
+
+        /// <inheritdoc />
+        public override void Enable()
+        {
+            base.Enable();
+            CoreServices.InputSystem?.RegisterHandler<IMixedRealityInputHandler<float>>(this);
+            isEnabled = true;
+        }
+
+        /// <inheritdoc />
+        public override void Disable()
+        {
+            base.Disable();
+            CoreServices.InputSystem?.UnregisterHandler<IMixedRealityInputHandler<float>>(this);
+            isEnabled = false;
         }
 
         /// <inheritdoc />
