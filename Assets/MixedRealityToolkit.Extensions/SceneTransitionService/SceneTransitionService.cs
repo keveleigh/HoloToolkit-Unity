@@ -85,7 +85,7 @@ namespace Microsoft.MixedReality.Toolkit.Extensions.SceneTransitions
         private GameObject progressIndicatorObject;
         private IProgressIndicator defaultProgressIndicator;
         private ICameraFader cameraFader;
-        private List<Camera> customFadeTargetCameras = new List<Camera>();
+        private readonly List<Camera> customFadeTargetCameras = new List<Camera>();
 
         #region public methods
 

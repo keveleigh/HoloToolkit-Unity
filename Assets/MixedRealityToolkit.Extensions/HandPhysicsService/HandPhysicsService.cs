@@ -102,7 +102,7 @@ namespace Microsoft.MixedReality.Toolkit.Extensions.HandPhysics
             TrackedHandJoint.PinkyTip
         };
 
-        private List<JointKinematicBody> jointKinematicBodies = new List<JointKinematicBody>();
+        private readonly List<JointKinematicBody> jointKinematicBodies = new List<JointKinematicBody>();
 
         #region BaseExtensionService Implementation
 

@@ -29,7 +29,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
             }
         }
 
-        private List<InteractableThemeBase> themes = new List<InteractableThemeBase>();
+        private readonly List<InteractableThemeBase> themes = new List<InteractableThemeBase>();
 
         public void Awake()
         {

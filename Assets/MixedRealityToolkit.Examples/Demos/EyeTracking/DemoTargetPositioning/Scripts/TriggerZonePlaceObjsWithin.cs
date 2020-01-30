@@ -25,7 +25,7 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
         [SerializeField]
         private AudioClip AudioFx_Success = null;
 
-        private List<string> currCollidingObjs; // List of game objects that are currently colliding with this target.
+        private readonly List<string> currCollidingObjs = new List<string>(); // List of game objects that are currently colliding with this target.
         private Color? originalColor = null; // Store the original color of the target in case we want to use it later.
         private bool prevAllObjsInZone = false; // Were all requested objects correctly placed in the last run already?
         private bool justDroppedTarget = false;
@@ -33,9 +33,6 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
 
         private void Start()
         {
-            // Init our list of currently colliding game objects
-            currCollidingObjs = new List<string>();
-
             // Set default color
             EyeTrackingDemoUtils.GameObject_ChangeColor(gameObject, statusColor_idle, ref originalColor, false);
         }

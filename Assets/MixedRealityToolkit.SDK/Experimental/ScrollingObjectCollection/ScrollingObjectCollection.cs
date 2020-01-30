@@ -498,10 +498,10 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         private Vector3 workingScrollerPos;
 
         // A list of new child nodes that have new child renderers that need to be added to the clippingBox
-        private List<ObjectCollectionNode> nodesToClip = new List<ObjectCollectionNode>();
+        private readonly List<ObjectCollectionNode> nodesToClip = new List<ObjectCollectionNode>();
 
         // A list of new child nodes that have new child renderers that need to be removed to the clippingBox
-        private List<ObjectCollectionNode> nodesToUnclip = new List<ObjectCollectionNode>();
+        private readonly List<ObjectCollectionNode> nodesToUnclip = new List<ObjectCollectionNode>();
 
         private IMixedRealityPointer currentPointer;
 

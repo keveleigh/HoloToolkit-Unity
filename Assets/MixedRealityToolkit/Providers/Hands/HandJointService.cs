@@ -17,8 +17,8 @@ namespace Microsoft.MixedReality.Toolkit.Input
         private IMixedRealityHand leftHand;
         private IMixedRealityHand rightHand;
 
-        private Dictionary<TrackedHandJoint, Transform> leftHandFauxJoints = new Dictionary<TrackedHandJoint, Transform>();
-        private Dictionary<TrackedHandJoint, Transform> rightHandFauxJoints = new Dictionary<TrackedHandJoint, Transform>();
+        private readonly Dictionary<TrackedHandJoint, Transform> leftHandFauxJoints = new Dictionary<TrackedHandJoint, Transform>();
+        private readonly Dictionary<TrackedHandJoint, Transform> rightHandFauxJoints = new Dictionary<TrackedHandJoint, Transform>();
 
         #region BaseInputDeviceManager Implementation
 

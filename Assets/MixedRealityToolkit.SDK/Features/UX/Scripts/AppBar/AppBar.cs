@@ -308,12 +308,13 @@ namespace Microsoft.MixedReality.Toolkit.UI
 
         #endregion
 
-        private List<AppBarButton> buttons = new List<AppBarButton>();
+        private readonly List<AppBarButton> buttons = new List<AppBarButton>();
+        private readonly List<Vector3> boundsPoints = new List<Vector3>();
+        private readonly BoundingBoxHelper helper = new BoundingBoxHelper();
+        private readonly float coolDownTime = 0.5f;
+
         private Vector3 targetBarSize = Vector3.one;
         private float lastTimeTapped = 0f;
-        private float coolDownTime = 0.5f;
-        private BoundingBoxHelper helper = new BoundingBoxHelper();
-        private List<Vector3> boundsPoints = new List<Vector3>();
 
         #region MonoBehaviour Functions
 

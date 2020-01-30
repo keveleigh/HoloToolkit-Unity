@@ -14,7 +14,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
     /// </summary>
     internal class ConstraintManager
     {
-        private List<TransformConstraint> constraints;
+        private readonly List<TransformConstraint> constraints;
 
         public ConstraintManager(GameObject gameObject)
         {

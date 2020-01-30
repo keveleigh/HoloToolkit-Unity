@@ -27,7 +27,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI.BoundsControl
             }
         }
 
-        private List<Link> links = new List<Link>();
+        private readonly List<Link> links = new List<Link>();
 
         private LinksConfiguration config;
 

@@ -299,7 +299,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
             }
         }
 
-        private List<InteractableThemeBase> activeThemes = new List<InteractableThemeBase>();
+        private readonly List<InteractableThemeBase> activeThemes = new List<InteractableThemeBase>();
 
         /// <summary>
         /// The list of running theme instances to receive state changes
@@ -313,7 +313,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
         /// This list gets initialized on startup, or whenever the profiles for the interactable changes.
         /// The list of active themes inspects this list to determine which themes to use based on current dimension.
         /// </summary>
-        private List<System.Tuple<int, InteractableThemeBase>> allThemeDimensionPairs = new List<System.Tuple<int, InteractableThemeBase>>();
+        private readonly List<System.Tuple<int, InteractableThemeBase>> allThemeDimensionPairs = new List<System.Tuple<int, InteractableThemeBase>>();
 
         /// <summary>
         /// How many times this interactable was clicked

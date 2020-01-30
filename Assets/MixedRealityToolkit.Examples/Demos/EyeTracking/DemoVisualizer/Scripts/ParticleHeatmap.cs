@@ -25,14 +25,13 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
         private int particleDecalDataIndex;
         private ParticleSystem particleSys;
         private ParticleSystem.EmissionModule emissionModule;
-        private List<ParticleHeatmapParticleData> particleData;
+        private readonly List<ParticleHeatmapParticleData> particleData = new List<ParticleHeatmapParticleData>();
 
         private void Start()
         {
             // Initialize particle data handlers
             particleSys = GetComponent<ParticleSystem>();
             emissionModule = particleSys.emission;
-            particleData = new List<ParticleHeatmapParticleData>();
         }
 
         public void SetParticle(Vector3 pos)

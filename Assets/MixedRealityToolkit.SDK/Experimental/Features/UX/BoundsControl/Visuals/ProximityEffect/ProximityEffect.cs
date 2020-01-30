@@ -53,11 +53,9 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI.BoundsControl
             public List<ObjectProximityInfo> proximityInfos;
         }
 
-        private List<RegisteredObjects> registeredObjects = new List<RegisteredObjects>();
-
-
-        private HashSet<IMixedRealityPointer> proximityPointers = new HashSet<IMixedRealityPointer>();
-        private List<Vector3> proximityPoints = new List<Vector3>();
+        private readonly List<RegisteredObjects> registeredObjects = new List<RegisteredObjects>();
+        private readonly HashSet<IMixedRealityPointer> proximityPointers = new HashSet<IMixedRealityPointer>();
+        private readonly List<Vector3> proximityPoints = new List<Vector3>();
 
         #region public methods
         /// <summary>
