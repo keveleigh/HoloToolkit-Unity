@@ -462,10 +462,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         /// <summary>
         /// The empty GameObject containing the ScrollingObjectCollection's <see cref="Microsoft.MixedReality.Toolkit.Utilities.ClippingBox"/>.
         /// </summary>
-        public GameObject ClippingObject
-        {
-            get { return clippingObject; }
-        }
+        public GameObject ClippingObject => clippingObject;
 
         [SerializeField]
         [HideInInspector]
@@ -475,10 +472,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         /// The ScrollingObjectCollection's <see cref="Microsoft.MixedReality.Toolkit.Utilities.ClippingBox"/> 
         /// that is used for clipping items in and out of the list.
         /// </summary>
-        public ClippingBox ClipBox
-        {
-            get { return clipBox; }
-        }
+        public ClippingBox ClipBox => clipBox;
 
         #region scroll state variables
 

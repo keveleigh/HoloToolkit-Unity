@@ -21,13 +21,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
         [HideInInspector]
         protected List<VisualProfile> Profiles = new List<VisualProfile>();
 
-        protected InteractableStates.InteractableStateEnum State
-        {
-            get
-            {
-                return HasFocus ? InteractableStates.InteractableStateEnum.Focus : InteractableStates.InteractableStateEnum.Default;
-            }
-        }
+        protected InteractableStates.InteractableStateEnum State => HasFocus ? InteractableStates.InteractableStateEnum.Focus : InteractableStates.InteractableStateEnum.Default;
 
         private readonly List<InteractableThemeBase> themes = new List<InteractableThemeBase>();
 
