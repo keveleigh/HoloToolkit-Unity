@@ -38,13 +38,13 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// The default left handed interactions for this controller.
         /// </summary>
         /// <remarks>By default, this points to DefaultInteractions.</remarks>
-        public virtual MixedRealityInteractionMapping[] DefaultLeftHandedInteractions { get; } => DefaultInteractions;
+        public virtual MixedRealityInteractionMapping[] DefaultLeftHandedInteractions => DefaultInteractions;
 
         /// <summary>
         /// The default right handed interactions for this controller.
         /// </summary>
         /// <remarks>By default, this points to DefaultInteractions.</remarks>
-        public virtual MixedRealityInteractionMapping[] DefaultRightHandedInteractions { get; } => DefaultInteractions;
+        public virtual MixedRealityInteractionMapping[] DefaultRightHandedInteractions => DefaultInteractions;
 
         #region IMixedRealityController Implementation
 
