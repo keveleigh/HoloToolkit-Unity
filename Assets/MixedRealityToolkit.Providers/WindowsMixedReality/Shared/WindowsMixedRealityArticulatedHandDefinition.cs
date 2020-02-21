@@ -4,7 +4,6 @@
 using Microsoft.MixedReality.Toolkit.Input;
 using Microsoft.MixedReality.Toolkit.Utilities;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 #if WINDOWS_UWP
