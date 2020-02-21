@@ -16,8 +16,8 @@ namespace Microsoft.MixedReality.Toolkit.WindowsMixedReality
 {
     public class WindowsMixedRealityArticulatedHandDefinition : BaseArticulatedHandDefinition
     {
-        public WindowsMixedRealityArticulatedHandDefinition(IMixedRealityInputSource source, Handedness handedness) : base (source, handedness) { }
-        
+        public WindowsMixedRealityArticulatedHandDefinition(IMixedRealityInputSource source, Handedness handedness) : base(source, handedness) { }
+
 #if WINDOWS_UWP
         private Vector2[] handMeshUVs = null;
         private HandMeshObserver handMeshObserver = null;
