@@ -26,12 +26,11 @@ namespace Microsoft.MixedReality.Toolkit.Input
             IsPositionApproximate = false;
             IsRotationAvailable = false;
 
-            Type controllerType = GetType();
-
             if (IsControllerMappingEnabled() && Interactions == null)
             {
                 // We can only enable controller profiles if mappings exist.
                 var controllerMappings = GetControllerMappings();
+                Type controllerType = GetType();
 
                 // Have to test that a controller type has been registered in the profiles,
                 // else its Unity input manager mappings will not have been set up by the inspector.
@@ -87,7 +86,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                 GetControllerVisualizationProfile().RenderMotionControllers &&
                 InputSource != null)
             {
-                TryRenderControllerModel(controllerType, InputSource.SourceType);
+                TryRenderControllerModel();
             }
 
             Enabled = true;
@@ -205,20 +204,28 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// <param name="controllerType">The type of controller to load the model for.</param>
         /// <param name="inputSourceType">Whether the model represents a hand or a controller.</param>
         /// <returns>True if a model was successfully loaded or model rendering is disabled. False if a model tried to load but failed.</returns>
-        protected virtual bool TryRenderControllerModel(Type controllerType, InputSourceType inputSourceType)
-        {
-            GameObject controllerModel = null;
+        [Obsolete("This method no longer takes in parameters. It reads from the controller instance it's called on.")]
+        protected virtual bool TryRenderControllerModel(Type controllerType, InputSourceType inputSourceType) => TryRenderControllerModel();
 
+        /// <summary>
+        /// Try to render a controller model for this controller from the visualization profile.
+        /// </summary>
+        /// <returns>True if a model was successfully loaded or model rendering is disabled. False if a model tried to load but failed.</returns>
+        protected virtual bool TryRenderControllerModel()
+        {
             if (GetControllerVisualizationProfile() == null ||
                 !GetControllerVisualizationProfile().RenderMotionControllers)
             {
                 return true;
             }
 
+            GameObject controllerModel = null;
+            Type controllerType = GetType();
+
             // If a specific controller template wants to override the global model, assign that instead.
             if (IsControllerMappingEnabled() &&
                 GetControllerVisualizationProfile() != null &&
-                inputSourceType == InputSourceType.Controller &&
+                InputSource.SourceType == InputSourceType.Controller &&
                 !(GetControllerVisualizationProfile().GetUseDefaultModelsOverride(controllerType, ControllerHandedness)))
             {
                 controllerModel = GetControllerVisualizationProfile().GetControllerModelOverride(controllerType, ControllerHandedness);
@@ -228,7 +235,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
             if (controllerModel == null &&
                 GetControllerVisualizationProfile() != null)
             {
-                if (inputSourceType == InputSourceType.Controller)
+                if (InputSource.SourceType == InputSourceType.Controller)
                 {
                     if (ControllerHandedness == Handedness.Left &&
                         GetControllerVisualizationProfile().GlobalLeftHandModel != null)
@@ -241,7 +248,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                         controllerModel = GetControllerVisualizationProfile().GlobalRightHandModel;
                     }
                 }
-                else if (inputSourceType == InputSourceType.Hand)
+                else if (InputSource.SourceType == InputSourceType.Hand)
                 {
                     if (ControllerHandedness == Handedness.Left &&
                         GetControllerVisualizationProfile().GlobalLeftHandVisualizer != null)

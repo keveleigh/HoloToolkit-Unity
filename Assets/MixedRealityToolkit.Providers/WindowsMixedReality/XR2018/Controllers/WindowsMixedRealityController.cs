@@ -261,7 +261,7 @@ namespace Microsoft.MixedReality.Toolkit.WindowsMixedReality.Input
         }
 
         /// <inheritdoc />
-        protected override bool TryRenderControllerModel(Type controllerType, InputSourceType inputSourceType)
+        protected override bool TryRenderControllerModel()
         {
             // Intercept this call if we are using the default driver provided models.
             // Note: Obtaining models from the driver will require access to the InteractionSource.
@@ -272,7 +272,7 @@ namespace Microsoft.MixedReality.Toolkit.WindowsMixedReality.Input
                 !GetControllerVisualizationProfile().GetUseDefaultModelsOverride(GetType(), ControllerHandedness))
             {
                 controllerModelInitialized = true;
-                return base.TryRenderControllerModel(controllerType, inputSourceType);
+                return base.TryRenderControllerModel();
             }
 
             return false;

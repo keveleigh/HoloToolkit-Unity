@@ -4,7 +4,6 @@
 using Microsoft.MixedReality.Toolkit.Input;
 using Microsoft.MixedReality.Toolkit.Input.UnityInput;
 using Microsoft.MixedReality.Toolkit.Utilities;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
@@ -224,7 +223,7 @@ namespace Microsoft.MixedReality.Toolkit.OpenVR.Input
         #region Controller model functions
 
         /// <inheritdoc />
-        protected override bool TryRenderControllerModel(Type controllerType, InputSourceType inputSourceType)
+        protected override bool TryRenderControllerModel()
         {
             MixedRealityControllerVisualizationProfile visualizationProfile = GetControllerVisualizationProfile();
 
@@ -232,7 +231,7 @@ namespace Microsoft.MixedReality.Toolkit.OpenVR.Input
             if (visualizationProfile == null ||
                 !visualizationProfile.GetUseDefaultModelsOverride(GetType(), ControllerHandedness))
             {
-                return base.TryRenderControllerModel(controllerType, inputSourceType);
+                return base.TryRenderControllerModel();
             }
             else if (controllerDictionary.TryGetValue(ControllerHandedness, out GameObject controllerModel))
             {
@@ -243,13 +242,13 @@ namespace Microsoft.MixedReality.Toolkit.OpenVR.Input
 
             Debug.Log("Trying to load controller model from platform SDK");
 
-            GameObject controllerModelGameObject = new GameObject($"{ControllerHandedness} OpenVR Controller");
-
             bool failedToObtainControllerModel;
 
             var visualizationType = visualizationProfile.GetControllerVisualizationTypeOverride(GetType(), ControllerHandedness);
             if (visualizationType != null)
             {
+                GameObject controllerModelGameObject = new GameObject($"{ControllerHandedness} OpenVR Controller");
+
                 // Set the platform controller model to not be destroyed when the source is lost. It'll be disabled instead,
                 // and re-enabled when the same controller is re-detected.
                 if (controllerModelGameObject.AddComponent(visualizationType.Type) is IMixedRealityControllerPoseSynchronizer visualizer)
@@ -271,6 +270,10 @@ namespace Microsoft.MixedReality.Toolkit.OpenVR.Input
                     TryAddControllerModelToSceneHierarchy(controllerModelGameObject);
                     controllerDictionary.Add(ControllerHandedness, controllerModelGameObject);
                 }
+                else
+                {
+                    UnityEngine.Object.Destroy(controllerModelGameObject);
+                }
             }
             else
             {
@@ -281,8 +284,7 @@ namespace Microsoft.MixedReality.Toolkit.OpenVR.Input
             if (failedToObtainControllerModel)
             {
                 Debug.LogWarning("Failed to create controller model from driver, defaulting to BaseController behavior");
-                UnityEngine.Object.Destroy(controllerModelGameObject);
-                return base.TryRenderControllerModel(GetType(), InputSourceType.Controller);
+                return base.TryRenderControllerModel();
             }
 
             return true;
