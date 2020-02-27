@@ -1,4 +1,6 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿#define ARFOUNDATION_PRESENT
+
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Copyright(c) 2019 Takahiro Miyaura
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
@@ -23,7 +25,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UnityAR
         "Unity AR Foundation Camera Settings",
         "UnityAR/Profiles/DefaultUnityARCameraSettingsProfile.asset",
         "MixedRealityToolkit.Providers")]
-    public class UnityARCameraSettings : BaseCameraSettingsProvider
+    public class UnityARCameraSettings : BaseXRCameraSettingsProvider
     {
         /// <summary>
         /// Constructor.
@@ -37,26 +39,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UnityAR
             string name = null,
             uint priority = DefaultPriority,
             BaseCameraSettingsProfile profile = null) : base(cameraSystem, name, priority, profile)
-        {
-            ReadProfile();
-        }
-
-        private ArTrackedPose poseSource = ArTrackedPose.ColorCamera;
-        private ArTrackingType trackingType = ArTrackingType.RotationAndPosition;
-        private ArUpdateType updateType = ArUpdateType.UpdateAndBeforeRender;
-
-        private void ReadProfile()
-        {
-            if (SettingsProfile == null)
-            {
-                Debug.LogWarning("A profile was not specified for the Unity AR Camera Settings provider.\nUsing Microsoft Mixed Reality Toolkit default options.");
-                return;
-            }
-
-            poseSource = SettingsProfile.PoseSource;
-            trackingType = SettingsProfile.TrackingType;
-            updateType = SettingsProfile.UpdateType;
-        }
+        { }
 
         #region IMixedRealityCameraSettings
 
@@ -64,11 +47,6 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UnityAR
         public override bool IsOpaque => poseSource != ArTrackedPose.ColorCamera;
 
         #endregion IMixedRealityCameraSettings
-
-        /// <summary>
-        /// The profile used to configure the camera.
-        /// </summary>
-        public UnityARCameraSettingsProfile SettingsProfile => ConfigurationProfile as UnityARCameraSettingsProfile;
 
 #if ARFOUNDATION_PRESENT
         private bool isSupportedArConfiguration = true;

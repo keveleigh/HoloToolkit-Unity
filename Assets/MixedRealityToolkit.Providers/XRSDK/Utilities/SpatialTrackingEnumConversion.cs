@@ -1,20 +1,20 @@
-﻿#define ARFOUNDATION_PRESENT
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See LICENSE in the project root for license information.﻿
+﻿// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 
-#if ARFOUNDATION_PRESENT
+#if SPATIALTRACKING_ENABLED
+using Microsoft.MixedReality.Toolkit.Experimental.UnityAR;
 using UnityEngine.SpatialTracking;
-#endif // ARFOUNDATION_PRESENT
+#endif // SPATIALTRACKING_ENABLED
 
-namespace Microsoft.MixedReality.Toolkit.Experimental.UnityAR
+namespace Microsoft.MixedReality.Toolkit.XRSDK
 {
     /// <summary>
     /// Class that performs conversions between Unity's AR enum values and the provider's
     /// custom enums.
     /// </summary>
-    public static class ArEnumConversion
+    public static class SpatialTrackingEnumConversion
     {
-#if ARFOUNDATION_PRESENT
+#if SPATIALTRACKING_ENABLED
         /// <summary>
         /// Converts from an <see cref="ArTrackedPose"/> to a Unity tracked pose value.
         /// </summary>
@@ -91,6 +91,6 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UnityAR
                     return (TrackedPoseDriver.UpdateType)((int)updateType);
             }
         }
-#endif // ARFOUNDATION_PRESENT
+#endif // SPATIALTRACKING_ENABLED
     }
 }

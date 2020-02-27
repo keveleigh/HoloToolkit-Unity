@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.MixedReality.Toolkit.CameraSystem;
+using Microsoft.MixedReality.Toolkit.Experimental;
 using Microsoft.MixedReality.Toolkit.Utilities;
 using UnityEngine;
 
@@ -17,8 +18,10 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
     [MixedRealityDataProvider(
         typeof(IMixedRealityCameraSystem),
         (SupportedPlatforms)(-1),
-        "XR SDK Camera Settings")]
-    public class GenericXRSDKCameraSettings : BaseCameraSettingsProvider
+        "XR SDK Camera Settings",
+        "XRSDK/Profiles/DefaultUnityARCameraSettingsProfile.asset",
+        "MixedRealityToolkit.Providers")]
+    public class GenericXRSDKCameraSettings : BaseXRCameraSettingsProvider
     {
         /// <summary>
         /// Constructor.
@@ -54,6 +57,13 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
             if (!CameraCache.Main.GetComponent<TrackedPoseDriver>())
             {
                 trackedPoseDriver = CameraCache.Main.gameObject.AddComponent<TrackedPoseDriver>();
+
+                trackedPoseDriver.SetPoseSource(
+                    TrackedPoseDriver.DeviceType.GenericXRDevice,
+                    SpatialTrackingEnumConversion.ToUnityTrackedPose(poseSource));
+                trackedPoseDriver.trackingType = SpatialTrackingEnumConversion.ToUnityTrackingType(trackingType);
+                trackedPoseDriver.updateType = SpatialTrackingEnumConversion.ToUnityUpdateType(updateType);
+                trackedPoseDriver.UseRelativeTransform = false;
             }
         }
 
