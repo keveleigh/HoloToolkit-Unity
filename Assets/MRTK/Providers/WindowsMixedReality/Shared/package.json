@@ -3,7 +3,7 @@
     "displayName": "Mixed Reality Toolkit Shared WMR Providers",
     "version": "2.4.0",
     "unity": "2018.4",
-    "description": "Providers for use with Mixed Reality Toolkit",
+    "description": "Provider for use with Mixed Reality Toolkit",
     "keywords": [
         "mrtk",
         "microsoft",
