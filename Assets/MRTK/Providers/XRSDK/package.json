@@ -1,9 +1,9 @@
 {
-    "name": "com.microsoft.mixedreality.toolkit.services",
-    "displayName": "Mixed Reality Toolkit Services",
+    "name": "com.microsoft.mixedreality.toolkit.providers.xrsdk",
+    "displayName": "Mixed Reality Toolkit XR SDK Providers",
     "version": "2.4.0",
-    "unity": "2018.4",
-    "description": "Services for Mixed Reality Toolkit",
+    "unity": "2019.3",
+    "description": "Providers for use with Unity XR SDK and Mixed Reality Toolkit",
     "keywords": [
         "mrtk",
         "microsoft",
@@ -11,7 +11,7 @@
         "reality",
         "augmented",
         "virtual",
-        "hololens"
+        "xr sdk"
     ],
     "author": "Microsoft Corporation",
     "dependencies": {

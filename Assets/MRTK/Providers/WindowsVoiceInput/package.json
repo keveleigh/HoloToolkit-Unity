@@ -1,9 +1,9 @@
 {
-    "name": "com.microsoft.mixedreality.toolkit.services",
-    "displayName": "Mixed Reality Toolkit Services",
+    "name": "com.microsoft.mixedreality.toolkit.providers.windows",
+    "displayName": "Mixed Reality Toolkit Windows Providers",
     "version": "2.4.0",
     "unity": "2018.4",
-    "description": "Services for Mixed Reality Toolkit",
+    "description": "Windows providers for use with Mixed Reality Toolkit",
     "keywords": [
         "mrtk",
         "microsoft",
@@ -11,7 +11,7 @@
         "reality",
         "augmented",
         "virtual",
-        "hololens"
+        "windows"
     ],
     "author": "Microsoft Corporation",
     "dependencies": {

@@ -1,9 +1,9 @@
 {
-    "name": "com.microsoft.mixedreality.toolkit.services",
-    "displayName": "Mixed Reality Toolkit Services",
+    "name": "com.microsoft.mixedreality.toolkit.providers.windowsmixedreality.shared",
+    "displayName": "Mixed Reality Toolkit Shared WMR Providers",
     "version": "2.4.0",
     "unity": "2018.4",
-    "description": "Services for Mixed Reality Toolkit",
+    "description": "Providers for use with Mixed Reality Toolkit",
     "keywords": [
         "mrtk",
         "microsoft",
