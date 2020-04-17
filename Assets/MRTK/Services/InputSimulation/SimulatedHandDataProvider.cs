@@ -20,23 +20,44 @@ namespace Microsoft.MixedReality.Toolkit.Input
     /// </summary>
     internal class SimulatedHandState
     {
-        private Handedness handedness = Handedness.None;
-        public Handedness Handedness => handedness;
+        public Handedness Handedness { get; private set; } = Handedness.None;
 
-        // Show a tracked hand device
-        public bool IsTracked = false;
-        // Activate the pinch gesture
-        public bool IsPinching
+        /// <summary>
+        /// Show a tracked hand device.
+        /// </summary>
+        public bool IsTracked { get; set; } = false;
+
+        /// <summary>
+        /// Activate the pinch gesture.
+        /// </summary>
+        public bool IsPinching => gesture == ArticulatedHandPose.GestureId.Pinch;
+
+        private Vector3 viewportPosition = Vector3.zero;
+
+        /// <summary>
+        /// Position of the hand in viewport space.
+        /// </summary>
+        public Vector3 ViewportPosition
         {
-            get { return gesture == ArticulatedHandPose.GestureId.Pinch; }
+            get => viewportPosition;
+            set => viewportPosition = value;
         }
 
-        // Position of the hand in viewport space
-        public Vector3 ViewportPosition = Vector3.zero;
-        // Rotation of the hand relative to the camera
-        public Vector3 ViewportRotation = Vector3.zero;
-        // Random offset to simulate tracking inaccuracy
-        public Vector3 JitterOffset = Vector3.zero;
+        private Vector3 viewportRotation = Vector3.zero;
+
+        /// <summary>
+        /// Rotation of the hand relative to the camera.
+        /// </summary>
+        public Vector3 ViewportRotation
+        {
+            get => viewportRotation;
+            set => viewportRotation = value;
+        }
+
+        /// <summary>
+        /// Random offset to simulate tracking inaccuracy.
+        /// </summary>
+        public Vector3 JitterOffset { get; set; } = Vector3.zero;
 
         private ArticulatedHandPose.GestureId gesture = ArticulatedHandPose.GestureId.None;
         public ArticulatedHandPose.GestureId Gesture
@@ -52,8 +73,10 @@ namespace Microsoft.MixedReality.Toolkit.Input
             }
         }
 
-        // Interpolation between current pose and target gesture
         private float gestureBlending = 0.0f;
+        /// <summary>
+        /// Interpolation between current pose and target gesture.
+        /// </summary>
         public float GestureBlending
         {
             get { return gestureBlending; }
@@ -64,13 +87,14 @@ namespace Microsoft.MixedReality.Toolkit.Input
         }
 
         private float poseBlending = 0.0f;
-        private ArticulatedHandPose pose = new ArticulatedHandPose();
         private float viewportPositionZTarget;
+
+        private readonly ArticulatedHandPose pose = new ArticulatedHandPose();
         private readonly float smoothScrollSpeed = 5f;
 
-        public SimulatedHandState(Handedness _handedness)
+        public SimulatedHandState(Handedness handedness)
         {
-            handedness = _handedness;
+            Handedness = handedness;
         }
 
         public void SimulateInput(MouseDelta mouseDelta, bool useMouseRotation, float rotationSensitivity, float rotationScale, float noiseAmount)
@@ -87,9 +111,9 @@ namespace Microsoft.MixedReality.Toolkit.Input
             }
             else
             {
-                ViewportPosition.x += mouseDelta.viewportDelta.x;
-				ViewportPosition.y += mouseDelta.viewportDelta.y;
-				viewportPositionZTarget += mouseDelta.viewportDelta.z;
+                viewportPosition.x += mouseDelta.viewportDelta.x;
+                viewportPosition.y += mouseDelta.viewportDelta.y;
+                viewportPositionZTarget += mouseDelta.viewportDelta.z;
             }
 
             JitterOffset = UnityEngine.Random.insideUnitSphere * noiseAmount;
@@ -119,7 +143,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
         public void ResetRotation()
         {
             // Use wrist joint rotation as the default
-            Quaternion rotationRef = pose.GetLocalJointPose(TrackedHandJoint.Wrist, handedness).Rotation;
+            Quaternion rotationRef = pose.GetLocalJointPose(TrackedHandJoint.Wrist, Handedness).Rotation;
             ViewportRotation = rotationRef.eulerAngles;
         }
 
@@ -128,7 +152,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// </summary>
         internal void Update()
         {
-            ViewportPosition.z = Mathf.Lerp(ViewportPosition.z, viewportPositionZTarget, smoothScrollSpeed * Time.deltaTime);
+            viewportPosition.z = Mathf.Lerp(ViewportPosition.z, viewportPositionZTarget, smoothScrollSpeed * Time.deltaTime);
         }
 
         internal void FillCurrentFrame(MixedRealityPose[] jointsOut)
@@ -149,11 +173,11 @@ namespace Microsoft.MixedReality.Toolkit.Input
             Vector3 worldPosition = CameraCache.Main.ScreenToWorldPoint(screenPosition + JitterOffset);
 
             // Apply rotation relative to the wrist joint
-            Quaternion rotationRef = pose.GetLocalJointPose(TrackedHandJoint.Wrist, handedness).Rotation;
+            Quaternion rotationRef = pose.GetLocalJointPose(TrackedHandJoint.Wrist, Handedness).Rotation;
             Quaternion localRotation = Quaternion.Euler(ViewportRotation) * Quaternion.Inverse(rotationRef);
 
             Quaternion worldRotation = CameraCache.Main.transform.rotation * localRotation;
-            pose.ComputeJointPoses(handedness, worldRotation, worldPosition, jointsOut);
+            pose.ComputeJointPoses(Handedness, worldRotation, worldPosition, jointsOut);
         }
     }
 
@@ -162,35 +186,31 @@ namespace Microsoft.MixedReality.Toolkit.Input
     /// </summary>
     public class SimulatedHandDataProvider
     {
-        private static readonly int jointCount = Enum.GetNames(typeof(TrackedHandJoint)).Length;
+        /// <summary>
+        /// Left hand is controlled by user input.
+        /// </summary>
+        public bool IsSimulatingLeft { get; private set; } = false;
 
-        protected MixedRealityInputSimulationProfile profile;
+        /// <summary>
+        /// Right hand is controlled by user input.
+        /// </summary>
+        public bool IsSimulatingRight { get; private set; } = false;
 
         /// <summary>
         /// If true then the hand is always visible, regardless of simulating.
         /// </summary>
-        public bool IsAlwaysVisibleLeft = false;
+        public bool IsAlwaysVisibleLeft { get; private set; } = false;
+
         /// <summary>
         /// If true then the hand is always visible, regardless of simulating.
         /// </summary>
-        public bool IsAlwaysVisibleRight = false;
+        public bool IsAlwaysVisibleRight { get; private set; } = false;
 
         internal SimulatedHandState HandStateLeft;
         internal SimulatedHandState HandStateRight;
         internal SimulatedHandState HandStateGaze;
 
-        // If true then hands are controlled by user input
-        private bool isSimulatingLeft = false;
-        private bool isSimulatingRight = false;
-        private bool isSimulatingGaze => !isSimulatingLeft && !isSimulatingRight && !IsAlwaysVisibleLeft && !IsAlwaysVisibleRight;
-        /// <summary>
-        /// Left hand is controlled by user input.
-        /// </summary>
-        public bool IsSimulatingLeft => isSimulatingLeft;
-        /// <summary>
-        /// Right hand is controlled by user input.
-        /// </summary>
-        public bool IsSimulatingRight => isSimulatingRight;
+        private bool IsSimulatingGaze => !IsSimulatingLeft && !IsSimulatingRight && !IsAlwaysVisibleLeft && !IsAlwaysVisibleRight;
 
         // Most recent time hand control was enabled,
         private float lastSimulationLeft = -1.0e6f;
@@ -204,6 +224,8 @@ namespace Microsoft.MixedReality.Toolkit.Input
         private SimulatedHandData.HandJointDataGenerator generatorLeft;
         private SimulatedHandData.HandJointDataGenerator generatorRight;
         private SimulatedHandData.HandJointDataGenerator generatorGaze;
+
+        protected MixedRealityInputSimulationProfile profile;
 
         private static readonly KeyBinding cancelRotationKey = KeyBinding.FromKey(KeyCode.Escape);
         private readonly MouseRotationProvider mouseRotation = new MouseRotationProvider();
@@ -275,14 +297,14 @@ namespace Microsoft.MixedReality.Toolkit.Input
 
             if (!Application.isFocused && !KeyInputSystem.SimulatingInput)
             {
-                isSimulatingLeft = false;
-                isSimulatingRight = false;
+                IsSimulatingLeft = false;
+                IsSimulatingRight = false;
             }
             else
             {
                 if (KeyInputSystem.GetKeyDown(profile.LeftHandManipulationKey))
                 {
-                    isSimulatingLeft = true;
+                    IsSimulatingLeft = true;
                     if (lastSimulationLeft > 0.0f && time - lastSimulationLeft <= profile.DoublePressTime)
                     {
                         IsAlwaysVisibleLeft = !IsAlwaysVisibleLeft;
@@ -291,12 +313,12 @@ namespace Microsoft.MixedReality.Toolkit.Input
                 }
                 if (KeyInputSystem.GetKeyUp(profile.LeftHandManipulationKey))
                 {
-                    isSimulatingLeft = false;
+                    IsSimulatingLeft = false;
                 }
 
                 if (KeyInputSystem.GetKeyDown(profile.RightHandManipulationKey))
                 {
-                    isSimulatingRight = true;
+                    IsSimulatingRight = true;
                     if (lastSimulationRight > 0.0f && time - lastSimulationRight <= profile.DoublePressTime)
                     {
                         IsAlwaysVisibleRight = !IsAlwaysVisibleRight;
@@ -305,17 +327,17 @@ namespace Microsoft.MixedReality.Toolkit.Input
                 }
                 if (KeyInputSystem.GetKeyUp(profile.RightHandManipulationKey))
                 {
-                    isSimulatingRight = false;
+                    IsSimulatingRight = false;
                 }
-                if(isSimulatingGaze)
+                if (IsSimulatingGaze)
                     lastSimulationGaze = time;
             }
 
             mouseRotation.Update(profile.HandRotateButton, cancelRotationKey, false);
 
-            SimulateHandInput(ref lastHandTrackedTimestampLeft, HandStateLeft, isSimulatingLeft, IsAlwaysVisibleLeft, mouseDelta, mouseRotation.IsRotating);
-            SimulateHandInput(ref lastHandTrackedTimestampRight, HandStateRight, isSimulatingRight, IsAlwaysVisibleRight, mouseDelta, mouseRotation.IsRotating);
-            SimulateHandInput(ref lastHandTrackedTimestampGaze, HandStateGaze, isSimulatingGaze, false, mouseDelta, mouseRotation.IsRotating);
+            SimulateHandInput(ref lastHandTrackedTimestampLeft, HandStateLeft, IsSimulatingLeft, IsAlwaysVisibleLeft, mouseDelta, mouseRotation.IsRotating);
+            SimulateHandInput(ref lastHandTrackedTimestampRight, HandStateRight, IsSimulatingRight, IsAlwaysVisibleRight, mouseDelta, mouseRotation.IsRotating);
+            SimulateHandInput(ref lastHandTrackedTimestampGaze, HandStateGaze, IsSimulatingGaze, false, mouseDelta, mouseRotation.IsRotating);
 
             // This line explicitly uses unscaledDeltaTime because we don't want input simulation
             // to lag when the time scale is set to a value other than 1. Input should still continue
@@ -381,11 +403,11 @@ namespace Microsoft.MixedReality.Toolkit.Input
         {
             if (handedness == Handedness.Left)
             {
-                ResetHand(HandStateLeft, isSimulatingLeft);
+                ResetHand(HandStateLeft, IsSimulatingLeft);
             }
             else
             {
-                ResetHand(HandStateRight, isSimulatingRight);
+                ResetHand(HandStateRight, IsSimulatingRight);
             }
         }
 
