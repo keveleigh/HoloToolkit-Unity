@@ -32,12 +32,14 @@ namespace Microsoft.MixedReality.Toolkit.UI
             /// after that many seconds elapses after focus loss.
             /// </summary>
             VanishOnFocusExitWithDelay,
+            VanishOnGazeExit,
         }
 
         private enum AppearType
         {
             AppearOnFocusEnter = 0,
             AppearOnTap,
+            AppearOnGazeEnter,
         }
 
         public enum RemainType
@@ -82,6 +84,20 @@ namespace Microsoft.MixedReality.Toolkit.UI
 
         private GameObject spawnable;
 
+        private void Update()
+        {
+            if (appearType != AppearType.AppearOnGazeEnter) { return; }
+
+            if (HasGaze)
+            {
+                HandleFocusEnter();
+            }
+            else
+            {
+                HandleFocusExit();
+            }
+        }
+
         private async void ShowSpawnable()
         {
             await UpdateSpawnable(focusEnterTime, tappedTime);
@@ -89,7 +105,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
 
         private async Task UpdateSpawnable(float focusEnterTimeOnStart, float tappedTimeOnStart)
         {
-            if (appearType == AppearType.AppearOnFocusEnter)
+            if (appearType != AppearType.AppearOnTap)
             {
                 if (spawnable == null)
                 {
@@ -105,7 +121,8 @@ namespace Microsoft.MixedReality.Toolkit.UI
                 await new WaitForSeconds(appearDelay);
                 // If we don't have focus any more, get out of here
 
-                if (!HasFocus)
+                if (appearType == AppearType.AppearOnFocusEnter && !HasFocus ||
+                    appearType == AppearType.AppearOnGazeEnter && !HasGaze)
                 {
                     return;
                 }
@@ -130,6 +147,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
 
                             break;
                         case AppearType.AppearOnFocusEnter:
+                        case AppearType.AppearOnGazeEnter:
                             if (Time.unscaledTime - focusEnterTime >= lifetime)
                             {
                                 spawnable.gameObject.SetActive(false);
@@ -159,6 +177,14 @@ namespace Microsoft.MixedReality.Toolkit.UI
 
                         break;
 
+                    case VanishType.VanishOnGazeExit:
+                        if (!HasGaze)
+                        {
+                            spawnable.gameObject.SetActive(false);
+                        }
+
+                        break;
+
                     case VanishType.VanishOnFocusExitWithDelay:
                     default:
                         if (!HasFocus && HasVanishDelayElapsed())
@@ -173,6 +199,8 @@ namespace Microsoft.MixedReality.Toolkit.UI
         }
 
         protected virtual void SpawnableActivated(GameObject spawnable) { }
+
+        private bool HasGaze => CoreServices.InputSystem.GazeProvider.GazeTarget == gameObject;
 
         /// <inheritdoc />
         public override void OnFocusEnter(FocusEventData eventData)
@@ -241,11 +269,9 @@ namespace Microsoft.MixedReality.Toolkit.UI
 
             if (spawnable == null || !spawnable.gameObject.activeSelf)
             {
-                switch (appearType)
+                if (appearType != AppearType.AppearOnTap)
                 {
-                    case AppearType.AppearOnFocusEnter:
-                        ShowSpawnable();
-                        break;
+                    ShowSpawnable();
                 }
             }
         }
