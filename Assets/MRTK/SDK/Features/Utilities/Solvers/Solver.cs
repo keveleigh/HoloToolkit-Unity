@@ -327,7 +327,7 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Solvers
         /// </remarks>
         public static Vector3 SmoothTo(Vector3 source, Vector3 goal, float deltaTime, float lerpTime)
         {
-            return Vector3.Lerp(source, goal, lerpTime.Equals(0.0f) ? 1f : deltaTime / lerpTime);
+            return Vector3.Lerp(source, goal, Mathf.Approximately(lerpTime, 0.0f) ? 1f : deltaTime / lerpTime);
         }
 
         /// <summary>
@@ -335,7 +335,7 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Solvers
         /// </summary>
         public static Quaternion SmoothTo(Quaternion source, Quaternion goal, float deltaTime, float lerpTime)
         {
-            return Quaternion.Slerp(source, goal, lerpTime.Equals(0.0f) ? 1f : deltaTime / lerpTime);
+            return Quaternion.Slerp(source, goal, Mathf.Approximately(lerpTime, 0.0f) ? 1f : deltaTime / lerpTime);
         }
 
         /// <summary>
