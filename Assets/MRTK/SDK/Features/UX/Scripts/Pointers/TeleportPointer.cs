@@ -18,14 +18,10 @@ namespace Microsoft.MixedReality.Toolkit.Teleport
     [AddComponentMenu("Scripts/MRTK/SDK/TeleportPointer")]
     public class TeleportPointer : CurvePointer, IMixedRealityTeleportPointer, IMixedRealityTeleportHandler
     {
-        /// <summary>
-        /// True if a teleport request is being raised, false otherwise.
-        /// </summary>
+        /// <inheritdoc />
         public bool TeleportRequestRaised { get; private set; } = false;
 
-        /// <summary>
-        /// The result from the last raycast.
-        /// </summary>
+        /// <inheritdoc />
         public TeleportSurfaceResult TeleportSurfaceResult { get; private set; } = TeleportSurfaceResult.None;
 
         /// <inheritdoc />

@@ -26,16 +26,16 @@ namespace Microsoft.MixedReality.Toolkit.Teleport
             get { return pointer; }
             set
             {
-                Debug.Assert(value is TeleportPointer,
-                    "Teleport Cursor's Pointer must derive from TeleportPointer.");
+                Debug.Assert(value is IMixedRealityTeleportPointer,
+                    "Teleport Cursor's Pointer must derive from IMixedRealityTeleportPointer.");
 
-                pointer = value as TeleportPointer;
+                pointer = value as IMixedRealityTeleportPointer;
                 pointer.BaseCursor = this;
                 RegisterManagers();
             }
         }
 
-        private TeleportPointer pointer;
+        private IMixedRealityTeleportPointer pointer;
 
         /// <inheritdoc />
         public override Vector3 Position => PrimaryCursorVisual.position;
@@ -58,7 +58,6 @@ namespace Microsoft.MixedReality.Toolkit.Teleport
                         case TeleportSurfaceResult.None:
                             return CursorStateEnum.Release;
                         case TeleportSurfaceResult.Invalid:
-                            return CursorStateEnum.ObserveHover;
                         case TeleportSurfaceResult.HotSpot:
                         case TeleportSurfaceResult.Valid:
                             return CursorStateEnum.ObserveHover;
