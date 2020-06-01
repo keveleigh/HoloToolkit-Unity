@@ -85,6 +85,10 @@ foreach ($file in (Get-ChildItem -Path $GitRoot -Recurse))
     {
         $Errors += ReplaceVersionInFile -Path $file.FullName -NewVersion $NewVersion -Patterns  @("(?<=\sVersion=')(\d+\.\d+\.\d+)(?=\.\d+\')") -Strict $True
     }
+    ElseIf ($file.Name -eq "package.json")
+    {
+        $Errors += ReplaceVersionInFile -Path $file.FullName -NewVersion $NewVersion -Patterns @("(?<=\s`"version`": `")(\d+\.\d+\.\d+)") -Strict $True
+    }
 }
 
 $AssetsDir = Get-Item (Join-Path $GitRoot "Assets")
