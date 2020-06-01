@@ -1,7 +1,7 @@
 {
     "name": "com.microsoft.mixedreality.toolkit.providers.xrsdk",
     "displayName": "Mixed Reality Toolkit XR SDK Providers",
-    "version": "2.4.0",
+    "version": "2.5.0",
     "unity": "2019.3",
     "description": "Providers for use with Unity XR SDK and Mixed Reality Toolkit",
     "keywords": [

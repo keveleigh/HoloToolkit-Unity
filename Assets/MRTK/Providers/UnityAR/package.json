@@ -1,7 +1,7 @@
 {
     "name": "com.microsoft.mixedreality.toolkit.providers.unityar",
     "displayName": "Mixed Reality Toolkit Unity AR Providers",
-    "version": "2.4.0",
+    "version": "2.5.0",
     "unity": "2018.4",
     "description": "Providers for use with AR Foundation and Mixed Reality Toolkit",
     "keywords": [

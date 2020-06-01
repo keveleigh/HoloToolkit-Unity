@@ -1,7 +1,7 @@
 {
     "name": "com.microsoft.mixedreality.toolkit.services",
     "displayName": "Mixed Reality Toolkit Services",
-    "version": "2.4.0",
+    "version": "2.5.0",
     "unity": "2018.4",
     "description": "Services for Mixed Reality Toolkit",
     "keywords": [

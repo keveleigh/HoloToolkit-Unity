@@ -1,7 +1,7 @@
 {
     "name": "com.microsoft.mixedreality.toolkit.providers",
     "displayName": "Mixed Reality Toolkit Providers",
-    "version": "2.4.0",
+    "version": "2.5.0",
     "unity": "2018.4",
     "description": "Providers for use with Mixed Reality Toolkit",
     "keywords": [

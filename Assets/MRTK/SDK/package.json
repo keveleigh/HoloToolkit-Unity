@@ -1,7 +1,7 @@
 {
     "name": "com.microsoft.mixedreality.toolkit.sdk",
     "displayName": "Mixed Reality Toolkit SDK",
-    "version": "2.4.0",
+    "version": "2.5.0",
     "unity": "2018.4",
     "description": "SDK for Mixed Reality Toolkit",
     "keywords": [
