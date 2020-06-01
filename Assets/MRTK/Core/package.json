@@ -14,5 +14,13 @@
         "hololens"
     ],
     "author": "Microsoft Corporation",
-    "dependencies": {}
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/microsoft/MixedRealityToolkit-Unity.git"
+    },
+    "bugs": {
+        "url": "https://github.com/microsoft/MixedRealityToolkit-Unity/issues"
+      },
+    "dependencies": {},
+    "license": "MIT"
 }
