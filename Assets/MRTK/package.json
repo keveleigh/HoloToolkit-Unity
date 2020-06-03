@@ -1,0 +1,32 @@
+{
+    "name": "com.microsoft.mixedreality.toolkit",
+    "displayName": "Mixed Reality Toolkit",
+    "version": "2.5.0",
+    "unity": "2018.4",
+    "description": "MRTK-Unity provides a set of foundational components and features to accelerate MR app development in Unity. The latest Release of MRTK (V2) supports HoloLens/HoloLens 2, Windows Mixed Reality, and OpenVR platforms.",
+    "keywords": [
+        "mrtk",
+        "microsoft",
+        "mixed",
+        "reality",
+        "augmented",
+        "virtual",
+        "hololens"
+    ],
+    "author": "Microsoft Corporation",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/microsoft/MixedRealityToolkit-Unity.git"
+    },
+    "bugs": {
+        "url": "https://github.com/microsoft/MixedRealityToolkit-Unity/issues"
+      },
+    "dependencies": {},
+    "license": "MIT",
+    "files": [
+        "Core*",
+        "SDK*",
+        "Services*",
+        "package.json.meta"
+    ]
+}
