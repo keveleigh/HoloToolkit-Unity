@@ -124,7 +124,7 @@ namespace Microsoft.MixedReality.Toolkit.Audio
         /// <remarks>
         /// This struct is solely for the private use of the AudioLoFiEffect class.
         /// </remarks>
-        private struct AudioLoFiFilterSettings
+        private readonly struct AudioLoFiFilterSettings
         {
             /// <summary>
             /// The frequency below which sound will be heard.
@@ -205,7 +205,7 @@ namespace Microsoft.MixedReality.Toolkit.Audio
             /// </summary>
             public override int GetHashCode()
             {
-                string s = $"[{GetType().ToString()}] Low: {LowPassCutoff}, High: {HighPassCutoff}";
+                string s = $"[{GetType()}] Low: {LowPassCutoff}, High: {HighPassCutoff}";
                 return s.GetHashCode();
             }
         }

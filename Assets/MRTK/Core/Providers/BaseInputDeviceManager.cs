@@ -77,10 +77,16 @@ namespace Microsoft.MixedReality.Toolkit.Input
 
         #region Private members
 
-        private struct PointerConfig
+        private readonly struct PointerConfig
         {
-            public PointerOption profile;
-            public Stack<IMixedRealityPointer> cache;
+            public PointerConfig(PointerOption pointerOption) : this()
+            {
+                Profile = pointerOption;
+                Cache = new Stack<IMixedRealityPointer>();
+            }
+
+            public PointerOption Profile { get; }
+            public Stack<IMixedRealityPointer> Cache { get; }
         }
 
         private PointerConfig[] pointerConfigurations = System.Array.Empty<PointerConfig>();
@@ -146,8 +152,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
 
                 for (int i = 0; i < initPointerOptions.Length; i++)
                 {
-                    pointerConfigurations[i].profile = initPointerOptions[i];
-                    pointerConfigurations[i].cache = new Stack<IMixedRealityPointer>();
+                    pointerConfigurations[i] = new PointerConfig(initPointerOptions[i]);
                 }
             }
         }
@@ -190,14 +195,14 @@ namespace Microsoft.MixedReality.Toolkit.Input
 
                 for (int i = 0; i < pointerConfigurations.Length; i++)
                 {
-                    var option = pointerConfigurations[i].profile;
+                    var option = pointerConfigurations[i].Profile;
                     if (option.ControllerType.HasFlag(controllerType) && option.Handedness.HasFlag(controllingHand))
                     {
                         IMixedRealityPointer requestedPointer = null;
 
                         if (EnablePointerCache)
                         {
-                            var pointerCache = pointerConfigurations[i].cache;
+                            var pointerCache = pointerConfigurations[i].Cache;
                             while (pointerCache.Count > 0)
                             {
                                 var p = pointerCache.Pop();
@@ -270,7 +275,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                                     activePointersToConfig.Remove(pointer);
 
                                     // Add our pointer back to our cache
-                                    pointerConfigurations[(int)pointerOptionIndex].cache.Push(pointer);
+                                    pointerConfigurations[(int)pointerOptionIndex].Cache.Push(pointer);
                                 }
                             }
                             else
@@ -346,9 +351,9 @@ namespace Microsoft.MixedReality.Toolkit.Input
         {
             for (int i = 0; i < pointerConfigurations.Length; i++)
             {
-                while (pointerConfigurations[i].cache.Count > 0)
+                while (pointerConfigurations[i].Cache.Count > 0)
                 {
-                    if (pointerConfigurations[i].cache.Pop().TryGetMonoBehaviour(out MonoBehaviour pointerComponent))
+                    if (pointerConfigurations[i].Cache.Pop().TryGetMonoBehaviour(out MonoBehaviour pointerComponent))
                     {
                         GameObjectExtensions.DestroyGameObject(pointerComponent.gameObject);
                     }

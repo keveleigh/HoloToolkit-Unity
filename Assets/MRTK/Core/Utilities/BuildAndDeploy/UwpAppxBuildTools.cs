@@ -180,7 +180,7 @@ namespace Microsoft.MixedReality.Toolkit.Build.Editor
             // have VS2017 or VS2019 installed.
             foreach (VSWhereFindOption findOption in VSWhereFindOptions)
             {
-                string arguments = findOption.arguments;
+                string arguments = findOption.Arguments;
                 if (string.IsNullOrWhiteSpace(EditorUserBuildSettings.wsaUWPVisualStudioVersion))
                 {
                     arguments += " -latest";
@@ -217,7 +217,7 @@ namespace Microsoft.MixedReality.Toolkit.Build.Editor
                                 .ThenByDescending(p => p.ToLower().Contains("professional"))
                                 .ThenByDescending(p => p.ToLower().Contains("community")).First();
 
-                            string finalPath = $@"{bestPath}{findOption.pathSuffix}";
+                            string finalPath = $@"{bestPath}{findOption.PathSuffix}";
                             if (File.Exists(finalPath))
                             {
                                 return finalPath;
@@ -648,25 +648,25 @@ namespace Microsoft.MixedReality.Toolkit.Build.Editor
         /// This struct controls the behavior of the arguments that are used
         /// when finding msbuild.exe.
         /// </summary>
-        private struct VSWhereFindOption
+        private readonly struct VSWhereFindOption
         {
             public VSWhereFindOption(string args, string suffix)
             {
-                arguments = args;
-                pathSuffix = suffix;
+                Arguments = args;
+                PathSuffix = suffix;
             }
 
             /// <summary>
             /// Used to populate the Arguments of ProcessStartInfo when invoking
             /// vswhere.
             /// </summary>
-            public string arguments;
+            public string Arguments { get; }
 
             /// <summary>
             /// This string is added as a suffix to the result of the vswhere path
             /// search.
             /// </summary>
-            public string pathSuffix;
+            public string PathSuffix { get; }
         }
 
         private static readonly VSWhereFindOption[] VSWhereFindOptions =

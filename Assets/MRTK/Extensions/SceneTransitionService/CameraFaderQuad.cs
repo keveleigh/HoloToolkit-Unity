@@ -20,18 +20,24 @@ namespace Microsoft.MixedReality.Toolkit.Extensions.SceneTransitions
         /// <summary>
         /// Simple struct for keeping track of quad properties
         /// </summary>
-        private struct Quad
+        private readonly struct Quad
         {
-            public Renderer Renderer;
+            public Quad(Renderer renderer) : this()
+            {
+                Renderer = renderer;
+                PropertyBlock = new MaterialPropertyBlock();
+            }
+
+            public Renderer Renderer { get; }
             // Eventually we want to be able to have different quads use different colors
             // Using property blocks now keeps our options open
-            public MaterialPropertyBlock PropertyBlock;
+            public MaterialPropertyBlock PropertyBlock { get; }
         }
 
         /// <inheritdoc />
         public CameraFaderState State { get; private set; }
 
-        private Dictionary<Camera, Quad> quads = new Dictionary<Camera, Quad>();
+        private readonly Dictionary<Camera, Quad> quads = new Dictionary<Camera, Quad>();
         private Color fadeOutColor;
         private Color fadeInColor;
         private Color currentColor;
@@ -117,9 +123,7 @@ namespace Microsoft.MixedReality.Toolkit.Extensions.SceneTransitions
                     if (quads.ContainsKey(camera))
                         continue;
 
-                    Quad quad = new Quad();
-                    quad.PropertyBlock = new MaterialPropertyBlock();
-                    quad.Renderer = GameObject.CreatePrimitive(PrimitiveType.Quad).GetComponent<Renderer>();
+                    Quad quad = new Quad(GameObject.CreatePrimitive(PrimitiveType.Quad).GetComponent<Renderer>());
                     quad.Renderer.sharedMaterial = quadMaterial;
                     // Parent the quad under the camera
                     quad.Renderer.transform.parent = camera.transform;

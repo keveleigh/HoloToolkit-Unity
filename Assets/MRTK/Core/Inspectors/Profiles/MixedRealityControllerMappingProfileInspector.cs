@@ -15,11 +15,11 @@ namespace Microsoft.MixedReality.Toolkit.Input.Editor
     [CustomEditor(typeof(MixedRealityControllerMappingProfile))]
     public class MixedRealityControllerMappingProfileInspector : BaseMixedRealityToolkitConfigurationProfileInspector
     {
-        private struct ControllerRenderProfile
+        private readonly struct ControllerRenderProfile
         {
-            public SupportedControllerType SupportedControllerType;
-            public Handedness Handedness;
-            public MixedRealityInteractionMapping[] Interactions;
+            public SupportedControllerType SupportedControllerType { get; }
+            public Handedness Handedness { get; }
+            public MixedRealityInteractionMapping[] Interactions { get; }
 
             public ControllerRenderProfile(SupportedControllerType supportedControllerType, Handedness handedness, MixedRealityInteractionMapping[] interactions)
             {

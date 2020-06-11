@@ -275,21 +275,23 @@ namespace Microsoft.MixedReality.Toolkit.UI
         /// Holds the pointer and the initial intersection point of the pointer ray 
         /// with the object on pointer down in pointer space
         /// </summary>
-        private struct PointerData
+        private readonly struct PointerData
         {
-            public IMixedRealityPointer pointer;
-            private Vector3 initialGrabPointInPointer;
+            public IMixedRealityPointer Pointer { get; }
+            private readonly Vector3 initialGrabPointInPointer;
 
             public PointerData(IMixedRealityPointer pointer, Vector3 worldGrabPoint) : this()
             {
-                this.pointer = pointer;
-                this.initialGrabPointInPointer = Quaternion.Inverse(pointer.Rotation) * (worldGrabPoint - pointer.Position);
+                Pointer = pointer;
+                initialGrabPointInPointer = Quaternion.Inverse(pointer.Rotation) * (worldGrabPoint - pointer.Position);
             }
 
             public bool IsNearPointer => pointer is IMixedRealityNearPointer;
 
+            /// <summary>
             /// Returns the grab point on the manipulated object in world space
-            public Vector3 GrabPoint => (pointer.Rotation * initialGrabPointInPointer) + pointer.Position;
+            /// </summary>
+            public Vector3 GrabPoint => (Pointer.Rotation * initialGrabPointInPointer) + Pointer.Position;
         }
 
         private Dictionary<uint, PointerData> pointerIdToPointerMap = new Dictionary<uint, PointerData>();
@@ -342,8 +344,8 @@ namespace Microsoft.MixedReality.Toolkit.UI
             int count = 0;
             foreach (var p in pointerIdToPointerMap.Values)
             {
-                sumPos += p.pointer.Position;
-                sumDir += p.pointer.Rotation * Vector3.forward;
+                sumPos += p.Pointer.Position;
+                sumDir += p.Pointer.Rotation * Vector3.forward;
                 count++;
             }
 
@@ -361,10 +363,10 @@ namespace Microsoft.MixedReality.Toolkit.UI
             foreach (var p in pointerIdToPointerMap.Values)
             {
                 // Check pointer has a valid controller (e.g. gaze pointer doesn't)
-                if (p.pointer.Controller != null)
+                if (p.Pointer.Controller != null)
                 {
                     numControllers++;
-                    sum += p.pointer.Controller.Velocity;
+                    sum += p.Pointer.Controller.Velocity;
                 }
             }
             return sum / Math.Max(1, numControllers);
@@ -377,10 +379,10 @@ namespace Microsoft.MixedReality.Toolkit.UI
             foreach (var p in pointerIdToPointerMap.Values)
             {
                 // Check pointer has a valid controller (e.g. gaze pointer doesn't)
-                if (p.pointer.Controller != null)
+                if (p.Pointer.Controller != null)
                 {
                     numControllers++;
-                    sum += p.pointer.Controller.AngularVelocity;
+                    sum += p.Pointer.Controller.AngularVelocity;
                 }
             }
             return sum / Math.Max(1, numControllers);
@@ -578,7 +580,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
         {
             Assert.IsTrue(pointerIdToPointerMap.Count == 1);
             PointerData pointerData = GetFirstPointer();
-            IMixedRealityPointer pointer = pointerData.pointer;
+            IMixedRealityPointer pointer = pointerData.Pointer;
 
             // Calculate relative transform from object to grip.
             Quaternion gripRotation;
@@ -595,7 +597,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
         {
             Debug.Assert(pointerIdToPointerMap.Count == 1);
             PointerData pointerData = GetFirstPointer();
-            IMixedRealityPointer pointer = pointerData.pointer;
+            IMixedRealityPointer pointer = pointerData.Pointer;
 
             var targetTransform = new MixedRealityTransform(HostTransform.position, HostTransform.rotation, HostTransform.localScale);
 
@@ -628,7 +630,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
                 {
                     ManipulationSource = gameObject,
                     IsNearInteraction = isNearManipulation,
-                    Pointer = GetFirstPointer().pointer,
+                    Pointer = GetFirstPointer().Pointer,
                     PointerCentroid = GetPointersGrabPoint(),
                     PointerVelocity = GetPointersVelocity(),
                     PointerAngularVelocity = GetPointersAngularVelocity()
@@ -706,7 +708,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
             int index = 0;
             foreach (var item in pointerIdToPointerMap)
             {
-                handPositionMap[index++] = item.Value.pointer.Position;
+                handPositionMap[index++] = item.Value.Pointer.Position;
             }
             return handPositionMap;
         }

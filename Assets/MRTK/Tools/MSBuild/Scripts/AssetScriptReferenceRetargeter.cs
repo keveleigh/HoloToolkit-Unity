@@ -18,13 +18,22 @@ namespace Microsoft.MixedReality.Toolkit.MSBuild
 {
     public static class AssetScriptReferenceRetargeter
     {
-        private struct ClassInformation
+        private readonly struct ClassInformation
         {
-            public string Name;
-            public string Namespace;
-            public string Guid;
-            public long FileId;
-            public int ExecutionOrder;
+            public ClassInformation(string name, string @namespace, string guid, long fileId, int executionOrder = 0)
+            {
+                Name = name;
+                Namespace = @namespace;
+                Guid = guid;
+                FileId = fileId;
+                ExecutionOrder = executionOrder;
+            }
+
+            public string Name { get; }
+            public string Namespace { get; }
+            public string Guid { get; }
+            public long FileId { get; }
+            public int ExecutionOrder { get; }
         }
 
         private class AssemblyInformation
@@ -300,7 +309,7 @@ namespace Microsoft.MixedReality.Toolkit.MSBuild
                             Type type = monoScript.GetClass();
                             if (type != null)
                             {
-                                toReturn.Add(type.FullName, new ClassInformation() { Name = type.Name, Namespace = type.Namespace, FileId = fileId, Guid = guid, ExecutionOrder = MonoImporter.GetExecutionOrder(monoScript) });
+                                toReturn.Add(type.FullName, new ClassInformation(type.Name, type.Namespace, guid, fileId, MonoImporter.GetExecutionOrder(monoScript)));
                             }
                             else
                             {
@@ -381,7 +390,7 @@ namespace Microsoft.MixedReality.Toolkit.MSBuild
                                 }
                                 else
                                 {
-                                    assemblyInformation.CompiledClasses.Add(type.FullName, new ClassInformation() { Name = type.Name, Namespace = type.Namespace, FileId = fileId, Guid = newDllGuid });
+                                    assemblyInformation.CompiledClasses.Add(type.FullName, new ClassInformation(type.Name, type.Namespace, newDllGuid, fileId));
                                 }
                             }
                         }

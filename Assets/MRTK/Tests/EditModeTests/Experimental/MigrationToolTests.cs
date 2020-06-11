@@ -24,17 +24,17 @@ namespace Microsoft.MixedReality.Toolkit.Tests.EditMode
         private readonly string scenePath = "Assets/_migration.unity";
         private readonly string prefabPath = "Assets/_migration.prefab";
 
-        private struct MigrationTypes
+        private readonly struct MigrationTypes
         {
-            public Type oldType;
-            public Type newType;
-            public Type handler;
+            public Type OldType { get; }
+            public Type NewType { get; }
+            public Type Handler { get; }
 
             public MigrationTypes(Type oldT, Type newT, Type mHandler)
             {
-                oldType = oldT;
-                newType = newT;
-                handler = mHandler;
+                OldType = oldT;
+                NewType = newT;
+                Handler = mHandler;
             }
         }
 
@@ -144,9 +144,9 @@ namespace Microsoft.MixedReality.Toolkit.Tests.EditMode
         {
             foreach (var entry in migrationList)
             {
-                Type oldType = entry.oldType;
-                Type newType = entry.newType;
-                Type migrationHandlerType = entry.handler;
+                Type oldType = entry.OldType;
+                Type newType = entry.NewType;
+                Type migrationHandlerType = entry.Handler;
 
                 GameObject gameObject = SetUpGameObjectWithComponentOfType(oldType);
 
@@ -168,9 +168,9 @@ namespace Microsoft.MixedReality.Toolkit.Tests.EditMode
         {
             foreach (var entry in migrationList)
             {
-                Type oldType = entry.oldType;
-                Type newType = entry.newType;
-                Type migrationHandlerType = entry.handler;
+                Type oldType = entry.OldType;
+                Type newType = entry.NewType;
+                Type migrationHandlerType = entry.Handler;
 
                 GameObject gameObject = SetUpGameObjectWithComponentOfType(oldType);
                 PrefabUtility.SaveAsPrefabAsset(gameObject, prefabPath);
@@ -196,9 +196,9 @@ namespace Microsoft.MixedReality.Toolkit.Tests.EditMode
         {
             foreach (var entry in migrationList)
             {
-                Type oldType = entry.oldType;
-                Type newType = entry.newType;
-                Type migrationHandlerType = entry.handler;
+                Type oldType = entry.OldType;
+                Type newType = entry.NewType;
+                Type migrationHandlerType = entry.Handler;
 
                 Scene scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
                 GameObject gameObject = SetUpGameObjectWithComponentOfType(oldType);
@@ -229,9 +229,9 @@ namespace Microsoft.MixedReality.Toolkit.Tests.EditMode
         {
             foreach (var entry in migrationList)
             {
-                Type oldType = entry.oldType;
-                Type newType = entry.newType;
-                Type migrationHandlerType = entry.handler;
+                Type oldType = entry.OldType;
+                Type newType = entry.NewType;
+                Type migrationHandlerType = entry.Handler;
 
                 Scene scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
                 GameObject gameObject = SetUpGameObjectWithComponentOfType(oldType);

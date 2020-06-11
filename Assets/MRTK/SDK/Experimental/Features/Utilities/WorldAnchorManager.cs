@@ -80,11 +80,18 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.Utilities
         /// we'll setup a queue of anchor attachment operations.
         /// The AnchorAttachmentInfo struct has the data needed to do this.
         /// </summary>
-        private struct AnchorAttachmentInfo
+        private readonly struct AnchorAttachmentInfo
         {
-            public GameObject AnchoredGameObject { get; set; }
-            public string AnchorName { get; set; }
-            public AnchorOperation Operation { get; set; }
+            public AnchorAttachmentInfo(GameObject anchoredGameObject, string anchorName, AnchorOperation operation)
+            {
+                AnchoredGameObject = anchoredGameObject;
+                AnchorName = anchorName;
+                Operation = operation;
+            }
+
+            public GameObject AnchoredGameObject { get; }
+            public string AnchorName { get; }
+            public AnchorOperation Operation { get; }
         }
 
         /// <summary>
@@ -105,12 +112,12 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.Utilities
         /// <summary>
         /// The queue for local device anchor operations.
         /// </summary>
-        private Queue<AnchorAttachmentInfo> LocalAnchorOperations = new Queue<AnchorAttachmentInfo>();
+        private readonly Queue<AnchorAttachmentInfo> LocalAnchorOperations = new Queue<AnchorAttachmentInfo>();
 
         /// <summary>
         /// Internal list of anchors and their GameObject references.
         /// </summary>
-        private Dictionary<string, GameObject> AnchorGameObjectReferenceList = new Dictionary<string, GameObject>(0);
+        private readonly Dictionary<string, GameObject> AnchorGameObjectReferenceList = new Dictionary<string, GameObject>(0);
 
         #region Unity Methods
 
@@ -239,11 +246,11 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.Utilities
 
             LocalAnchorOperations.Enqueue(
                 new AnchorAttachmentInfo
-                {
-                    AnchoredGameObject = gameObjectToAnchor,
-                    AnchorName = anchorName,
-                    Operation = AnchorOperation.Save
-                }
+                (
+                    anchoredGameObject: gameObjectToAnchor,
+                    anchorName: anchorName,
+                    operation: AnchorOperation.Save
+                )
             );
 
             return anchorName;
@@ -314,11 +321,11 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.Utilities
 
             LocalAnchorOperations.Enqueue(
                 new AnchorAttachmentInfo
-                {
-                    AnchoredGameObject = gameObjectToUnanchor,
-                    AnchorName = anchorName,
-                    Operation = AnchorOperation.Delete
-                });
+                (
+                    anchoredGameObject: gameObjectToUnanchor,
+                    anchorName: anchorName,
+                    operation: AnchorOperation.Delete
+                ));
 #endif
         }
 
@@ -357,11 +364,11 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.Utilities
                 }
 
                 LocalAnchorOperations.Enqueue(new AnchorAttachmentInfo
-                {
-                    AnchorName = anchors[i].name,
-                    AnchoredGameObject = anchors[i].gameObject,
-                    Operation = AnchorOperation.Delete
-                });
+                (
+                    anchorName: anchors[i].name,
+                    anchoredGameObject: anchors[i].gameObject,
+                    operation: AnchorOperation.Delete
+                ));
             }
 #endif
         }
