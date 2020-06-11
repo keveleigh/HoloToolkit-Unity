@@ -278,15 +278,15 @@ namespace Microsoft.MixedReality.Toolkit.UI
         private readonly struct PointerData
         {
             public IMixedRealityPointer Pointer { get; }
+            public bool IsNearPointer { get; }
             private readonly Vector3 initialGrabPointInPointer;
 
             public PointerData(IMixedRealityPointer pointer, Vector3 worldGrabPoint) : this()
             {
                 Pointer = pointer;
                 initialGrabPointInPointer = Quaternion.Inverse(pointer.Rotation) * (worldGrabPoint - pointer.Position);
+                IsNearPointer = Pointer is IMixedRealityNearPointer;
             }
-
-            public bool IsNearPointer => pointer is IMixedRealityNearPointer;
 
             /// <summary>
             /// Returns the grab point on the manipulated object in world space

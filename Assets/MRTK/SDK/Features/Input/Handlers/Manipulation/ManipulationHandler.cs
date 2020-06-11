@@ -260,17 +260,14 @@ namespace Microsoft.MixedReality.Toolkit.UI
         private readonly struct PointerData
         {
             public IMixedRealityPointer Pointer { get; }
+            public bool IsNearPointer { get; }
             private readonly Vector3 initialGrabPointInPointer;
 
             public PointerData(IMixedRealityPointer pointer, Vector3 initialGrabPointInPointer) : this()
             {
                 this.Pointer = pointer;
                 this.initialGrabPointInPointer = initialGrabPointInPointer;
-            }
-
-            public bool IsNearPointer()
-            {
-                return (pointer is IMixedRealityNearPointer);
+                this.IsNearPointer = pointer is IMixedRealityNearPointer;
             }
 
             /// <summary>
@@ -397,7 +394,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
         {
             foreach (var item in pointerIdToPointerMap)
             {
-                if (item.Value.IsNearPointer())
+                if (item.Value.IsNearPointer)
                 {
                     return true;
                 }
