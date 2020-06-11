@@ -397,7 +397,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.Utilities
         /// Executes the anchor operations from the localAnchorOperations queue.
         /// </summary>
         /// <param name="anchorAttachmentInfo">Parameters for attaching the anchor.</param>
-        private void DoAnchorOperation(AnchorAttachmentInfo anchorAttachmentInfo)
+        private void DoAnchorOperation(in AnchorAttachmentInfo anchorAttachmentInfo)
         {
             if (AnchorStore == null)
             {
