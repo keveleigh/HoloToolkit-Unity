@@ -195,7 +195,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
 
                 for (int i = 0; i < pointerConfigurations.Length; i++)
                 {
-                    var option = pointerConfigurations[i].Profile;
+                    PointerOption option = pointerConfigurations[i].Profile;
                     if (option.ControllerType.HasFlag(controllerType) && option.Handedness.HasFlag(controllingHand))
                     {
                         IMixedRealityPointer requestedPointer = null;
