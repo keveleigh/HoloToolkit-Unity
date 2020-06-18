@@ -256,22 +256,22 @@ namespace Microsoft.MixedReality.Toolkit.Editor
 
         #region static
 
-        private static readonly string DefaultGeneratedFolderName = "MixedRealityToolkit.Generated";
-        private static readonly string DefaultExtensionsFolderName = "Extensions";
-        private static readonly string DefaultExtensionNamespace = "Microsoft.MixedReality.Toolkit.Extensions";
-        private static readonly string PersistentStateKey = "MRTK_ExtensionServiceWizard_State_Before_Recompilation";
-        private static readonly string ScriptExtension = ".cs";
-        private static readonly string ProfileExtension = ".asset";
+        private const string DefaultGeneratedFolderName = "MixedRealityToolkit.Generated";
+        private const string DefaultExtensionsFolderName = "Extensions";
+        private const string DefaultExtensionNamespace = "Microsoft.MixedReality.Toolkit.Extensions";
+        private const string PersistentStateKey = "MRTK_ExtensionServiceWizard_State_Before_Recompilation";
+        private const string ScriptExtension = ".cs";
+        private const string ProfileExtension = ".asset";
 
-        private static readonly string ServiceNameSearchString = "#SERVICE_NAME#";
-        private static readonly string InspectorNameSearchString = "#INSPECTOR_NAME#";
-        private static readonly string InterfaceNameSearchString = "#INTERFACE_NAME#";
-        private static readonly string ProfileNameSearchString = "#PROFILE_NAME#";
-        private static readonly string ProfileFieldNameSearchString = "#PROFILE_FIELD_NAME#";
-        private static readonly string ConstructorSearchString = "#SERVICE_CONSTRUCTOR#";
-        private static readonly string SupportedPlatformsSearchString = "#SUPPORTED_PLATFORMS_PARAM#";
-        private static readonly string ExtensionNamespaceSearchString = "#NAMESPACE#";
-        private static readonly string SampleCodeTemplate = "#INTERFACE_NAME# #SERVICE_NAME# = MixedRealityToolkit.Instance.GetService<#INTERFACE_NAME#>();";
+        private const string ServiceNameSearchString = "#SERVICE_NAME#";
+        private const string InspectorNameSearchString = "#INSPECTOR_NAME#";
+        private const string InterfaceNameSearchString = "#INTERFACE_NAME#";
+        private const string ProfileNameSearchString = "#PROFILE_NAME#";
+        private const string ProfileFieldNameSearchString = "#PROFILE_FIELD_NAME#";
+        private const string ConstructorSearchString = "#SERVICE_CONSTRUCTOR#";
+        private const string SupportedPlatformsSearchString = "#SUPPORTED_PLATFORMS_PARAM#";
+        private const string ExtensionNamespaceSearchString = "#NAMESPACE#";
+        private const string SampleCodeTemplate = "#INTERFACE_NAME# #SERVICE_NAME# = MixedRealityToolkit.Instance.GetService<#INTERFACE_NAME#>();";
 
         #endregion
 
