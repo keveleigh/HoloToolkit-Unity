@@ -319,7 +319,7 @@ namespace Microsoft.MixedReality.Toolkit.Editor
         private string InspectorTemplate;
         private string InterfaceTemplate;
         private string ProfileTemplate;
-        private StringBuilder creationLog = new StringBuilder();
+        private readonly StringBuilder creationLog = new StringBuilder();
         private PersistentState state;
 
         #endregion
