@@ -82,7 +82,7 @@ namespace Microsoft.MixedReality.Toolkit.Editor
                 cloneWindow.Close();
             }
 
-            cloneWindow = (MixedRealityProfileCloneWindow)GetWindow<MixedRealityProfileCloneWindow>(true, "Clone Profile", true);
+            cloneWindow = GetWindow<MixedRealityProfileCloneWindow>(true, "Clone Profile", true);
             cloneWindow.Initialize(parentProfile, childProfile, childProperty, selectionTarget);
             cloneWindow.Show(true);
         }
