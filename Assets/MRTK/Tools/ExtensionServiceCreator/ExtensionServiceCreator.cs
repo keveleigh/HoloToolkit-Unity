@@ -278,11 +278,11 @@ namespace Microsoft.MixedReality.Toolkit.Editor
         #region paths
 
         private string ExtensionsFolder => Path.Combine("Assets", DefaultGeneratedFolderName, DefaultExtensionsFolderName);
-        private string ServiceTemplatePath => MixedRealityToolkitFiles.MapRelativeFilePath(MixedRealityToolkitModuleType.Tools, "ExtensionServiceCreator/Templates/ExtensionScriptTemplate.txt");
-        private string ServiceConstructorTemplatePath => MixedRealityToolkitFiles.MapRelativeFilePath(MixedRealityToolkitModuleType.Tools, "ExtensionServiceCreator/Templates/ExtensionConstructorTemplate.txt");
-        private string InspectorTemplatePath => MixedRealityToolkitFiles.MapRelativeFilePath(MixedRealityToolkitModuleType.Tools, "ExtensionServiceCreator/Templates/ExtensionInspectorTemplate.txt");
-        private string InterfaceTemplatePath => MixedRealityToolkitFiles.MapRelativeFilePath(MixedRealityToolkitModuleType.Tools, "ExtensionServiceCreator/Templates/ExtensionInterfaceTemplate.txt");
-        private string ProfileTemplatePath => MixedRealityToolkitFiles.MapRelativeFilePath(MixedRealityToolkitModuleType.Tools, "ExtensionServiceCreator/Templates/ExtensionProfileTemplate.txt");
+        private static readonly string ServiceTemplatePath = AssetDatabase.GUIDToAssetPath("bd6d5de0b9c435345a4e4e25dda3afd1");
+        private static readonly string ServiceConstructorTemplatePath = AssetDatabase.GUIDToAssetPath("41b9c612c56dddd4691c98456dc221f2");
+        private static readonly string InspectorTemplatePath = AssetDatabase.GUIDToAssetPath("2283bd5be15f3074fa8839ef90573636");
+        private static readonly string InterfaceTemplatePath = AssetDatabase.GUIDToAssetPath("1179733a8171c7a49bb1cbdc1ff0c04c");
+        private static readonly string ProfileTemplatePath = AssetDatabase.GUIDToAssetPath("d67b9bbb1a49ad743a30f55e814007b9");
 
         #endregion
 
