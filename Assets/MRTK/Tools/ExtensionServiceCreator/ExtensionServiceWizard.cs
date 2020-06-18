@@ -21,7 +21,7 @@ namespace Microsoft.MixedReality.Toolkit.Editor
         private const string TargetFolderLabel = "Target Folder";
 
         private ExtensionServiceCreator creator = new ExtensionServiceCreator();
-        private List<string> errors = new List<string>();
+        private readonly List<string> errors = new List<string>();
         private bool registered = false;
         private static float progressBarTimer = 0.0f;
 

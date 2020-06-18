@@ -68,8 +68,7 @@ namespace Microsoft.MixedReality.Toolkit
                 }
                 else
                 {
-                    string folder;
-                    if (EditorProjectUtilities.FindRelativeDirectory(PackageFolder, out folder))
+                    if (EditorProjectUtilities.FindRelativeDirectory(PackageFolder, out string folder))
                     {
                         return AssetDatabase.LoadAssetAtPath<BaseMixedRealityProfile>(System.IO.Path.Combine(folder, DefaultProfilePath));
                     }

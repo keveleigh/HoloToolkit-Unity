@@ -73,7 +73,7 @@ namespace Microsoft.MixedReality.Toolkit.Editor
         private Object selectionTarget;
         private string childProfileTypeName;
         private string childProfileAssetName;
-        private List<SubProfileAction> subProfileActions = new List<SubProfileAction>();
+        private readonly List<SubProfileAction> subProfileActions = new List<SubProfileAction>();
 
         public static void OpenWindow(BaseMixedRealityProfile parentProfile, BaseMixedRealityProfile childProfile, SerializedProperty childProperty, Object selectionTarget = null)
         {
@@ -207,7 +207,7 @@ namespace Microsoft.MixedReality.Toolkit.Editor
                                     if (GUILayout.Button("Put in original folder", EditorStyles.miniButton, GUILayout.MaxWidth(120)))
                                     {
                                         string profilePath = AssetDatabase.GetAssetPath(action.Property.objectReferenceValue);
-                                        action.TargetFolder = AssetDatabase.LoadAssetAtPath<Object>(System.IO.Path.GetDirectoryName(profilePath));
+                                        action.TargetFolder = AssetDatabase.LoadAssetAtPath<Object>(Path.GetDirectoryName(profilePath));
                                     }
                                 }
                                 break;
@@ -235,7 +235,7 @@ namespace Microsoft.MixedReality.Toolkit.Editor
                 if (GUILayout.Button("Put in original folder", EditorStyles.miniButton, GUILayout.MaxWidth(120)))
                 {
                     string profilePath = AssetDatabase.GetAssetPath(childProfile);
-                    targetFolder = AssetDatabase.LoadAssetAtPath<Object>(System.IO.Path.GetDirectoryName(profilePath));
+                    targetFolder = AssetDatabase.LoadAssetAtPath<Object>(Path.GetDirectoryName(profilePath));
                 }
             }
 

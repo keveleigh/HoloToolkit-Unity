@@ -663,7 +663,7 @@ namespace Microsoft.MixedReality.Toolkit.Editor
                     return;
                 }
 
-                string profilePath = System.IO.Path.Combine(ProfileFolderPath, ProfileAssetName + ProfileExtension);
+                string profilePath = Path.Combine(ProfileFolderPath, ProfileAssetName + ProfileExtension);
                 profileInstance.name = ProfileAssetName;
 
                 // Save the asset and refresh
@@ -699,11 +699,11 @@ namespace Microsoft.MixedReality.Toolkit.Editor
         private bool ReadTemplate(string templatePath, ref string template)
         {
             string dataPath = Application.dataPath.Replace("/Assets", string.Empty);
-            string path = System.IO.Path.Combine(dataPath, templatePath);
+            string path = Path.Combine(dataPath, templatePath);
 
             try
             {
-                template = System.IO.File.ReadAllText(path);
+                template = File.ReadAllText(path);
             }
             catch (Exception e)
             {
@@ -716,12 +716,14 @@ namespace Microsoft.MixedReality.Toolkit.Editor
 
         private void CreateDefaultState()
         {
-            state = new PersistentState();
-            state.ServiceName = "NewService";
-            state.UsesProfile = true;
-            state.UsesInspector = true;
-            state.Stage = CreationStage.SelectNameAndPlatform;
-            state.Platforms = SupportedPlatforms.LinuxStandalone | SupportedPlatforms.MacStandalone | SupportedPlatforms.WindowsStandalone | SupportedPlatforms.WindowsUniversal;
+            state = new PersistentState
+            {
+                ServiceName = "NewService",
+                UsesProfile = true,
+                UsesInspector = true,
+                Stage = CreationStage.SelectNameAndPlatform,
+                Platforms = SupportedPlatforms.LinuxStandalone | SupportedPlatforms.MacStandalone | SupportedPlatforms.WindowsStandalone | SupportedPlatforms.WindowsUniversal
+            };
 
             SetAllFolders(ExtensionsFolder);
         }
@@ -746,7 +748,7 @@ namespace Microsoft.MixedReality.Toolkit.Editor
 
         private bool AssetExists(string assetPath, string assetName, string extension)
         {
-            string path = System.IO.Path.Combine(assetPath, assetName + extension);
+            string path = Path.Combine(assetPath, assetName + extension);
             UnityEngine.Object asset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(path);
             return asset != null;
         }
@@ -796,7 +798,7 @@ namespace Microsoft.MixedReality.Toolkit.Editor
             creationLog.AppendLine("Creating " + localPath);
             try
             {
-                System.IO.File.WriteAllText(localPath, contents);
+                File.WriteAllText(localPath, contents);
             }
             catch (Exception e)
             {
