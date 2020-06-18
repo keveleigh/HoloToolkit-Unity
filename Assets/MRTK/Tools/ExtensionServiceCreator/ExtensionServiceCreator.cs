@@ -256,7 +256,6 @@ namespace Microsoft.MixedReality.Toolkit.Editor
 
         #region static
 
-        private const string DefaultGeneratedFolderName = "MixedRealityToolkit.Generated";
         private const string DefaultExtensionsFolderName = "Extensions";
         private const string DefaultExtensionNamespace = "Microsoft.MixedReality.Toolkit.Extensions";
         private const string PersistentStateKey = "MRTK_ExtensionServiceWizard_State_Before_Recompilation";
@@ -277,7 +276,7 @@ namespace Microsoft.MixedReality.Toolkit.Editor
 
         #region paths
 
-        private string ExtensionsFolder => Path.Combine("Assets", DefaultGeneratedFolderName, DefaultExtensionsFolderName);
+        private static readonly string ExtensionsFolder = Path.Combine(MixedRealityToolkitFiles.GetGeneratedFolder, DefaultExtensionsFolderName);
         private static readonly string ServiceTemplatePath = AssetDatabase.GUIDToAssetPath("bd6d5de0b9c435345a4e4e25dda3afd1");
         private static readonly string ServiceConstructorTemplatePath = AssetDatabase.GUIDToAssetPath("41b9c612c56dddd4691c98456dc221f2");
         private static readonly string InspectorTemplatePath = AssetDatabase.GUIDToAssetPath("2283bd5be15f3074fa8839ef90573636");
@@ -427,13 +426,7 @@ namespace Microsoft.MixedReality.Toolkit.Editor
 
             if (!AssetDatabase.IsValidFolder(ExtensionsFolder))
             {
-                var generatedFolder = Path.Combine("Assets", DefaultGeneratedFolderName);
-                if (!AssetDatabase.IsValidFolder(generatedFolder))
-                {
-                    AssetDatabase.CreateFolder("Assets", DefaultGeneratedFolderName);
-                }
-
-                AssetDatabase.CreateFolder(generatedFolder, DefaultExtensionsFolderName);
+                AssetDatabase.CreateFolder(MixedRealityToolkitFiles.GetGeneratedFolder, DefaultExtensionsFolderName);
                 AssetDatabase.Refresh();
 
                 // Setting the default folders is necessary after the asset database refresh
