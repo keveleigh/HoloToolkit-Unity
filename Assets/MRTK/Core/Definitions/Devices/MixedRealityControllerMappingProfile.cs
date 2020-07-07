@@ -19,16 +19,14 @@ namespace Microsoft.MixedReality.Toolkit.Input
     /// the controller class.
     /// </summary>
     [CreateAssetMenu(menuName = "Mixed Reality Toolkit/Profiles/Mixed Reality Controller Mapping Profile", fileName = "MixedRealityControllerMappingProfile", order = (int)CreateProfileMenuItemIndices.ControllerMapping)]
-    public class MixedRealityControllerMappingProfile : BaseMixedRealityProfile
+    public class MixedRealityControllerMappingProfile : BaseMixedRealityProfile, IMixedRealityControllerMappingProfile
     {
         [SerializeField]
         [Tooltip("The list of controller mappings your application can use.")]
         [FormerlySerializedAs("mixedRealityControllerMappingProfiles")]
         private MixedRealityControllerMapping[] mixedRealityControllerMappings = Array.Empty<MixedRealityControllerMapping>();
 
-        /// <summary>
-        /// The list of controller mappings your application can use.
-        /// </summary>
+        /// <inheritdoc />
         public MixedRealityControllerMapping[] MixedRealityControllerMappings => mixedRealityControllerMappings;
 
         [Obsolete("MixedRealityControllerMappingProfiles is obsolete. Please use MixedRealityControllerMappings.")]
