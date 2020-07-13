@@ -50,8 +50,9 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Gltf.Serialization
         /// <summary>
         /// Constructs the glTF Object.
         /// </summary>
+        /// <param name="shader">The shader to use with the glTF object.</param>
         /// <returns>The new <see href="https://docs.unity3d.com/ScriptReference/GameObject.html">GameObject</see> of the final constructed <see cref="Schema.GltfScene"/></returns>
-        public static async Task<GameObject> ConstructAsync(this GltfObject gltfObject)
+        public static async Task<GameObject> ConstructAsync(this GltfObject gltfObject, Shader shader = null)
         {
             if (!gltfObject.asset.version.Contains("2.0"))
             {
@@ -78,7 +79,7 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Gltf.Serialization
 
             for (int i = 0; i < gltfObject.materials?.Length; i++)
             {
-                await gltfObject.ConstructMaterialAsync(gltfObject.materials[i], i);
+                await gltfObject.ConstructMaterialAsync(gltfObject.materials[i], i, shader);
             }
 
             if (gltfObject.scenes == null)
@@ -207,22 +208,32 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Gltf.Serialization
             }
         }
 
-        private static async Task ConstructMaterialAsync(this GltfObject gltfObject, GltfMaterial gltfMaterial, int materialId)
+        private static async Task ConstructMaterialAsync(this GltfObject gltfObject, GltfMaterial gltfMaterial, int materialId, Shader shader = null)
         {
             if (gltfObject.UseBackgroundThread) await Update;
 
-            Material material = await CreateMRTKShaderMaterial(gltfObject, gltfMaterial, materialId);
-            if (material == null)
-            {
-                Debug.LogWarning("The Mixed Reality Toolkit/Standard Shader was not found. Falling back to Standard Shader");
-                material = await CreateStandardShaderMaterial(gltfObject, gltfMaterial, materialId);
-            }
+            Material material;
 
-            if (material == null)
+            if (shader != null)
             {
-                Debug.LogWarning("The Standard Shader was not found. Failed to create material for glTF object");
+                material = new Material(shader);
             }
             else
+            {
+                material = await CreateMRTKShaderMaterial(gltfObject, gltfMaterial, materialId);
+                if (material == null)
+                {
+                    Debug.LogWarning("The Mixed Reality Toolkit/Standard Shader was not found. Falling back to Standard Shader");
+                    material = await CreateStandardShaderMaterial(gltfObject, gltfMaterial, materialId);
+                }
+
+                if (material == null)
+                {
+                    Debug.LogWarning("The Standard Shader was not found. Failed to create material for glTF object");
+                }
+            }
+
+            if (material != null)
             {
                 gltfMaterial.Material = material;
             }
@@ -232,7 +243,7 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Gltf.Serialization
 
         private static async Task<Material> CreateMRTKShaderMaterial(GltfObject gltfObject, GltfMaterial gltfMaterial, int materialId)
         {
-            var shader = StandardShaderUtility.MrtkStandardShader;
+            Shader shader = StandardShaderUtility.MrtkStandardShader;
 
             if (shader == null) { return null; }
 
@@ -337,7 +348,7 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Gltf.Serialization
 
             if (gltfMaterial.doubleSided)
             {
-                material.SetFloat(CullModeId, (float)UnityEngine.Rendering.CullMode.Off);
+                material.SetFloat(CullModeId, (float)CullMode.Off);
             }
 
             material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
