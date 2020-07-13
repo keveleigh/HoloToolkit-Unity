@@ -232,7 +232,7 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Gltf.Serialization
 
         private static async Task<Material> CreateMRTKShaderMaterial(GltfObject gltfObject, GltfMaterial gltfMaterial, int materialId)
         {
-            var shader = Shader.Find("Mixed Reality Toolkit/Standard");
+            var shader = StandardShaderUtility.MrtkStandardShader;
 
             if (shader == null) { return null; }
 

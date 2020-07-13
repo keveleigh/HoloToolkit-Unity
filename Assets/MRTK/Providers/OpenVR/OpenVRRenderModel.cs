@@ -348,7 +348,7 @@ namespace Microsoft.MixedReality.Toolkit.OpenVR.Input
                         texture.Apply();
                     }
 
-                    material = new Material(shader != null ? shader : Shader.Find("Mixed Reality Toolkit/Standard"))
+                    material = new Material(shader != null ? shader : StandardShaderUtility.MrtkStandardShader)
                     {
                         mainTexture = texture
                     };
