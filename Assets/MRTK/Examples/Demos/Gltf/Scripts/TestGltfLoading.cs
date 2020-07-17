@@ -36,10 +36,15 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.Gltf
 
         [SerializeField]
         [Tooltip("Scale factor to apply on load")]
-        private float ScaleFactor = 1.0f;
+        [FormerlySerializedAs("ScaleFactor")]
+        private float scaleFactor = 1.0f;
 
         [SerializeField]
         public GameObject DebugText;
+
+        //[SerializeField]
+        //[Tooltip("An optional material to use on the loaded model.")]
+        //private Material modelMaterial = null;
 
         private async void Start()
         {
@@ -62,7 +67,7 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.Gltf
                 // Put object in front of user
                 gltfObject.GameObjectReference.transform.position = new Vector3(0.0f, 0.0f, 1.0f);
 
-                gltfObject.GameObjectReference.transform.localScale *= this.ScaleFactor;
+                gltfObject.GameObjectReference.transform.localScale *= scaleFactor;
             }
             catch (Exception e)
             {

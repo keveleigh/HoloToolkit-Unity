@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-using Microsoft.MixedReality.Toolkit.Utilities;
 using Microsoft.MixedReality.Toolkit.Utilities.Gltf.Serialization;
 using System;
 using UnityEngine;
@@ -18,9 +17,13 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.Gltf
         [Tooltip("This can be a local or external resource uri.")]
         private string uri = string.Empty;
 
+        [SerializeField]
+        [Tooltip("An optional material to use on the loaded model.")]
+        private Material modelMaterial = null;
+
         private async void Start()
         {
-            Response response = new Response();
+            Utilities.Response response = new Utilities.Response();
 
             try
             {
@@ -41,7 +44,7 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.Gltf
 
             try
             {
-                await gltfObject.ConstructAsync();
+                await gltfObject.ConstructAsync(modelMaterial);
             }
             catch (Exception e)
             {

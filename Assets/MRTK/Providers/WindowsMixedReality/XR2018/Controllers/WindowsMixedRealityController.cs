@@ -324,14 +324,29 @@ namespace Microsoft.MixedReality.Toolkit.WindowsMixedReality.Input
             GameObject gltfGameObject = null;
             if (fileBytes != null)
             {
-                var gltfObject = GltfUtility.GetGltfObjectFromGlb(fileBytes);
-                gltfGameObject = await gltfObject.ConstructAsync();
+                Utilities.Gltf.Schema.GltfObject gltfObject = GltfUtility.GetGltfObjectFromGlb(fileBytes);
+
+                MixedRealityControllerVisualizationProfile visualizationProfile = GetControllerVisualizationProfile();
+                if (visualizationProfile != null)
+                {
+                    Material defaultControllerModelMaterial = visualizationProfile.GetDefaultControllerModelMaterialOverride(GetType(), ControllerHandedness);
+                    if (defaultControllerModelMaterial != null)
+                    {
+                        gltfGameObject = await gltfObject.ConstructAsync(defaultControllerModelMaterial);
+                    }
+                }
+
+                // If there wasn't a profile-serialized shader, create with the default
+                if (gltfGameObject == null)
+                {
+                    gltfGameObject = await gltfObject.ConstructAsync();
+                }
+
                 if (gltfGameObject != null)
                 {
-                    var visualizationProfile = GetControllerVisualizationProfile();
                     if (visualizationProfile != null)
                     {
-                        var visualizationType = visualizationProfile.GetControllerVisualizationTypeOverride(GetType(), ControllerHandedness);
+                        SystemType visualizationType = visualizationProfile.GetControllerVisualizationTypeOverride(GetType(), ControllerHandedness);
                         if (visualizationType != null)
                         {
                             // Set the platform controller model to not be destroyed when the source is lost. It'll be disabled instead,

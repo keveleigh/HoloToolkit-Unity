@@ -410,9 +410,7 @@ namespace Microsoft.MixedReality.Toolkit.WindowsMixedReality.Input
 
                 if (controller != null)
                 {
-                    var mrtkController = controller as WindowsMixedRealityController;
-
-                    if (mrtkController != null)
+                    if (controller is WindowsMixedRealityController mrtkController)
                     {
                         mrtkController.EnsureControllerModel(interactionSourceState.source);
                     }
@@ -618,6 +616,8 @@ namespace Microsoft.MixedReality.Toolkit.WindowsMixedReality.Input
                 Debug.Assert(controller != null);
                 return controller;
             }
+
+            Debug.Log($"AddController {interactionSource.id} | {addController}");
 
             if (!addController) { return null; }
 
@@ -953,7 +953,7 @@ namespace Microsoft.MixedReality.Toolkit.WindowsMixedReality.Input
                 {
                     // clean up existing controllers that didn't trigger the InteractionSourceLost event.
                     // this can happen eg. when unity is registering cached controllers from a previous play session in the editor.
-                    // those actually don't exist in the current session and therefor won't receive the InteractionSourceLost once  
+                    // those actually don't exist in the current session and therefore won't receive the InteractionSourceLost once  
                     // Unity's InteractionManager catches up
                     for (int i = 0; i < numInteractionManagerStates; ++i)
                     {
