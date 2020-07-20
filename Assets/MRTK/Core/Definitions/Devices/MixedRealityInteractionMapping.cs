@@ -54,27 +54,15 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// <param name="axisCodeY">Optional vertical axis value to get axis data from Unity's old input system.</param>
         /// <param name="invertXAxis">Optional horizontal axis invert option.</param>
         /// <param name="invertYAxis">Optional vertical axis invert option.</param> 
-        public MixedRealityInteractionMapping(uint id, string description, AxisType axisType, DeviceInputType inputType, MixedRealityInputAction inputAction, KeyCode keyCode = KeyCode.None, string axisCodeX = "", string axisCodeY = "", bool invertXAxis = false, bool invertYAxis = false)
+        public MixedRealityInteractionMapping(uint id, string description, AxisType axisType, DeviceInputType inputType, MixedRealityInputAction inputAction, KeyCode keyCode = KeyCode.None, string axisCodeX = "", string axisCodeY = "", bool invertXAxis = false, bool invertYAxis = false) :
+            this(new MixedRealityInputActionMapping(description, axisType, inputType, inputAction))
         {
             this.id = id;
-            this.description = description;
-            this.axisType = axisType;
-            this.inputType = inputType;
-            this.inputAction = inputAction;
             this.keyCode = keyCode;
             this.axisCodeX = axisCodeX;
             this.axisCodeY = axisCodeY;
             this.invertXAxis = invertXAxis;
             this.invertYAxis = invertYAxis;
-
-            rawData = null;
-            boolData = false;
-            floatData = 0f;
-            vector2Data = Vector2.zero;
-            positionData = Vector3.zero;
-            rotationData = Quaternion.identity;
-            poseData = MixedRealityPose.ZeroIdentity;
-            changed = false;
         }
 
         public MixedRealityInteractionMapping(MixedRealityInteractionMapping mixedRealityInteractionMapping)
@@ -89,7 +77,23 @@ namespace Microsoft.MixedReality.Toolkit.Input
                    mixedRealityInteractionMapping.invertXAxis,
                    mixedRealityInteractionMapping.invertYAxis) { }
 
+        public MixedRealityInteractionMapping(MixedRealityInputActionMapping mixedRealityInputActionMapping)
+        {
+            inputActionMapping = mixedRealityInputActionMapping;
+            rawData = null;
+            boolData = false;
+            floatData = 0f;
+            vector2Data = Vector2.zero;
+            positionData = Vector3.zero;
+            rotationData = Quaternion.identity;
+            poseData = MixedRealityPose.ZeroIdentity;
+            changed = false;
+        }
+
         #region Interaction Properties
+
+        [SerializeField]
+        private MixedRealityInputActionMapping inputActionMapping;
 
         [SerializeField]
         [Tooltip("The Id assigned to the Interaction.")]
@@ -100,44 +104,28 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// </summary>
         public uint Id => id;
 
-        [SerializeField]
-        [Tooltip("The description of the interaction mapping.")]
-        private string description;
-
         /// <summary>
         /// The description of the interaction mapping.
         /// </summary>
-        public string Description => description;
-
-        [SerializeField]
-        [Tooltip("The axis type of the button, e.g. Analogue, Digital, etc.")]
-        private AxisType axisType;
+        public string Description => inputActionMapping.Description;
 
         /// <summary>
         /// The axis type of the button, e.g. Analogue, Digital, etc.
         /// </summary>
-        public AxisType AxisType => axisType;
-
-        [SerializeField]
-        [Tooltip("The primary action of the input as defined by the controller SDK.")]
-        private DeviceInputType inputType;
+        public AxisType AxisType => inputActionMapping.AxisType;
 
         /// <summary>
         /// The primary action of the input as defined by the controller SDK.
         /// </summary>
-        public DeviceInputType InputType => inputType;
-
-        [SerializeField]
-        [Tooltip("Action to be raised to the Input Manager when the input data has changed.")]
-        private MixedRealityInputAction inputAction;
+        public DeviceInputType InputType => inputActionMapping.InputType;
 
         /// <summary>
         /// Action to be raised to the Input Manager when the input data has changed.
         /// </summary>
         public MixedRealityInputAction MixedRealityInputAction
         {
-            get { return inputAction; }
-            internal set { inputAction = value; }
+            get { return inputActionMapping.InputAction; }
+            internal set { inputActionMapping.InputAction = value; }
         }
 
         [SerializeField]
