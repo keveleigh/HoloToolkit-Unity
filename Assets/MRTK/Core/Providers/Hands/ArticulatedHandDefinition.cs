@@ -86,13 +86,13 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// The articulated hands default interactions.
         /// </summary>
         /// <remarks>A single interaction mapping works for both left and right articulated hands.</remarks>
-        public MixedRealityInteractionMapping[] DefaultInteractions => new[]
+        public MixedRealityInputActionMapping[] DefaultInteractions => new[]
         {
-            new MixedRealityInteractionMapping(0, "Spatial Pointer", AxisType.SixDof, DeviceInputType.SpatialPointer),
-            new MixedRealityInteractionMapping(1, "Spatial Grip", AxisType.SixDof, DeviceInputType.SpatialGrip),
-            new MixedRealityInteractionMapping(2, "Select", AxisType.Digital, DeviceInputType.Select),
-            new MixedRealityInteractionMapping(3, "Grab", AxisType.SingleAxis, DeviceInputType.TriggerPress),
-            new MixedRealityInteractionMapping(4, "Index Finger Pose", AxisType.SixDof, DeviceInputType.IndexFinger)
+            new MixedRealityInputActionMapping("Spatial Pointer", AxisType.SixDof, DeviceInputType.SpatialPointer),
+            new MixedRealityInputActionMapping("Spatial Grip", AxisType.SixDof, DeviceInputType.SpatialGrip),
+            new MixedRealityInputActionMapping("Select", AxisType.Digital, DeviceInputType.Select),
+            new MixedRealityInputActionMapping("Grab", AxisType.SingleAxis, DeviceInputType.TriggerPress),
+            new MixedRealityInputActionMapping("Index Finger Pose", AxisType.SixDof, DeviceInputType.IndexFinger)
         };
 
         /// <summary>

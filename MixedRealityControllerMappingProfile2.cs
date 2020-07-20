@@ -19,7 +19,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
     /// the controller class.
     /// </summary>
     [CreateAssetMenu(menuName = "Mixed Reality Toolkit/Profiles/Mixed Reality Controller Mapping Profile", fileName = "MixedRealityControllerMappingProfile", order = (int)CreateProfileMenuItemIndices.ControllerMapping)]
-    public class MixedRealityControllerMappingProfile : BaseMixedRealityProfile
+    public class MixedRealityControllerMappingProfile2 : BaseMixedRealityProfile
     {
         [SerializeField]
         [Tooltip("The list of controller mappings your application can use.")]
@@ -63,7 +63,6 @@ namespace Microsoft.MixedReality.Toolkit.Input
                 EditorUtility.SetDirty(asset);
             }
         }
-
 
         private static Type[] controllerMappingTypes;
 
