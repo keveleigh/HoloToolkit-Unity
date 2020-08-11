@@ -128,12 +128,6 @@ namespace Microsoft.MixedReality.Toolkit.Utilities
 #if !UNITY_2020_1_OR_NEWER
             // Ensure compatibility with the pre-2019.3 XR architecture for customers / platforms
             // with legacy requirements.
-#pragma warning disable 0618
-            PlayerSettings.VRCardboard.depthFormat = depthFormat;
-            PlayerSettings.VRDaydream.depthFormat = depthFormat;
-#pragma warning restore 0618
-
-            var playerSettings = GetSettingsObject("PlayerSettings");
 #if UNITY_2019_1_OR_NEWER
             // Ensure compatibility with the pre-2019.3 XR architecture for customers / platforms
             // with legacy requirements.
@@ -142,11 +136,8 @@ namespace Microsoft.MixedReality.Toolkit.Utilities
                 PlayerSettings.VRWindowsMixedReality.DepthBufferFormat.DepthBufferFormat16Bit :
                 PlayerSettings.VRWindowsMixedReality.DepthBufferFormat.DepthBufferFormat24Bit;
 #pragma warning restore 0618
-
-            ChangeProperty(playerSettings,
-                "vrSettings.lumin.depthFormat",
-                property => property.intValue = depthFormat);
 #else
+            var playerSettings = GetSettingsObject("PlayerSettings");
 
             ChangeProperty(playerSettings,
                 "vrSettings.hololens.depthFormat",
