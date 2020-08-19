@@ -5,6 +5,8 @@ using System;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 #if !UNITY_2020_1_OR_NEWER
 using Microsoft.MixedReality.Toolkit.Utilities.Editor;
@@ -14,19 +16,54 @@ namespace Microsoft.MixedReality.Toolkit.Utilities
 {
     public static class MixedRealityOptimizeUtils
     {
+        private static readonly Type rootType = typeof(IMixedRealityOptimizeUtilsProvider);
+        private static readonly IMixedRealityOptimizeUtilsProvider provider = null;
+
+        static MixedRealityOptimizeUtils()
+        {
+            Assembly[] searchAssemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+            var results = new List<Type>();
+
+            Parallel.ForEach(searchAssemblies, (assembly) =>
+            {
+                Parallel.ForEach(assembly.GetTypes(), (type) =>
+                {
+                    if (type != null && type.IsClass && !type.IsAbstract && type.IsSubclassOf(rootType))
+                    {
+                        results.Add(type);
+                    }
+                });
+            });
+
+            foreach (Type type in results)
+            {
+                Debug.Log(type);
+                if (Activator.CreateInstance(type) is IMixedRealityOptimizeUtilsProvider serviceInstance && serviceInstance.IsValid)
+                {
+                    provider = serviceInstance;
+                    return;
+                }
+            }
+        }
+
         public static bool IsOptimalRenderingPath()
-#if UNITY_ANDROID
-        => PlayerSettings.stereoRenderingPath == StereoRenderingPath.SinglePass;
-#else
-        => PlayerSettings.stereoRenderingPath == StereoRenderingPath.Instancing;
-#endif
+        {
+            if (provider != null)
+            {
+                return provider.IsOptimalRenderingPath;
+            }
+
+            return true;
+        }
 
         public static void SetOptimalRenderingPath()
-#if UNITY_ANDROID
-        => PlayerSettings.stereoRenderingPath = StereoRenderingPath.SinglePass;
-#else
-        => PlayerSettings.stereoRenderingPath = StereoRenderingPath.Instancing;
-#endif
+        {
+            if (provider != null)
+            {
+                provider.IsOptimalRenderingPath = true;
+            }
+        }
 
         /// <summary>
         /// Checks if the project has depth buffer sharing enabled.
@@ -34,114 +71,41 @@ namespace Microsoft.MixedReality.Toolkit.Utilities
         /// <returns>True if the project has depth buffer sharing enabled, false otherwise.</returns>
         public static bool IsDepthBufferSharingEnabled()
         {
-#if !UNITY_2020_1_OR_NEWER
-            if (IsBuildTargetOpenVR())
+            if (provider != null)
             {
-                // Ensure compatibility with the pre-2019.3 XR architecture for customers / platforms
-                // with legacy requirements.
-#pragma warning disable 0618
-                if (PlayerSettings.VROculus.sharedDepthBuffer)
-#pragma warning restore 0618
-                {
-                    return true;
-                }
+                return provider.DepthBufferSharingEnabled;
             }
-            else if (IsBuildTargetUWP())
-            {
-#if UNITY_2019_1_OR_NEWER
-                // Ensure compatibility with the pre-2019.3 XR architecture for customers / platforms
-                // with legacy requirements.
-#pragma warning disable 0618
-                if (PlayerSettings.VRWindowsMixedReality.depthBufferSharingEnabled)
-#pragma warning restore 0618
-                {
-                    return true;
-                }
-#else
-                var playerSettings = GetSettingsObject("PlayerSettings");
-                var property = playerSettings?.FindProperty("vrSettings.hololens.depthBufferSharingEnabled");
-                if (property != null && property.boolValue)
-                {
-                    return true;
-                }
-#endif // UNITY_2019_1_OR_NEWER
-        }
-#endif // !UNITY_2020_1_OR_NEWER
 
             return true;
         }
 
         public static void SetDepthBufferSharing(bool enableDepthBuffer)
         {
-#if !UNITY_2020_1_OR_NEWER
-            if (IsBuildTargetOpenVR())
+            if (provider != null)
             {
-                // Ensure compatibility with the pre-2019.3 XR architecture for customers / platforms
-                // with legacy requirements.
-#pragma warning disable 0618
-                PlayerSettings.VROculus.sharedDepthBuffer = enableDepthBuffer;
-#pragma warning restore 0618
+                provider.DepthBufferSharingEnabled = enableDepthBuffer;
             }
-            else if (IsBuildTargetUWP())
-            {
-#if UNITY_2019_1_OR_NEWER
-                // Ensure compatibility with the pre-2019.3 XR architecture for customers / platforms
-                // with legacy requirements.
-#pragma warning disable 0618
-                PlayerSettings.VRWindowsMixedReality.depthBufferSharingEnabled = enableDepthBuffer;
-#pragma warning restore 0618
-#else
-                var playerSettings = GetSettingsObject("PlayerSettings");
-                ChangeProperty(playerSettings,
-                    "vrSettings.hololens.depthBufferSharingEnabled",
-                    property => property.boolValue = enableDepthBuffer);
-#endif // UNITY_2019_1_OR_NEWER
-            }
-#endif // !UNITY_2020_1_OR_NEWER
         }
 
-        [Obsolete("Use IsDepthBufferFormat24bit instead.")]
-        public static bool IsWMRDepthBufferFormat16bit() => IsDepthBufferFormat24bit;
+        [Obsolete("Use IsDepthBufferFormat16bit() instead.")]
+        public static bool IsWMRDepthBufferFormat16bit() => IsDepthBufferFormat16bit();
 
-        public static event Func<bool> IsDepthBufferFormat24bitCallback;
-
-        public static bool IsDepthBufferFormat24bit
+        public static bool IsDepthBufferFormat16bit()
         {
-            get
+            if (provider != null)
             {
-                if (IsDepthBufferFormat24bitCallback != null)
-                {
-                    return IsDepthBufferFormat24bitCallback();
-                }
-                return false;
+                return provider.IsDepthBufferFormat16Bit;
             }
-        }
 
-        //public static event SetDepthBufferSharing(bool settowhat);
+            return true;
+        }
 
         public static void SetDepthBufferFormat(bool set16BitDepthBuffer)
         {
-            int depthFormat = set16BitDepthBuffer ? 0 : 1;
-
-#if !UNITY_2020_1_OR_NEWER
-            // Ensure compatibility with the pre-2019.3 XR architecture for customers / platforms
-            // with legacy requirements.
-#if UNITY_2019_1_OR_NEWER
-            // Ensure compatibility with the pre-2019.3 XR architecture for customers / platforms
-            // with legacy requirements.
-#pragma warning disable 0618
-            PlayerSettings.VRWindowsMixedReality.depthBufferFormat = set16BitDepthBuffer ?
-                PlayerSettings.VRWindowsMixedReality.DepthBufferFormat.DepthBufferFormat16Bit :
-                PlayerSettings.VRWindowsMixedReality.DepthBufferFormat.DepthBufferFormat24Bit;
-#pragma warning restore 0618
-#else
-            var playerSettings = GetSettingsObject("PlayerSettings");
-
-            ChangeProperty(playerSettings,
-                "vrSettings.hololens.depthFormat",
-                property => property.intValue = depthFormat);
-#endif // UNITY_2019_1_OR_NEWER
-#endif // !UNITY_2020_1_OR_NEWER
+            if (provider != null)
+            {
+                provider.IsDepthBufferFormat16Bit = set16BitDepthBuffer;
+            }
         }
 
         public static bool IsRealtimeGlobalIlluminationEnabled()
