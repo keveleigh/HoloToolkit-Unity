@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-using Microsoft.MixedReality.Toolkit.Utilities.Editor;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -14,7 +13,7 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.Gltf.Editor
     [CustomEditor(typeof(TestGltfLoading))]
     public class TestGltfLoadingEditor : UnityEditor.Editor
     {
-        private static readonly string GLTFModelsPath = $"Common{Path.DirectorySeparatorChar}Gltf{Path.DirectorySeparatorChar}Models";
+        private const string GLTFModelsFolderGUID = "55bea35f05e99164cacb9c7dabdd25ee";
 
         public override void OnInspectorGUI()
         {
@@ -31,7 +30,7 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.Gltf.Editor
 
             if (GUILayout.Button("Copy GLTF Directory to Streaming Assets"))
             {
-                string modelPath = MixedRealityToolkitFiles.MapRelativeFolderPathToAbsolutePath(MixedRealityToolkitModuleType.Examples, GLTFModelsPath);
+                string modelPath = AssetDatabase.GUIDToAssetPath(GLTFModelsFolderGUID);
                 DirectoryCopy(modelPath, Path.Combine(Application.streamingAssetsPath, "GltfModels"));
                 AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
                 Debug.Log("Copied glTF model files to Streaming Assets folder");
