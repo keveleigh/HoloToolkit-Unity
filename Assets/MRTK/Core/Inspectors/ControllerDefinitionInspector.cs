@@ -35,25 +35,23 @@ namespace Microsoft.MixedReality.Toolkit.Input.Editor
             EditorGUILayout.PropertyField(controllerType);
             EditorGUILayout.PropertyField(controllerImagePath);
 
-            if (MixedRealityEditorUtility.RenderIndentedButton(ControllerAddButtonContent, EditorStyles.miniButton))
+            if (InspectorUIUtility.RenderIndentedButton(ControllerAddButtonContent, EditorStyles.miniButton))
             {
                 ControllerMappingWizard.CreateControllerMappingWindow();
-                return;
-
-                var index = controllerMappingsList.arraySize;
-                controllerMappingsList.InsertArrayElementAtIndex(index);
-                var elementProperty = controllerMappingsList.GetArrayElementAtIndex(index);
-                SerializedProperty handednessProperty = elementProperty.FindPropertyRelative("handedness");
-                handednessProperty.intValue = (int)Handedness.None;
-                SerializedProperty interactionsProperty = elementProperty.FindPropertyRelative("interactions");
-                interactionsProperty.ClearArray();
-                serializedObject.ApplyModifiedProperties();
-                thisControllerDefinition.MixedRealityControllerMappings[index].ControllerType.Type = thisControllerDefinition.ControllerType.Type;
-                thisControllerDefinition.MixedRealityControllerMappings[index].SetDefaultInteractionMapping(true);
+                //var index = controllerMappingsList.arraySize;
+                //controllerMappingsList.InsertArrayElementAtIndex(index);
+                //var elementProperty = controllerMappingsList.GetArrayElementAtIndex(index);
+                //SerializedProperty handednessProperty = elementProperty.FindPropertyRelative("handedness");
+                //handednessProperty.intValue = (int)Handedness.None;
+                //SerializedProperty interactionsProperty = elementProperty.FindPropertyRelative("interactions");
+                //interactionsProperty.ClearArray();
+                //serializedObject.ApplyModifiedProperties();
+                //thisControllerDefinition.MixedRealityControllerMappings[index].ControllerType.Type = thisControllerDefinition.ControllerType.Type;
+                //thisControllerDefinition.MixedRealityControllerMappings[index].SetDefaultInteractionMapping(true);
                 return;
             }
 
-            if (MixedRealityEditorUtility.RenderIndentedButton(ControllerMinusButtonContent, EditorStyles.miniButton))
+            if (InspectorUIUtility.RenderIndentedButton(ControllerMinusButtonContent, EditorStyles.miniButton))
             {
                 controllerMappingsList.DeleteArrayElementAtIndex(controllerMappingsList.arraySize - 1);
                 serializedObject.ApplyModifiedProperties();

@@ -16,13 +16,13 @@ namespace Microsoft.MixedReality.Toolkit.Editor
 
         public MixedRealityControllerMapping[] MixedRealityControllerMappings => controllerMappings;
 
-        [SerializeField]
-        private string controllerImagePath = null;
+        //[SerializeField]
+        //private string controllerImagePath = null;
 
         [SerializeField]
         [Tooltip("Controller type to instantiate at runtime.")]
         [Implements(typeof(IMixedRealityController), TypeGrouping.ByNamespaceFlat)]
-        private SystemType controllerType;
+        private SystemType controllerType = null;
 
         /// <summary>
         /// Controller Type to instantiate at runtime.
