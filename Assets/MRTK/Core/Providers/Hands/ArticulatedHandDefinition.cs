@@ -11,16 +11,9 @@ namespace Microsoft.MixedReality.Toolkit.Input
     /// <summary>
     /// Defines the interactions and data that an articulated hand can provide.
     /// </summary>
-    public class ArticulatedHandDefinition
+    public class ArticulatedHandDefinition : BaseInputSourceDefinition
     {
-        public ArticulatedHandDefinition(IMixedRealityInputSource source, Handedness handedness)
-        {
-            inputSource = source;
-            this.handedness = handedness;
-        }
-
-        protected readonly IMixedRealityInputSource inputSource;
-        protected readonly Handedness handedness;
+        public ArticulatedHandDefinition(IMixedRealityInputSource source, Handedness handedness) : base(source, handedness) { }
 
         private readonly float cursorBeamBackwardTolerance = 0.5f;
         private readonly float cursorBeamUpTolerance = 0.8f;
@@ -86,7 +79,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// The articulated hands default interactions.
         /// </summary>
         /// <remarks>A single interaction mapping works for both left and right articulated hands.</remarks>
-        public MixedRealityInteractionMapping[] DefaultInteractions => new[]
+        public override MixedRealityInteractionMapping[] DefaultInteractions => new[]
         {
             new MixedRealityInteractionMapping(0, "Spatial Pointer", AxisType.SixDof, DeviceInputType.SpatialPointer),
             new MixedRealityInteractionMapping(1, "Spatial Grip", AxisType.SixDof, DeviceInputType.SpatialGrip),

@@ -8,22 +8,15 @@ namespace Microsoft.MixedReality.Toolkit.Input
     /// <summary>
     /// Defines the interactions and data that a Windows Mixed Reality motion controller can provide.
     /// </summary>
-    public class WindowsMixedRealityControllerDefinition
+    public class WindowsMixedRealityControllerDefinition : BaseInputSourceDefinition
     {
-        public WindowsMixedRealityControllerDefinition(IMixedRealityInputSource source, Handedness handedness)
-        {
-            inputSource = source;
-            this.handedness = handedness;
-        }
-
-        protected readonly IMixedRealityInputSource inputSource;
-        protected readonly Handedness handedness;
+        public WindowsMixedRealityControllerDefinition(IMixedRealityInputSource source, Handedness handedness) : base(source, handedness) { }
 
         /// <summary>
         /// A Windows Mixed Reality motion controller's default interactions.
         /// </summary>
         /// <remarks>A single interaction mapping works for both left and right controllers.</remarks>
-        public MixedRealityInteractionMapping[] DefaultInteractions => new[]
+        public override MixedRealityInteractionMapping[] DefaultInteractions => new[]
         {
             new MixedRealityInteractionMapping(0, "Spatial Pointer", AxisType.SixDof, DeviceInputType.SpatialPointer),
             new MixedRealityInteractionMapping(1, "Spatial Grip", AxisType.SixDof, DeviceInputType.SpatialGrip),
