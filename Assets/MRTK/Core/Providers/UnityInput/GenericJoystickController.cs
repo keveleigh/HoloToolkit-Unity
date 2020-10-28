@@ -133,7 +133,14 @@ namespace Microsoft.MixedReality.Toolkit.Input.UnityInput
                 switch (interactionMapping.InputType)
                 {
                     case DeviceInputType.TriggerPress:
-                        interactionMapping.BoolData = UInput.GetAxisRaw(interactionMapping.AxisCodeX).Equals(1);
+                        if (interactionMapping.KeyCode != KeyCode.None)
+                        {
+                            interactionMapping.BoolData = UInput.GetKey(interactionMapping.KeyCode);
+                        }
+                        else
+                        {
+                            interactionMapping.BoolData = UInput.GetAxisRaw(interactionMapping.AxisCodeX).Equals(1);
+                        }
                         break;
                     case DeviceInputType.TriggerTouch:
                     case DeviceInputType.TriggerNearTouch:
