@@ -49,7 +49,7 @@ namespace Microsoft.MixedReality.Toolkit.OpenVR.Input
         {
             new MixedRealityInteractionMappingLegacyInput(), // Spatial Pointer
             new MixedRealityInteractionMappingLegacyInput(), // Spatial Grip
-            new MixedRealityInteractionMappingLegacyInput(axisCodeX: ControllerMappingLibrary.AXIS_11), // Grip Press
+            new MixedRealityInteractionMappingLegacyInput(keyCode: KeyCode.JoystickButton4), // Grip Press
             new MixedRealityInteractionMappingLegacyInput(axisCodeX: ControllerMappingLibrary.AXIS_9), // Trigger Position
             new MixedRealityInteractionMappingLegacyInput(axisCodeX: ControllerMappingLibrary.AXIS_9), // Trigger Touch
             new MixedRealityInteractionMappingLegacyInput(keyCode: KeyCode.JoystickButton14), // Trigger Press (Select)
@@ -81,7 +81,7 @@ namespace Microsoft.MixedReality.Toolkit.OpenVR.Input
         {
             new MixedRealityInteractionMappingLegacyInput(), // Spatial Pointer
             new MixedRealityInteractionMappingLegacyInput(), // Spatial Grip
-            new MixedRealityInteractionMappingLegacyInput(axisCodeX: ControllerMappingLibrary.AXIS_12), // Grip Press
+            new MixedRealityInteractionMappingLegacyInput(keyCode: KeyCode.JoystickButton5), // Grip Press
             new MixedRealityInteractionMappingLegacyInput(axisCodeX: ControllerMappingLibrary.AXIS_10), // Trigger Position
             new MixedRealityInteractionMappingLegacyInput(axisCodeX: ControllerMappingLibrary.AXIS_10), // Trigger Touch
             new MixedRealityInteractionMappingLegacyInput(keyCode: KeyCode.JoystickButton15), // Trigger Press (Select)
