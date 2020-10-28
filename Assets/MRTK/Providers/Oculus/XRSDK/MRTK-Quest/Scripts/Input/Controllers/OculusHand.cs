@@ -84,7 +84,7 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.Oculus.Input
         internal ArticulatedHandDefinition handDefinition;
 
         // Set the interactions for each hand to the Default interactions of the hand definition
-        public override MixedRealityInteractionMapping[] DefaultInteractions => handDefinition?.DefaultInteractions;
+        public override MixedRealityInteractionMapping[] DefaultInteractions => System.Array.ConvertAll<MixedRealityInputActionMapping, MixedRealityInteractionMapping>(handDefinition?.DefaultInteractions);
 
         public override MixedRealityInteractionMapping[] DefaultLeftHandedInteractions => DefaultInteractions;
 
