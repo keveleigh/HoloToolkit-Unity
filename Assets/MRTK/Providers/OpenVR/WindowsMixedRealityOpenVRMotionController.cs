@@ -35,7 +35,7 @@ namespace Microsoft.MixedReality.Toolkit.OpenVR.Input
         {
             get
             {
-                MixedRealityInteractionMapping[] definitionInteractions = controllerDefinition.DefaultInteractions;
+                MixedRealityInputActionMapping[] definitionInteractions = controllerDefinition.DefaultInteractions;
                 MixedRealityInteractionMapping[] defaultLeftHandedInteractions = new MixedRealityInteractionMapping[definitionInteractions.Length];
                 for (int i = 0; i < definitionInteractions.Length; i++)
                 {
@@ -66,7 +66,7 @@ namespace Microsoft.MixedReality.Toolkit.OpenVR.Input
         {
             get
             {
-                MixedRealityInteractionMapping[] definitionInteractions = controllerDefinition.DefaultInteractions;
+                MixedRealityInputActionMapping[] definitionInteractions = controllerDefinition.DefaultInteractions;
                 MixedRealityInteractionMapping[] defaultRightHandedInteractions = new MixedRealityInteractionMapping[definitionInteractions.Length];
                 for (int i = 0; i < definitionInteractions.Length; i++)
                 {

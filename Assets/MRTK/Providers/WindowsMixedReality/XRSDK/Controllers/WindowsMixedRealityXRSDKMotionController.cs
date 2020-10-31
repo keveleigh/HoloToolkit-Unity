@@ -4,6 +4,7 @@
 using Microsoft.MixedReality.Toolkit.Input;
 using Microsoft.MixedReality.Toolkit.Utilities;
 using Microsoft.MixedReality.Toolkit.WindowsMixedReality;
+using System;
 using Unity.Profiling;
 using UnityEngine;
 using UnityEngine.XR;
@@ -31,7 +32,8 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.WindowsMixedReality
         private readonly WindowsMixedRealityControllerDefinition controllerDefinition;
 
         /// <inheritdoc />
-        public override MixedRealityInteractionMapping[] DefaultInteractions => controllerDefinition?.DefaultInteractions;
+        public override MixedRealityInteractionMapping[] DefaultInteractions =>
+            Array.ConvertAll(controllerDefinition?.DefaultInteractions, element => element as MixedRealityInteractionMapping);
 
         private static readonly ProfilerMarker UpdateButtonDataPerfMarker = new ProfilerMarker("[MRTK] WindowsMixedRealityXRSDKMotionController.UpdateButtonData");
 
