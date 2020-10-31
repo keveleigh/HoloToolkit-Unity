@@ -191,7 +191,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                     if (interactionMapping.Changed)
                     {
                         // Raise input system event if it's enabled
-                        CoreServices.InputSystem?.RaisePoseInputChanged(inputSource, handedness, interactionMapping.MixedRealityInputAction, currentIndexPose);
+                        CoreServices.InputSystem?.RaisePoseInputChanged(inputSource, handedness, interactionMapping.InputAction, currentIndexPose);
                     }
                 }
             }

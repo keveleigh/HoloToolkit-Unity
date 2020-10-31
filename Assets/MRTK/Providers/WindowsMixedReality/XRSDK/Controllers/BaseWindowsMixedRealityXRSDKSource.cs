@@ -56,7 +56,7 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.WindowsMixedReality
                         if (interactionMapping.Changed)
                         {
                             // Raise input system event if it's enabled
-                            CoreServices.InputSystem?.RaisePoseInputChanged(InputSource, ControllerHandedness, interactionMapping.MixedRealityInputAction, interactionMapping.PoseData);
+                            CoreServices.InputSystem?.RaisePoseInputChanged(InputSource, ControllerHandedness, interactionMapping.InputAction, interactionMapping.PoseData);
                         }
                         break;
                     default:

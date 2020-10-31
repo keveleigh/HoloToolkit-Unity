@@ -119,11 +119,11 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.Oculus.Input
                         // Raise input system event if it's enabled
                         if (interactionMapping.BoolData)
                         {
-                            CoreServices.InputSystem?.RaiseOnInputDown(InputSource, ControllerHandedness, interactionMapping.MixedRealityInputAction);
+                            CoreServices.InputSystem?.RaiseOnInputDown(InputSource, ControllerHandedness, interactionMapping.InputAction);
                         }
                         else
                         {
-                            CoreServices.InputSystem?.RaiseOnInputUp(InputSource, ControllerHandedness, interactionMapping.MixedRealityInputAction);
+                            CoreServices.InputSystem?.RaiseOnInputUp(InputSource, ControllerHandedness, interactionMapping.InputAction);
                         }
                     }
                 }

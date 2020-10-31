@@ -164,11 +164,11 @@ namespace Microsoft.MixedReality.Toolkit.Input.Editor
 
                                         if (currentMapping.InputType == DeviceInputType.Select)
                                         {
-                                            thisProfile.MixedRealityControllerMappings[j].Interactions[0].MixedRealityInputAction = currentMapping.MixedRealityInputAction;
+                                            thisProfile.MixedRealityControllerMappings[j].Interactions[0].InputAction = currentMapping.InputAction;
                                         }
                                         else if (currentMapping.InputType == DeviceInputType.SpatialGrip)
                                         {
-                                            thisProfile.MixedRealityControllerMappings[j].Interactions[1].MixedRealityInputAction = currentMapping.MixedRealityInputAction;
+                                            thisProfile.MixedRealityControllerMappings[j].Interactions[1].InputAction = currentMapping.InputAction;
                                         }
                                     }
 

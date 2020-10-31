@@ -95,7 +95,7 @@ namespace Microsoft.MixedReality.Toolkit.Input.UnityInput
 
                             if (Interactions[i].Changed)
                             {
-                                CoreServices.InputSystem?.RaisePoseInputChanged(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction, Interactions[i].PoseData);
+                                CoreServices.InputSystem?.RaisePoseInputChanged(InputSource, ControllerHandedness, Interactions[i].InputAction, Interactions[i].PoseData);
                             }
                         }
                         else
@@ -105,7 +105,7 @@ namespace Microsoft.MixedReality.Toolkit.Input.UnityInput
 
                             if (Interactions[i].Changed)
                             {
-                                CoreServices.InputSystem?.RaisePositionInputChanged(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction, Interactions[i].Vector2Data);
+                                CoreServices.InputSystem?.RaisePositionInputChanged(InputSource, ControllerHandedness, Interactions[i].InputAction, Interactions[i].Vector2Data);
                             }
                         }
                     }
@@ -123,11 +123,11 @@ namespace Microsoft.MixedReality.Toolkit.Input.UnityInput
                             // Raise input system event if it's enabled
                             if (Interactions[i].BoolData)
                             {
-                                CoreServices.InputSystem?.RaiseOnInputDown(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction);
+                                CoreServices.InputSystem?.RaiseOnInputDown(InputSource, ControllerHandedness, Interactions[i].InputAction);
                             }
                             else
                             {
-                                CoreServices.InputSystem?.RaiseOnInputUp(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction);
+                                CoreServices.InputSystem?.RaiseOnInputUp(InputSource, ControllerHandedness, Interactions[i].InputAction);
                             }
                         }
                     }
@@ -145,7 +145,7 @@ namespace Microsoft.MixedReality.Toolkit.Input.UnityInput
 
                         if (Interactions[i].Changed)
                         {
-                            CoreServices.InputSystem?.RaisePositionInputChanged(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction, Interactions[i].Vector2Data);
+                            CoreServices.InputSystem?.RaisePositionInputChanged(InputSource, ControllerHandedness, Interactions[i].InputAction, Interactions[i].Vector2Data);
                         }
                     }
                 }

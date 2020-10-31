@@ -166,7 +166,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                 {
                     interactions[i] = new MixedRealityInteractionMapping(currentDefaultMapping)
                     {
-                        MixedRealityInputAction = currentMapping.MixedRealityInputAction
+                        InputAction = currentMapping.InputAction
                     };
 
                     updatedMappings = true;
@@ -188,7 +188,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                     {
                         newDefaultMapping[i] = new MixedRealityInteractionMapping(newDefaultInteractions[i])
                         {
-                            MixedRealityInputAction = interactions[j].MixedRealityInputAction
+                            InputAction = interactions[j].InputAction
                         };
                         break;
                     }
@@ -245,7 +245,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
 
             for (int i = 0; i < interactions.Length; i++)
             {
-                interactions[i].MixedRealityInputAction = otherControllerMapping[i].MixedRealityInputAction;
+                interactions[i].InputAction = otherControllerMapping[i].InputAction;
             }
         }
     }

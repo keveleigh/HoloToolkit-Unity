@@ -132,7 +132,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                         Interactions[i].PoseData = currentGripPose;
                         if (Interactions[i].Changed)
                         {
-                            CoreServices.InputSystem?.RaisePoseInputChanged(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction, currentGripPose);
+                            CoreServices.InputSystem?.RaisePoseInputChanged(InputSource, ControllerHandedness, Interactions[i].InputAction, currentGripPose);
                         }
                         break;
                     case DeviceInputType.Select:
@@ -141,14 +141,14 @@ namespace Microsoft.MixedReality.Toolkit.Input
                         {
                             if (Interactions[i].BoolData)
                             {
-                                CoreServices.InputSystem?.RaiseOnInputDown(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction);
+                                CoreServices.InputSystem?.RaiseOnInputDown(InputSource, ControllerHandedness, Interactions[i].InputAction);
 
                                 SelectDownStartTime = Time.time;
                                 cumulativeDelta = Vector3.zero;
                             }
                             else
                             {
-                                CoreServices.InputSystem?.RaiseOnInputUp(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction);
+                                CoreServices.InputSystem?.RaiseOnInputUp(InputSource, ControllerHandedness, Interactions[i].InputAction);
 
                                 // Stop active gestures
                                 TryCompleteSelect();

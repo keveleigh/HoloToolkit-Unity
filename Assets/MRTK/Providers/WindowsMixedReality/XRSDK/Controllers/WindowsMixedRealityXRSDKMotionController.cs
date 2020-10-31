@@ -73,11 +73,11 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.WindowsMixedReality
                     // Raise input system event if it's enabled
                     if (interactionMapping.BoolData)
                     {
-                        CoreServices.InputSystem?.RaiseOnInputDown(InputSource, ControllerHandedness, interactionMapping.MixedRealityInputAction);
+                        CoreServices.InputSystem?.RaiseOnInputDown(InputSource, ControllerHandedness, interactionMapping.InputAction);
                     }
                     else
                     {
-                        CoreServices.InputSystem?.RaiseOnInputUp(InputSource, ControllerHandedness, interactionMapping.MixedRealityInputAction);
+                        CoreServices.InputSystem?.RaiseOnInputUp(InputSource, ControllerHandedness, interactionMapping.InputAction);
                     }
                 }
             }
@@ -119,7 +119,7 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.WindowsMixedReality
                 if (interactionMapping.Changed)
                 {
                     // Raise input system event if it's enabled
-                    CoreServices.InputSystem?.RaisePositionInputChanged(InputSource, ControllerHandedness, interactionMapping.MixedRealityInputAction, interactionMapping.Vector2Data);
+                    CoreServices.InputSystem?.RaisePositionInputChanged(InputSource, ControllerHandedness, interactionMapping.InputAction, interactionMapping.Vector2Data);
                 }
             }
         }

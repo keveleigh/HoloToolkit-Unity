@@ -112,8 +112,8 @@ namespace Microsoft.MixedReality.Toolkit.Input.UnityInput
                 {
                     isNewController = false;
 
-                    inputSystem.RaiseOnInputDown(InputSource, Handedness.None, Interactions[2].MixedRealityInputAction);
-                    inputSystem.RaisePointerDown(InputSource.Pointers[0], Interactions[2].MixedRealityInputAction);
+                    inputSystem.RaiseOnInputDown(InputSource, Handedness.None, Interactions[2].InputAction);
+                    inputSystem.RaisePointerDown(InputSource.Pointers[0], Interactions[2].InputAction);
                     isTouched = true;
                     inputSystem.RaiseGestureStarted(this, holdingAction);
                     isHolding = true;
@@ -132,7 +132,7 @@ namespace Microsoft.MixedReality.Toolkit.Input.UnityInput
 
                     if (Interactions[0].Changed)
                     {
-                        inputSystem.RaisePositionInputChanged(InputSource, ControllerHandedness, Interactions[0].MixedRealityInputAction, TouchData.deltaPosition);
+                        inputSystem.RaisePositionInputChanged(InputSource, ControllerHandedness, Interactions[0].InputAction, TouchData.deltaPosition);
                     }
 
                     lastPose.Position = InputSource.Pointers[0].Position;
@@ -143,7 +143,7 @@ namespace Microsoft.MixedReality.Toolkit.Input.UnityInput
 
                     if (Interactions[1].Changed)
                     {
-                        inputSystem.RaisePoseInputChanged(InputSource, ControllerHandedness, Interactions[1].MixedRealityInputAction, lastPose);
+                        inputSystem.RaisePoseInputChanged(InputSource, ControllerHandedness, Interactions[1].InputAction, lastPose);
                     }
 
                     if (!isManipulating)
@@ -164,7 +164,7 @@ namespace Microsoft.MixedReality.Toolkit.Input.UnityInput
                     }
 
                     // Send dragged event, to inform manipulation handlers.
-                    inputSystem.RaisePointerDragged(InputSource.Pointers[0], Interactions[1].MixedRealityInputAction);
+                    inputSystem.RaisePointerDragged(InputSource.Pointers[0], Interactions[1].InputAction);
                 }
             }
         }
@@ -201,7 +201,7 @@ namespace Microsoft.MixedReality.Toolkit.Input.UnityInput
                             isManipulating = false;
                         }
 
-                        inputSystem.RaisePointerClicked(InputSource.Pointers[0], Interactions[2].MixedRealityInputAction, TouchData.tapCount);
+                        inputSystem.RaisePointerClicked(InputSource.Pointers[0], Interactions[2].InputAction, TouchData.tapCount);
                     }
 
                     if (isHolding)
@@ -233,8 +233,8 @@ namespace Microsoft.MixedReality.Toolkit.Input.UnityInput
 
                 Debug.Assert(!isManipulating);
 
-                inputSystem.RaiseOnInputUp(InputSource, Handedness.None, Interactions[2].MixedRealityInputAction);
-                inputSystem.RaisePointerUp(InputSource.Pointers[0], Interactions[2].MixedRealityInputAction);
+                inputSystem.RaiseOnInputUp(InputSource, Handedness.None, Interactions[2].InputAction);
+                inputSystem.RaisePointerUp(InputSource.Pointers[0], Interactions[2].InputAction);
 
                 Lifetime = 0.0f;
                 isTouched = false;

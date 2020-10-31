@@ -257,14 +257,14 @@ namespace Microsoft.MixedReality.Toolkit.LeapMotion.Input
                         Interactions[i].PoseData = pointerPose;
                         if (Interactions[i].Changed)
                         {
-                            CoreServices.InputSystem?.RaisePoseInputChanged(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction, pointerPose);
+                            CoreServices.InputSystem?.RaisePoseInputChanged(InputSource, ControllerHandedness, Interactions[i].InputAction, pointerPose);
                         }
                         break;
                     case DeviceInputType.SpatialGrip:
                         Interactions[i].PoseData = gripPose;
                         if (Interactions[i].Changed)
                         {
-                            CoreServices.InputSystem?.RaisePoseInputChanged(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction, gripPose);
+                            CoreServices.InputSystem?.RaisePoseInputChanged(InputSource, ControllerHandedness, Interactions[i].InputAction, gripPose);
                         }
                         break;
                     case DeviceInputType.Select:
@@ -274,11 +274,11 @@ namespace Microsoft.MixedReality.Toolkit.LeapMotion.Input
                         {
                             if (Interactions[i].BoolData)
                             {
-                                CoreServices.InputSystem?.RaiseOnInputDown(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction);
+                                CoreServices.InputSystem?.RaiseOnInputDown(InputSource, ControllerHandedness, Interactions[i].InputAction);
                             }
                             else
                             {
-                                CoreServices.InputSystem?.RaiseOnInputUp(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction);
+                                CoreServices.InputSystem?.RaiseOnInputUp(InputSource, ControllerHandedness, Interactions[i].InputAction);
                             }
                         }
                         break;
@@ -286,7 +286,7 @@ namespace Microsoft.MixedReality.Toolkit.LeapMotion.Input
                         Interactions[i].PoseData = indexPose;
                         if (Interactions[i].Changed)
                         {
-                            CoreServices.InputSystem?.RaisePoseInputChanged(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction, indexPose);
+                            CoreServices.InputSystem?.RaisePoseInputChanged(InputSource, ControllerHandedness, Interactions[i].InputAction, indexPose);
                         }
                         break;
                 }

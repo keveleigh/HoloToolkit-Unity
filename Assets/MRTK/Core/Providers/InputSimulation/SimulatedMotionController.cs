@@ -120,7 +120,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                         Interactions[i].PoseData = currentPose;
                         if (Interactions[i].Changed)
                         {
-                            CoreServices.InputSystem?.RaisePoseInputChanged(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction, currentPose);
+                            CoreServices.InputSystem?.RaisePoseInputChanged(InputSource, ControllerHandedness, Interactions[i].InputAction, currentPose);
                         }
                         break;
                     case DeviceInputType.Select:
@@ -129,11 +129,11 @@ namespace Microsoft.MixedReality.Toolkit.Input
                         {
                             if (Interactions[i].BoolData)
                             {
-                                CoreServices.InputSystem?.RaiseOnInputDown(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction);
+                                CoreServices.InputSystem?.RaiseOnInputDown(InputSource, ControllerHandedness, Interactions[i].InputAction);
                             }
                             else
                             {
-                                CoreServices.InputSystem?.RaiseOnInputUp(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction);
+                                CoreServices.InputSystem?.RaiseOnInputUp(InputSource, ControllerHandedness, Interactions[i].InputAction);
                             }
                         }
                         break;
@@ -142,7 +142,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                         Interactions[i].FloatData = motionControllerData.ButtonState.IsGrabbing ? 1 : 0;
                         if (Interactions[i].Changed)
                         {
-                            CoreServices.InputSystem?.RaiseFloatInputChanged(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction, motionControllerData.ButtonState.IsGrabbing ? 1 : 0);
+                            CoreServices.InputSystem?.RaiseFloatInputChanged(InputSource, ControllerHandedness, Interactions[i].InputAction, motionControllerData.ButtonState.IsGrabbing ? 1 : 0);
                         }
                         break;
                     case DeviceInputType.Menu:
@@ -151,11 +151,11 @@ namespace Microsoft.MixedReality.Toolkit.Input
                         {
                             if (Interactions[i].BoolData)
                             {
-                                CoreServices.InputSystem?.RaiseOnInputDown(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction);
+                                CoreServices.InputSystem?.RaiseOnInputDown(InputSource, ControllerHandedness, Interactions[i].InputAction);
                             }
                             else
                             {
-                                CoreServices.InputSystem?.RaiseOnInputUp(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction);
+                                CoreServices.InputSystem?.RaiseOnInputUp(InputSource, ControllerHandedness, Interactions[i].InputAction);
                             }
                         }
                         break;

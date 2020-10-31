@@ -231,14 +231,14 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.Oculus.Input
                         Interactions[i].PoseData = currentPointerPose;
                         if (Interactions[i].Changed)
                         {
-                            CoreServices.InputSystem?.RaisePoseInputChanged(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction, currentPointerPose);
+                            CoreServices.InputSystem?.RaisePoseInputChanged(InputSource, ControllerHandedness, Interactions[i].InputAction, currentPointerPose);
                         }
                         break;
                     case DeviceInputType.SpatialGrip:
                         Interactions[i].PoseData = currentGripPose;
                         if (Interactions[i].Changed)
                         {
-                            CoreServices.InputSystem?.RaisePoseInputChanged(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction, currentGripPose);
+                            CoreServices.InputSystem?.RaisePoseInputChanged(InputSource, ControllerHandedness, Interactions[i].InputAction, currentGripPose);
                         }
                         break;
                     case DeviceInputType.Select:
@@ -248,11 +248,11 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.Oculus.Input
                         {
                             if (Interactions[i].BoolData)
                             {
-                                CoreServices.InputSystem?.RaiseOnInputDown(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction);
+                                CoreServices.InputSystem?.RaiseOnInputDown(InputSource, ControllerHandedness, Interactions[i].InputAction);
                             }
                             else
                             {
-                                CoreServices.InputSystem?.RaiseOnInputUp(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction);
+                                CoreServices.InputSystem?.RaiseOnInputUp(InputSource, ControllerHandedness, Interactions[i].InputAction);
                             }
                         }
                         break;
@@ -263,11 +263,11 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.Oculus.Input
                         {
                             if (Interactions[i].BoolData)
                             {
-                                CoreServices.InputSystem?.RaiseOnInputDown(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction);
+                                CoreServices.InputSystem?.RaiseOnInputDown(InputSource, ControllerHandedness, Interactions[i].InputAction);
                             }
                             else
                             {
-                                CoreServices.InputSystem?.RaiseOnInputUp(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction);
+                                CoreServices.InputSystem?.RaiseOnInputUp(InputSource, ControllerHandedness, Interactions[i].InputAction);
                             }
                         }
                         break;
@@ -583,7 +583,7 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.Oculus.Input
             if (interactionMapping.Changed)
             {
                 // Raise input system Event if it enabled
-                CoreServices.InputSystem?.RaisePoseInputChanged(InputSource, ControllerHandedness, interactionMapping.MixedRealityInputAction, currentIndexPose);
+                CoreServices.InputSystem?.RaisePoseInputChanged(InputSource, ControllerHandedness, interactionMapping.InputAction, currentIndexPose);
             }
         }
                 #endregion
