@@ -3,6 +3,7 @@
 
 using Microsoft.MixedReality.Toolkit.Utilities;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.Profiling;
 using UnityEditor;
 using UnityEngine;
@@ -21,16 +22,28 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// <param name="handedness">The controller's handedness.</param>
         /// <param name="mapping"><see cref="MixedRealityInteractionMapping"/> (ex: menu button) for the event.</param>
         /// <param name="data">The event data. True if the button is pressed, false if released.</param>
-        public static void RaiseDigitialInput(
+        /// <returns>True if the event was raised, false if not.</returns>
+        /// <remarks>
+        /// An event will not be raised in the following scenarios:
+        ///  - an incompatbile mapping is provided
+        ///  - the data for the mapping is unchanged
+        /// </remarks>
+        public static bool TryRaiseDigitalInput(
             IMixedRealityInputSource source,
             Handedness handedness,
             MixedRealityInteractionMapping mapping,
             bool data)
         {
-            if (!IsExpectedAxisType(mapping.AxisType, AxisType.Digital)) { return; }
+            if (!IsExpectedAxisType(mapping.AxisType, AxisType.Digital)) 
+            { 
+                return false; 
+            }
 
             mapping.BoolData = data;
-            if (!mapping.Changed) { return; }
+            if (!mapping.Changed) 
+            { 
+                return false; 
+            }
             
             if (data)
             {
@@ -40,6 +53,8 @@ namespace Microsoft.MixedReality.Toolkit.Input
             {
                 CoreServices.InputSystem?.RaiseOnInputUp(source, handedness, mapping.MixedRealityInputAction);
             }
+
+            return true;
         }
 
         /// <summary>
@@ -49,18 +64,32 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// <param name="handedness">The controller's handedness.</param>
         /// <param name="mapping"><see cref="MixedRealityInteractionMapping"/> (ex: thumbstick x-axis) for the event.</param>
         /// <param name="data">The event data.</param>
-        public static void RaiseAxisInput(
+        /// <returns>True if the event was raised, false if not.</returns>
+        /// <remarks>
+        /// An event will not be raised in the following scenarios:
+        ///  - an incompatbile mapping is provided
+        ///  - the data for the mapping is unchanged
+        /// </remarks>
+        public static bool TryRaiseAxisInput(
             IMixedRealityInputSource source,
             Handedness handedness,
             MixedRealityInteractionMapping mapping,
             float data)
         {
-            if (!IsExpectedAxisType(mapping.AxisType, AxisType.SingleAxis)) { return; }
+            if (!IsExpectedAxisType(mapping.AxisType, AxisType.SingleAxis)) 
+            { 
+                return false;
+            }
 
             mapping.FloatData = data;
-            if (!mapping.Changed) { return; }
+            if (!mapping.Changed) 
+            { 
+                return false;
+            }
 
             CoreServices.InputSystem?.RaiseFloatInputChanged(source, handedness, mapping.MixedRealityInputAction, data);
+
+            return true;
         }
 
         /// <summary>
@@ -70,18 +99,32 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// <param name="handedness">The controller's handedness.</param>
         /// <param name="mapping"><see cref="MixedRealityInteractionMapping"/> (ex: touchpad position) for the event.</param>
         /// <param name="data">The event data.</param>
-        public static void RaisePositionInput(
+        /// <returns>True if the event was raised, false if not.</returns>
+        /// <remarks>
+        /// An event will not be raised in the following scenarios:
+        ///  - an incompatbile mapping is provided
+        ///  - the data for the mapping is unchanged
+        /// </remarks>
+        public static bool TryRaisePositionInput(
             IMixedRealityInputSource source,
             Handedness handedness,
             MixedRealityInteractionMapping mapping,
             Vector2 data)
         {
-            if (!IsExpectedAxisType(mapping.AxisType, AxisType.DualAxis)) { return; }
+            if (!IsExpectedAxisType(mapping.AxisType, AxisType.DualAxis))
+            { 
+                return false;
+            }
 
             mapping.Vector2Data = data;
-            if (!mapping.Changed) { return; }
+            if (!mapping.Changed)
+            {
+                return false;
+            }
 
             CoreServices.InputSystem?.RaisePositionInputChanged(source, handedness, mapping.MixedRealityInputAction, data);
+
+            return true;
         }
 
         /// <summary>
@@ -91,18 +134,32 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// <param name="handedness">The controller's handedness.</param>
         /// <param name="mapping"><see cref="MixedRealityInteractionMapping"/> (ex: grip position) for the event.</param>
         /// <param name="data">The event data.</param>
-        public static void RaisePositionInput(
+        /// <returns>True if the event was raised, false if not.</returns>
+        /// <remarks>
+        /// An event will not be raised in the following scenarios:
+        ///  - an incompatbile mapping is provided
+        ///  - the data for the mapping is unchanged
+        /// </remarks>
+        public static bool TryRaisePositionInput(
             IMixedRealityInputSource source,
             Handedness handedness,
             MixedRealityInteractionMapping mapping,
             Vector3 data)
         {
-            if (!IsExpectedAxisType(mapping.AxisType, AxisType.ThreeDofPosition)) { return; }
+            if (!IsExpectedAxisType(mapping.AxisType, AxisType.ThreeDofPosition))
+            { 
+                return false;
+            }
 
             mapping.PositionData = data;
-            if (!mapping.Changed) { return; }
+            if (!mapping.Changed)
+            { 
+                return false;
+            }
 
             CoreServices.InputSystem?.RaisePositionInputChanged(source, handedness, mapping.MixedRealityInputAction, data);
+
+            return true;
         }
 
         /// <summary>
@@ -112,18 +169,32 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// <param name="handedness">The controller's handedness.</param>
         /// <param name="mapping"><see cref="MixedRealityInteractionMapping"/> (ex: gruip rotation) for the event.</param>
         /// <param name="data">The event data.</param>
-        public static void RaiseRotationInput(
+        /// <returns>True if the event was raised, false if not.</returns>
+        /// <remarks>
+        /// An event will not be raised in the following scenarios:
+        ///  - an incompatbile mapping is provided
+        ///  - the data for the mapping is unchanged
+        /// </remarks>
+        public static bool TryRaiseRotationInput(
             IMixedRealityInputSource source,
             Handedness handedness,
             MixedRealityInteractionMapping mapping,
             Quaternion data)
         {
-            if (!IsExpectedAxisType(mapping.AxisType, AxisType.ThreeDofRotation)) { return; }
+            if (!IsExpectedAxisType(mapping.AxisType, AxisType.ThreeDofRotation))
+            { 
+                return false;
+            }
 
             mapping.RotationData = data;
-            if (!mapping.Changed) { return; }
+            if (!mapping.Changed)
+            { 
+                return false;
+            }
 
             CoreServices.InputSystem?.RaiseRotationInputChanged(source, handedness, mapping.MixedRealityInputAction, data);
+
+            return true;
         }
 
         /// <summary>
@@ -133,18 +204,32 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// <param name="handedness">The controller's handedness.</param>
         /// <param name="mapping"><see cref="MixedRealityInteractionMapping"/> (ex: grip pose) for the event.</param>
         /// <param name="data">The event data.</param>
-        public static void RaisePoseInput(
+        /// <returns>True if the event was raised, false if not.</returns>
+        /// <remarks>
+        /// An event will not be raised in the following scenarios:
+        ///  - an incompatbile mapping is provided
+        ///  - the data for the mapping is unchanged
+        /// </remarks>
+        public static bool TryRaisePoseInput(
             IMixedRealityInputSource source,
             Handedness handedness,
             MixedRealityInteractionMapping mapping,
             MixedRealityPose data)
         {
-            if (!IsExpectedAxisType(mapping.AxisType, AxisType.SixDof)) { return; }
+            if (!IsExpectedAxisType(mapping.AxisType, AxisType.SixDof))
+            { 
+                return false;
+            }
 
             mapping.PoseData = data;
-            if (!mapping.Changed) { return; }
+            if (!mapping.Changed)
+            { 
+                return false;
+            }
 
             CoreServices.InputSystem?.RaisePoseInputChanged(source, handedness, mapping.MixedRealityInputAction, data);
+
+            return true;
         }
 
         /// <summary>
