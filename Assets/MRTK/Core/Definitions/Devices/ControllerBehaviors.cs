@@ -158,7 +158,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
             if (actual == expected) { return true; }
 
             Debug.LogError($"Unsupported axis type: expected {expected}");
-            return false; ;
+            return false;
         }
     }
 }
