@@ -3,6 +3,7 @@
 
 using Microsoft.MixedReality.Toolkit.Input;
 using Microsoft.MixedReality.Toolkit.Utilities;
+using System;
 using UnityEngine;
 
 namespace Microsoft.MixedReality.Toolkit.OpenVR.Input
@@ -19,8 +20,12 @@ namespace Microsoft.MixedReality.Toolkit.OpenVR.Input
         /// <summary>
         /// Constructor.
         /// </summary>
-        public WindowsMixedRealityOpenVRMotionController(TrackingState trackingState, Handedness controllerHandedness, IMixedRealityInputSource inputSource = null, MixedRealityInteractionMapping[] interactions = null)
-            : base(trackingState, controllerHandedness, inputSource, interactions)
+        public WindowsMixedRealityOpenVRMotionController(
+            TrackingState trackingState,
+            Handedness controllerHandedness,
+            IMixedRealityInputSource inputSource = null,
+            MixedRealityInteractionMapping[] interactions = null)
+                : base(trackingState, controllerHandedness, inputSource, interactions, new WindowsMixedRealityControllerDefinition(controllerHandedness))
         {
             controllerDefinition = new WindowsMixedRealityControllerDefinition(controllerHandedness);
         }
@@ -31,6 +36,7 @@ namespace Microsoft.MixedReality.Toolkit.OpenVR.Input
         public override float PointerOffsetAngle { get; protected set; } = -30f;
 
         /// <inheritdoc />
+        [Obsolete("The DefaultLeftHandedInteractions property is obsolete and will be removed in a future version of the Mixed Reality Toolkit. Please use ControllerDefinition to define interactions.")]
         public override MixedRealityInteractionMapping[] DefaultLeftHandedInteractions
         {
             get
@@ -62,6 +68,7 @@ namespace Microsoft.MixedReality.Toolkit.OpenVR.Input
         };
 
         /// <inheritdoc />
+        [Obsolete("The DefaultRightHandedInteractions property is obsolete and will be removed in a future version of the Mixed Reality Toolkit. Please use ControllerDefinition to define interactions.")]
         public override MixedRealityInteractionMapping[] DefaultRightHandedInteractions
         {
             get

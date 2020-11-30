@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.MixedReality.Toolkit.Utilities;
+using System;
 using Unity.Profiling;
 using UnityEngine;
 using UInput = UnityEngine.Input;
@@ -23,12 +24,14 @@ namespace Microsoft.MixedReality.Toolkit.Input.UnityInput
         /// <param name="interactions">The set of interactions supported by this controller.</param>
         public MouseController(
             TrackingState trackingState,
-            Handedness controllerHandedness,
+            Handedness controllerHandedness = Handedness.None,
             IMixedRealityInputSource inputSource = null,
-            MixedRealityInteractionMapping[] interactions = null) : base(trackingState, controllerHandedness, inputSource, interactions)
+            MixedRealityInteractionMapping[] interactions = null) 
+                : base(trackingState, controllerHandedness, inputSource, interactions, new MouseControllerDefinition())
         { }
 
         /// <inheritdoc />
+        [Obsolete("The DefaultInteractions property is obsolete and will be removed in a future version of the Mixed Reality Toolkit. Please use ControllerDefinition to define interactions.")]
         public override MixedRealityInteractionMapping[] DefaultInteractions { get; } =
         {
             new MixedRealityInteractionMapping(0, "Spatial Mouse Position", AxisType.SixDof, DeviceInputType.SpatialPointer),

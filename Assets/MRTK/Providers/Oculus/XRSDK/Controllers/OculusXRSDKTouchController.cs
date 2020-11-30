@@ -4,6 +4,7 @@
 using Microsoft.MixedReality.Toolkit.Input;
 using Microsoft.MixedReality.Toolkit.Utilities;
 using Microsoft.MixedReality.Toolkit.XRSDK.Input;
+using System;
 using UnityEngine;
 using Unity.Profiling;
 using UnityEngine.XR;
@@ -23,13 +24,16 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.Oculus.Input
         /// <summary>
         /// Constructor.
         /// </summary>
-        public OculusXRSDKTouchController(TrackingState trackingState, Handedness controllerHandedness,
-            IMixedRealityInputSource inputSource = null, MixedRealityInteractionMapping[] interactions = null)
-            : base(trackingState, controllerHandedness, inputSource, interactions)
-        {
-        }
+        public OculusXRSDKTouchController(
+            TrackingState trackingState,
+            Handedness controllerHandedness,
+            IMixedRealityInputSource inputSource = null,
+            MixedRealityInteractionMapping[] interactions = null)
+                : base(trackingState, controllerHandedness, inputSource, interactions, new OculusTouchControllerDefinition(controllerHandedness))
+        { }
 
         /// <inheritdoc />
+        [Obsolete("The DefaultLeftHandedInteractions property is obsolete and will be removed in a future version of the Mixed Reality Toolkit. Please use ControllerDefinition to define interactions.")]
         public override MixedRealityInteractionMapping[] DefaultLeftHandedInteractions => new[]
         {
             new MixedRealityInteractionMapping(0, "Spatial Pointer", AxisType.SixDof, DeviceInputType.SpatialPointer),
@@ -52,6 +56,7 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.Oculus.Input
         };
 
         /// <inheritdoc />
+        [Obsolete("The DefaultRightHandedInteractions property is obsolete and will be removed in a future version of the Mixed Reality Toolkit. Please use ControllerDefinition to define interactions.")]
         public override MixedRealityInteractionMapping[] DefaultRightHandedInteractions => new[]
         {
             new MixedRealityInteractionMapping(0, "Spatial Pointer", AxisType.SixDof, DeviceInputType.SpatialPointer),

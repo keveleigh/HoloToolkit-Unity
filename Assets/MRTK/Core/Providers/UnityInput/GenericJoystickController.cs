@@ -14,8 +14,13 @@ namespace Microsoft.MixedReality.Toolkit.Input.UnityInput
         flags: MixedRealityControllerConfigurationFlags.UseCustomInteractionMappings)]
     public class GenericJoystickController : BaseController
     {
-        public GenericJoystickController(TrackingState trackingState, Handedness controllerHandedness, IMixedRealityInputSource inputSource = null, MixedRealityInteractionMapping[] interactions = null)
-                : base(trackingState, controllerHandedness, inputSource, interactions)
+        public GenericJoystickController(
+            TrackingState trackingState,
+            Handedness controllerHandedness,
+            IMixedRealityInputSource inputSource = null,
+            MixedRealityInteractionMapping[] interactions = null,
+            BaseControllerDefinition controllerDefinition = null)
+                : base(trackingState, controllerHandedness, inputSource, interactions, controllerDefinition)
         {
             // Update the spatial pointer rotation with the preconfigured offset angle
             if (PointerOffsetAngle != 0f && Interactions != null)
@@ -121,19 +126,20 @@ namespace Microsoft.MixedReality.Toolkit.Input.UnityInput
         /// </summary>
         /// <remarks>
         /// Raises an Input System "Input Down" event when the key is down, and raises an "Input Up" when it is released (e.g. a Button)
-        /// Also raises a "Pressed" event while pressed
         /// </remarks>
         protected void UpdateButtonData(MixedRealityInteractionMapping interactionMapping)
         {
             using (UpdateButtonDataPerfMarker.Auto())
             {
+                bool data;
+
                 Debug.Assert(interactionMapping.AxisType == AxisType.Digital);
 
                 // Update the interaction data source
                 switch (interactionMapping.InputType)
                 {
                     case DeviceInputType.TriggerPress:
-                        interactionMapping.BoolData = UInput.GetAxisRaw(interactionMapping.AxisCodeX).Equals(1);
+                        data = UInput.GetAxisRaw(interactionMapping.AxisCodeX).Equals(1);
                         break;
                     case DeviceInputType.TriggerTouch:
                     case DeviceInputType.TriggerNearTouch:
@@ -142,28 +148,23 @@ namespace Microsoft.MixedReality.Toolkit.Input.UnityInput
                     case DeviceInputType.MiddleFingerNearTouch:
                     case DeviceInputType.RingFingerNearTouch:
                     case DeviceInputType.PinkyFingerNearTouch:
-                        interactionMapping.BoolData = interactionMapping.KeyCode == KeyCode.None ?
+                        data = interactionMapping.KeyCode == KeyCode.None ?
                             !UInput.GetAxisRaw(interactionMapping.AxisCodeX).Equals(0) :
                             UInput.GetKey(interactionMapping.KeyCode);
                         break;
                     default:
-                        interactionMapping.BoolData = UInput.GetKey(interactionMapping.KeyCode);
+                        data = UInput.GetKey(interactionMapping.KeyCode);
                         break;
                 }
 
-                // If our value changed raise it.
-                if (interactionMapping.Changed)
-                {
-                    // Raise input system event if it's enabled
-                    if (interactionMapping.BoolData)
-                    {
-                        CoreServices.InputSystem?.RaiseOnInputDown(InputSource, ControllerHandedness, interactionMapping.MixedRealityInputAction);
-                    }
-                    else
-                    {
-                        CoreServices.InputSystem?.RaiseOnInputUp(InputSource, ControllerHandedness, interactionMapping.MixedRealityInputAction);
-                    }
-                }
+                // We ignore the return value from TryRaiseDigitalInput
+                // as this is called in an inner loop and logging
+                // would likely impact performance.
+                ControllerBehaviors.TryRaiseDigitalInput(
+                    InputSource,
+                    ControllerHandedness,
+                    interactionMapping,
+                    data);
             }
         }
 
@@ -185,33 +186,29 @@ namespace Microsoft.MixedReality.Toolkit.Input.UnityInput
 
                 if (interactionMapping.InputType == DeviceInputType.TriggerPress || interactionMapping.InputType == DeviceInputType.GripPress)
                 {
-                    interactionMapping.BoolData = singleAxisValue.Equals(1);
+                    bool data = singleAxisValue.Equals(1);
 
-                    // If our value changed raise it.
-                    if (interactionMapping.Changed)
-                    {
-                        // Raise input system event if it's enabled
-                        if (interactionMapping.BoolData)
-                        {
-                            CoreServices.InputSystem?.RaiseOnInputDown(InputSource, ControllerHandedness, interactionMapping.MixedRealityInputAction);
-                        }
-                        else
-                        {
-                            CoreServices.InputSystem?.RaiseOnInputUp(InputSource, ControllerHandedness, interactionMapping.MixedRealityInputAction);
-                        }
-                    }
+                    // We ignore the return value from TryRaiseDigitalInput
+                    // as this is called in an inner loop and logging
+                    // would likely impact performance.
+                    ControllerBehaviors.TryRaiseDigitalInput(
+                        InputSource,
+                        ControllerHandedness,
+                        interactionMapping,
+                        data);
                 }
                 else
                 {
-                    // Update the interaction data source
-                    interactionMapping.FloatData = singleAxisValue;
+                    float data = singleAxisValue;
 
-                    // If our value changed raise it.
-                    if (interactionMapping.Changed)
-                    {
-                        // Raise input system event if it's enabled
-                        CoreServices.InputSystem?.RaiseFloatInputChanged(InputSource, ControllerHandedness, interactionMapping.MixedRealityInputAction, interactionMapping.FloatData);
-                    }
+                    // We ignore the return value from TryRaiseAxisInput
+                    // as this is called in an inner loop and logging
+                    // would likely impact performance.
+                    ControllerBehaviors.TryRaiseAxisInput(
+                        InputSource,
+                        ControllerHandedness,
+                        interactionMapping,
+                        data);
                 }
             }
         }
@@ -230,15 +227,16 @@ namespace Microsoft.MixedReality.Toolkit.Input.UnityInput
                 dualAxisPosition.x = UInput.GetAxisRaw(interactionMapping.AxisCodeX);
                 dualAxisPosition.y = UInput.GetAxisRaw(interactionMapping.AxisCodeY);
 
-                // Update the interaction data source
-                interactionMapping.Vector2Data = dualAxisPosition;
+                Vector2 data = dualAxisPosition;
 
-                // If our value changed raise it.
-                if (interactionMapping.Changed)
-                {
-                    // Raise input system event if it's enabled
-                    CoreServices.InputSystem?.RaisePositionInputChanged(InputSource, ControllerHandedness, interactionMapping.MixedRealityInputAction, interactionMapping.Vector2Data);
-                }
+                // We ignore the return value from TryRaisePositionInput
+                // as this is called in an inner loop and logging
+                // would likely impact performance.
+                ControllerBehaviors.TryRaisePositionInput(
+                    InputSource,
+                    ControllerHandedness,
+                    interactionMapping,
+                    data);
             }
         }
 
@@ -253,18 +251,18 @@ namespace Microsoft.MixedReality.Toolkit.Input.UnityInput
             {
                 Debug.Assert(interactionMapping.AxisType == AxisType.SixDof);
 
+                MixedRealityPose data = new MixedRealityPose();
+
                 if (interactionMapping.InputType == DeviceInputType.SpatialPointer)
                 {
-                    pointerOffsetPose.Position = CurrentControllerPose.Position;
-                    pointerOffsetPose.Rotation = CurrentControllerPose.Rotation * Quaternion.AngleAxis(PointerOffsetAngle, Vector3.left);
+                    data.Position = CurrentControllerPose.Position;
+                    data.Rotation = CurrentControllerPose.Rotation * Quaternion.AngleAxis(PointerOffsetAngle, Vector3.left);
 
-                    // Update the interaction data source
-                    interactionMapping.PoseData = pointerOffsetPose;
                 }
                 else if (interactionMapping.InputType == DeviceInputType.SpatialGrip)
                 {
                     // Update the interaction data source
-                    interactionMapping.PoseData = CurrentControllerPose;
+                    data = CurrentControllerPose;
                 }
                 else
                 {
@@ -272,12 +270,14 @@ namespace Microsoft.MixedReality.Toolkit.Input.UnityInput
                     return;
                 }
 
-                // If our value changed raise it.
-                if (interactionMapping.Changed)
-                {
-                    // Raise input system event if it's enabled
-                    CoreServices.InputSystem?.RaisePoseInputChanged(InputSource, ControllerHandedness, interactionMapping.MixedRealityInputAction, interactionMapping.PoseData);
-                }
+                // We ignore the return value from TryRaisePoseInput
+                // as this is called in an inner loop and logging
+                // would likely impact performance.
+                ControllerBehaviors.TryRaisePoseInput(
+                    InputSource,
+                    ControllerHandedness,
+                    interactionMapping,
+                    data);
             }
         }
     }

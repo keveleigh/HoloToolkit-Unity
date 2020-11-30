@@ -35,8 +35,16 @@ namespace Microsoft.MixedReality.Toolkit.WindowsMixedReality.Input
         /// <summary>
         /// Constructor.
         /// </summary>
-        public WindowsMixedRealityArticulatedHand(TrackingState trackingState, Handedness controllerHandedness, IMixedRealityInputSource inputSource = null, MixedRealityInteractionMapping[] interactions = null)
-                : base(trackingState, controllerHandedness, inputSource, interactions)
+        public WindowsMixedRealityArticulatedHand(
+            TrackingState trackingState,
+            Handedness controllerHandedness,
+            IMixedRealityInputSource inputSource = null,
+            MixedRealityInteractionMapping[] interactions = null)
+                : base(trackingState,
+                      controllerHandedness,
+                      new ArticulatedHandDefinition(inputSource, controllerHandedness),
+                      inputSource,
+                      interactions)
         {
             handDefinition = new ArticulatedHandDefinition(inputSource, controllerHandedness);
             handMeshProvider = new WindowsMixedRealityHandMeshProvider(this);
@@ -45,12 +53,6 @@ namespace Microsoft.MixedReality.Toolkit.WindowsMixedReality.Input
                 "SpatialInteractionSourceState",
                 "TryGetHandPose");
         }
-
-        /// <summary>
-        /// The Windows Mixed Reality articulated hands default interactions.
-        /// </summary>
-        /// <remarks>A single interaction mapping works for both left and right articulated hands.</remarks>
-        public override MixedRealityInteractionMapping[] DefaultInteractions => handDefinition?.DefaultInteractions;
 
         private readonly Dictionary<TrackedHandJoint, MixedRealityPose> unityJointPoses = new Dictionary<TrackedHandJoint, MixedRealityPose>();
         private readonly ArticulatedHandDefinition handDefinition;

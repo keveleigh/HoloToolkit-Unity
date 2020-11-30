@@ -31,15 +31,18 @@ namespace Microsoft.MixedReality.Toolkit.LeapMotion.Input
         /// <param name="controllerHandedness">Handedness of this controller (Left or Right)</param>
         /// <param name="inputSource">The origin of user input for this controller</param>
         /// <param name="interactions">The controller interaction map between physical inputs and the logical representation in MRTK</param>
-        public LeapMotionArticulatedHand(TrackingState trackingState, Handedness controllerHandedness, IMixedRealityInputSource inputSource = null, MixedRealityInteractionMapping[] interactions = null)
-            : base(trackingState, controllerHandedness, inputSource, interactions)
-        {
-            handDefinition = new ArticulatedHandDefinition(inputSource, controllerHandedness);
-        }
+        public LeapMotionArticulatedHand(
+            TrackingState trackingState,
+            Handedness controllerHandedness,
+            IMixedRealityInputSource inputSource = null,
+            MixedRealityInteractionMapping[] interactions = null)
+                : base(trackingState, controllerHandedness, inputSource, interactions) // todo: controller definition here
+        { } 
 
-        internal ArticulatedHandDefinition handDefinition;
+        internal ArticulatedHandDefinition handDefinition => ControllerDefinition as ArticulatedHandDefinition;
 
         // Set the interactions for each hand to the Default interactions of the hand definition
+        [Obsolete("The DefaultInteractions property is obsolete and will be removed in a future version of the Mixed Reality Toolkit. Please use ControllerDefinition to define interactions.")]
         public override MixedRealityInteractionMapping[] DefaultInteractions => handDefinition?.DefaultInteractions;
 
         private static readonly ProfilerMarker UpdateStatePerfMarker = new ProfilerMarker("[MRTK] LeapMotionArticulatedHand.UpdateState");
@@ -254,36 +257,33 @@ namespace Microsoft.MixedReality.Toolkit.LeapMotion.Input
                 switch (Interactions[i].InputType)
                 {
                     case DeviceInputType.SpatialPointer:
-                        Interactions[i].PoseData = pointerPose;
-                        if (Interactions[i].Changed)
-                        {
-                            CoreServices.InputSystem?.RaisePoseInputChanged(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction, pointerPose);
-                        }
+                        ControllerBehaviors.RaisePoseInput(
+                            InputSource,
+                            ControllerHandedness,
+                            Interactions[i],
+                            pointerPose);
                         break;
                     case DeviceInputType.SpatialGrip:
-                        Interactions[i].PoseData = gripPose;
-                        if (Interactions[i].Changed)
-                        {
-                            CoreServices.InputSystem?.RaisePoseInputChanged(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction, gripPose);
-                        }
+                        ControllerBehaviors.RaisePoseInput(
+                            InputSource,
+                            ControllerHandedness,
+                            Interactions[i],
+                            gripPose);
                         break;
                     case DeviceInputType.Select:
                     case DeviceInputType.TriggerPress:
-                        Interactions[i].BoolData = IsPinching;
-                        if (Interactions[i].Changed)
-                        {
-                            if (Interactions[i].BoolData)
-                            {
-                                CoreServices.InputSystem?.RaiseOnInputDown(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction);
-                            }
-                            else
-                            {
-                                CoreServices.InputSystem?.RaiseOnInputUp(InputSource, ControllerHandedness, Interactions[i].MixedRealityInputAction);
-                            }
-                        }
+                        ControllerBehaviors.RaiseDigitalInput(
+                            InputSource,
+                            ControllerHandedness,
+                            Interactions[i],
+                            IsPinching);
                         break;
                     case DeviceInputType.IndexFinger:
-                        handDefinition.UpdateCurrentIndexPose(Interactions[i]);
+                        ControllerBehaviors.RaisePoseInput(
+                            InputSource,
+                            ControllerHandedness,
+                            Interactions[i],
+                            indexPose);
                         break;
                     case DeviceInputType.ThumbStick:
                         handDefinition.UpdateCurrentTeleportPose(Interactions[i]);

@@ -29,6 +29,6 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// <summary>
         /// The collection of interactions supported by this controller.
         /// </summary>
-        public virtual MixedRealityInteractionMapping[] DefaultInteractions => new MixedRealityInteractionMapping[0];
+        public virtual MixedRealityInteractionMapping[] DefaultInteractions { get; } = null;
     }
 }

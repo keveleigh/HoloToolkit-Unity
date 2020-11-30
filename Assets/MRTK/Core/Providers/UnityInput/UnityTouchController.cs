@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.MixedReality.Toolkit.Utilities;
+using System;
 using Unity.Profiling;
 using UnityEngine;
 
@@ -12,10 +13,13 @@ namespace Microsoft.MixedReality.Toolkit.Input.UnityInput
         new[] { Handedness.Any })]
     public class UnityTouchController : BaseController
     {
-        public UnityTouchController(TrackingState trackingState, Handedness controllerHandedness, IMixedRealityInputSource inputSource = null, MixedRealityInteractionMapping[] interactions = null)
-                : base(trackingState, controllerHandedness, inputSource, interactions)
-        {
-        }
+        public UnityTouchController(
+            TrackingState trackingState,
+            Handedness controllerHandedness = Handedness.None,
+            IMixedRealityInputSource inputSource = null,
+            MixedRealityInteractionMapping[] interactions = null)
+                : base(trackingState, controllerHandedness, inputSource, interactions, new TouchScreenControllerDefinition())
+        { }
 
         /// <summary>
         /// Time in seconds to determine if the contact registers as a tap or a hold
@@ -43,6 +47,7 @@ namespace Microsoft.MixedReality.Toolkit.Input.UnityInput
         public float Lifetime { get; private set; } = 0.0f;
 
         /// <inheritdoc />
+        [Obsolete("The DefaultInteractions property is obsolete and will be removed in a future version of the Mixed Reality Toolkit. Please use ControllerDefinition to define interactions.")]
         public override MixedRealityInteractionMapping[] DefaultInteractions { get; } =
         {
             new MixedRealityInteractionMapping(0, "Touch Pointer Delta", AxisType.DualAxis, DeviceInputType.PointerPosition),

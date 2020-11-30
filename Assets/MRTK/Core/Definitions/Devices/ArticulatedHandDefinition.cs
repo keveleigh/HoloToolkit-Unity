@@ -11,16 +11,16 @@ namespace Microsoft.MixedReality.Toolkit.Input
     /// <summary>
     /// Defines the interactions and data that an articulated hand can provide.
     /// </summary>
-    public class ArticulatedHandDefinition
+    public class ArticulatedHandDefinition : BaseControllerDefinition
     {
-        public ArticulatedHandDefinition(IMixedRealityInputSource source, Handedness handedness)
+        public ArticulatedHandDefinition(
+            IMixedRealityInputSource source,
+            Handedness handedness) : base(handedness)
         {
             inputSource = source;
-            this.handedness = handedness;
         }
 
         protected readonly IMixedRealityInputSource inputSource;
-        protected readonly Handedness handedness;
 
         private readonly float cursorBeamBackwardTolerance = 0.5f;
         private readonly float cursorBeamUpTolerance = 0.8f;
@@ -86,7 +86,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// The articulated hands default interactions.
         /// </summary>
         /// <remarks>A single interaction mapping works for both left and right articulated hands.</remarks>
-        public MixedRealityInteractionMapping[] DefaultInteractions => new[]
+        public override MixedRealityInteractionMapping[] DefaultInteractions => new[]
         {
             new MixedRealityInteractionMapping(0, "Spatial Pointer", AxisType.SixDof, DeviceInputType.SpatialPointer),
             new MixedRealityInteractionMapping(1, "Spatial Grip", AxisType.SixDof, DeviceInputType.SpatialGrip),
@@ -198,7 +198,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
             using (UpdateHandJointsPerfMarker.Auto())
             {
                 unityJointPoses = jointPoses;
-                CoreServices.InputSystem?.RaiseHandJointsUpdated(inputSource, handedness, unityJointPoses);
+                CoreServices.InputSystem?.RaiseHandJointsUpdated(inputSource, Handedness, unityJointPoses);
             }
         }
 
@@ -214,15 +214,14 @@ namespace Microsoft.MixedReality.Toolkit.Input
             {
                 if (unityJointPoses.TryGetValue(TrackedHandJoint.IndexTip, out currentIndexPose))
                 {
-                    // Update the interaction data source
-                    interactionMapping.PoseData = currentIndexPose;
-
-                    // If our value changed raise it
-                    if (interactionMapping.Changed)
-                    {
-                        // Raise input system event if it's enabled
-                        CoreServices.InputSystem?.RaisePoseInputChanged(inputSource, handedness, interactionMapping.MixedRealityInputAction, currentIndexPose);
-                    }
+                    // We ignore the return value from TryRaisePoseInput
+                    // as this is called in an inner loop and logging
+                    // would likely impact performance.
+                    ControllerBehaviors.TryRaisePoseInput(
+                        inputSource,
+                        Handedness,
+                        interactionMapping,
+                        currentIndexPose);
                 }
             }
         }

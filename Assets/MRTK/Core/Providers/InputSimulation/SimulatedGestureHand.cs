@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.MixedReality.Toolkit.Utilities;
+using System;
 using UnityEngine;
 
 namespace Microsoft.MixedReality.Toolkit.Input
@@ -45,9 +46,8 @@ namespace Microsoft.MixedReality.Toolkit.Input
             Handedness controllerHandedness,
             IMixedRealityInputSource inputSource = null,
             MixedRealityInteractionMapping[] interactions = null)
-                : base(trackingState, controllerHandedness, inputSource, interactions)
-        {
-        }
+                : base(trackingState, controllerHandedness, inputSource, interactions) // todo: ggv hand definition
+        { }
 
         /// Lazy-init settings based on profile.
         /// This cannot happen in the constructor because the profile may not exist yet.
@@ -122,6 +122,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// The GGV default interactions.
         /// </summary>
         /// <remarks>A single interaction mapping works for both left and right controllers.</remarks>
+        [Obsolete("The DefaultInteractions property is obsolete and will be removed in a future version of the Mixed Reality Toolkit. Please use ControllerDefinition to define intereactions.")]
         public override MixedRealityInteractionMapping[] DefaultInteractions => new[]
         {
             new MixedRealityInteractionMapping(0, "Select", AxisType.Digital, DeviceInputType.Select),

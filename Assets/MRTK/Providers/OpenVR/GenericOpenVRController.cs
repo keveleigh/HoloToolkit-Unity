@@ -18,8 +18,13 @@ namespace Microsoft.MixedReality.Toolkit.OpenVR.Input
         flags: MixedRealityControllerConfigurationFlags.UseCustomInteractionMappings)]
     public class GenericOpenVRController : GenericJoystickController
     {
-        public GenericOpenVRController(TrackingState trackingState, Handedness controllerHandedness, IMixedRealityInputSource inputSource = null, MixedRealityInteractionMapping[] interactions = null)
-            : base(trackingState, controllerHandedness, inputSource, interactions)
+        public GenericOpenVRController(
+            TrackingState trackingState,
+            Handedness controllerHandedness,
+            IMixedRealityInputSource inputSource = null,
+            MixedRealityInteractionMapping[] interactions = null,
+            BaseControllerDefinition controllerDefinition = null)
+                : base(trackingState, controllerHandedness, inputSource, interactions, controllerDefinition)
         {
             nodeType = controllerHandedness == Handedness.Left ? XRNode.LeftHand : XRNode.RightHand;
         }
@@ -41,6 +46,7 @@ namespace Microsoft.MixedReality.Toolkit.OpenVR.Input
         /// </summary>
         private static readonly Dictionary<Handedness, GameObject> controllerDictionary = new Dictionary<Handedness, GameObject>(0);
 
+        [Obsolete("The DefaultLeftHandedInteractions property is obsolete and will be removed in a future version of the Mixed Reality Toolkit. Please use ControllerDefinition to define interactions.")]
         public override MixedRealityInteractionMapping[] DefaultLeftHandedInteractions => new[]
         {
             // Controller Pose
@@ -92,6 +98,7 @@ namespace Microsoft.MixedReality.Toolkit.OpenVR.Input
             new MixedRealityInteractionMapping(12, "Spatial Grip", AxisType.SixDof, DeviceInputType.SpatialGrip),
         };
 
+        [Obsolete("The DefaultRightHandedInteractions property is obsolete and will be removed in a future version of the Mixed Reality Toolkit. Please use ControllerDefinition to define interactions.")]
         public override MixedRealityInteractionMapping[] DefaultRightHandedInteractions => new[]
         {
             // Controller Pose

@@ -11,12 +11,12 @@ namespace Microsoft.MixedReality.Toolkit.Input
     /// <summary>
     /// 
     /// </summary>
-    public class OpenVROculusRemoteControllerDefinition : BaseControllerDefinition
+    public class OculusRemoteControllerDefinition : BaseControllerDefinition
     {
         /// <summary>
         /// 
         /// </summary>
-        public OpenVROculusRemoteControllerDefinition() : base(Handedness.None)
+        public OculusRemoteControllerDefinition() : base(Handedness.None)
         { }
 
         /// <inheritdoc />

@@ -82,18 +82,21 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// <summary>
         /// Constructor.
         /// </summary>
-        public SimulatedMotionController(TrackingState trackingState, Handedness controllerHandedness, IMixedRealityInputSource inputSource = null, MixedRealityInteractionMapping[] interactions = null)
-                : base(trackingState, controllerHandedness, inputSource, interactions)
-        {
-            controllerDefinition = new WindowsMixedRealityControllerDefinition(controllerHandedness);
-        }
+        public SimulatedMotionController(
+            TrackingState trackingState,
+            Handedness controllerHandedness,
+            IMixedRealityInputSource inputSource = null,
+            MixedRealityInteractionMapping[] interactions = null)
+                : base(trackingState, controllerHandedness, inputSource, interactions, new WindowsMixedRealityControllerDefinition(controllerHandedness))
+        { }
 
-        private readonly WindowsMixedRealityControllerDefinition controllerDefinition;
+        private WindowsMixedRealityControllerDefinition controllerDefinition => ControllerDefinition as WindowsMixedRealityControllerDefinition;
 
         /// <summary>
         /// The simulated motion controller's default interactions.
         /// </summary>
         /// <remarks>A single interaction mapping works for both left and right controllers. This is based on the Windows Mixed Reality controller.</remarks>
+        [Obsolete("The DefaultInteractions property is obsolete and will be removed in a future version of the Mixed Reality Toolkit. Please use ControllerDefinition to define intereactions.")]
         public override MixedRealityInteractionMapping[] DefaultInteractions => controllerDefinition?.DefaultInteractions;
 
         internal void UpdateState(SimulatedMotionControllerData motionControllerData)

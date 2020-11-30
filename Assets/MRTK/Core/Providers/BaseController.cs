@@ -15,12 +15,18 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// <summary>
         /// Constructor.
         /// </summary>
-        protected BaseController(TrackingState trackingState, Handedness controllerHandedness, IMixedRealityInputSource inputSource = null, MixedRealityInteractionMapping[] interactions = null)
+        protected BaseController(
+            TrackingState trackingState,
+            Handedness controllerHandedness,
+            IMixedRealityInputSource inputSource = null,
+            MixedRealityInteractionMapping[] interactions = null,
+            BaseControllerDefinition controllerDefinition = null)
         {
             TrackingState = trackingState;
             ControllerHandedness = controllerHandedness;
             InputSource = inputSource;
             Interactions = interactions;
+            ControllerDefinition = controllerDefinition;
 
             IsPositionAvailable = false;
             IsPositionApproximate = false;
@@ -94,18 +100,28 @@ namespace Microsoft.MixedReality.Toolkit.Input
         }
 
         /// <summary>
+        /// Defines a controller's handedness and available inputs.
+        /// </summary>
+        public BaseControllerDefinition ControllerDefinition { get; } = null;
+
+        // todo: add controller def here and deprecate the Default*Interactions
+
+        /// <summary>
         /// The default interactions for this controller.
         /// </summary>
+        [Obsolete("The DefaultInteractions property is obsolete and will be removed in a future version of the Mixed Reality Toolkit. Please use ControllerDefinition to define interactions.")]
         public virtual MixedRealityInteractionMapping[] DefaultInteractions { get; } = null;
 
         /// <summary>
         /// The Default Left Handed interactions for this controller.
         /// </summary>
+        [Obsolete("The DefaultLeftHandedInteractions property is obsolete and will be removed in a future version of the Mixed Reality Toolkit. Please use ControllerDefinition to define interactions.")]
         public virtual MixedRealityInteractionMapping[] DefaultLeftHandedInteractions { get; } = null;
 
         /// <summary>
         /// The Default Right Handed interactions for this controller.
         /// </summary>
+        [Obsolete("The DefaultRightHandedInteractions property is obsolete and will be removed in a future version of the Mixed Reality Toolkit. Please use ControllerDefinition to define interactions.")]
         public virtual MixedRealityInteractionMapping[] DefaultRightHandedInteractions { get; } = null;
 
         #region IMixedRealityController Implementation
@@ -179,6 +195,8 @@ namespace Microsoft.MixedReality.Toolkit.Input
         {
             switch (ControllerHandedness)
             {
+// todo: replace this with the controller definition
+#pragma warning disable 0618
                 case Handedness.Left:
                     AssignControllerMappings(DefaultLeftHandedInteractions ?? DefaultInteractions);
                     break;
@@ -188,6 +206,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                 default:
                     AssignControllerMappings(DefaultInteractions);
                     break;
+#pragma warning restore 0618
             }
         }
 

@@ -221,12 +221,15 @@ namespace Microsoft.MixedReality.Toolkit.Input
             {
                 switch (handedness)
                 {
+// todo: replace this with the controller definition
+#pragma warning disable 0618
                     case Handedness.Left:
                         return detectedController.DefaultLeftHandedInteractions ?? detectedController.DefaultInteractions;
                     case Handedness.Right:
                         return detectedController.DefaultRightHandedInteractions ?? detectedController.DefaultInteractions;
                     default:
                         return detectedController.DefaultInteractions;
+#pragma warning restore 0618
                 }
             }
 
