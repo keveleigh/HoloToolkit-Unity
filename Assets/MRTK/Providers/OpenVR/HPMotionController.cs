@@ -30,6 +30,7 @@ namespace Microsoft.MixedReality.Toolkit.OpenVR.Input
         public override float PointerOffsetAngle { get; protected set; } = -30f;
 
         /// <inheritdoc />
+        [System.Obsolete("The DefaultLeftHandedInteractions property is obsolete and will be removed in a future version of the Mixed Reality Toolkit. Please use ControllerDefinition to define interactions.")]
         public override MixedRealityInteractionMapping[] DefaultLeftHandedInteractions
         {
             get
@@ -62,6 +63,7 @@ namespace Microsoft.MixedReality.Toolkit.OpenVR.Input
         };
 
         /// <inheritdoc />
+        [System.Obsolete("The DefaultLeftHandedInteractions property is obsolete and will be removed in a future version of the Mixed Reality Toolkit. Please use ControllerDefinition to define interactions.")]
         public override MixedRealityInteractionMapping[] DefaultRightHandedInteractions
         {
             get

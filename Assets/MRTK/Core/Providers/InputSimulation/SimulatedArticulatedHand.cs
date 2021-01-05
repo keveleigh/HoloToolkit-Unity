@@ -36,6 +36,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// <summary>
         /// The definition and data store for this articulated hand class.
         /// </summary>
+        [Obsolete]
         protected ArticulatedHandDefinition handDefinition => ControllerDefinition as ArticulatedHandDefinition;
 
         /// <summary>
@@ -43,7 +44,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// </summary>
         /// <remarks>A single interaction mapping works for both left and right controllers.</remarks>
         [Obsolete("The DefaultInteractions property is obsolete and will be removed in a future version of the Mixed Reality Toolkit. Please use ControllerDefinition to define interactions.")]
-        public override MixedRealityInteractionMapping[] DefaultInteractions => handDefinition?.DefaultInteractions;
+        public override MixedRealityInteractionMapping[] DefaultInteractions => ControllerDefinition?.DefaultInteractions;
 
         /// <inheritdoc />
         protected override void UpdateHandJoints(SimulatedHandData handData)

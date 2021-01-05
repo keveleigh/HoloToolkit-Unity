@@ -15,8 +15,8 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.Input
         flags: MixedRealityControllerConfigurationFlags.UseCustomInteractionMappings)]
     public class GenericXRSDKController : BaseController
     {
-        public GenericXRSDKController(TrackingState trackingState, Handedness controllerHandedness, IMixedRealityInputSource inputSource = null, MixedRealityInteractionMapping[] interactions = null)
-            : base(trackingState, controllerHandedness, inputSource, interactions)
+        public GenericXRSDKController(TrackingState trackingState, Handedness controllerHandedness, BaseControllerDefinition controllerDefinition, IMixedRealityInputSource inputSource = null, MixedRealityInteractionMapping[] interactions = null)
+            : base(trackingState, controllerHandedness, inputSource, interactions, controllerDefinition)
         {
         }
 
@@ -41,9 +41,11 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.Input
         protected Quaternion CurrentControllerRotation = Quaternion.identity;
 
         /// <inheritdoc />
+        [System.Obsolete("The DefaultLeftHandedInteractions property is obsolete and will be removed in a future version of the Mixed Reality Toolkit. Please use ControllerDefinition to define interactions.")]
         public override MixedRealityInteractionMapping[] DefaultLeftHandedInteractions => DefaultInteractions;
 
         /// <inheritdoc />
+        [System.Obsolete("The DefaultLeftHandedInteractions property is obsolete and will be removed in a future version of the Mixed Reality Toolkit. Please use ControllerDefinition to define interactions.")]
         public override MixedRealityInteractionMapping[] DefaultRightHandedInteractions => DefaultInteractions;
 
         private static readonly ProfilerMarker UpdateControllerPerfMarker = new ProfilerMarker("[MRTK] GenericXRSDKController.UpdateController");

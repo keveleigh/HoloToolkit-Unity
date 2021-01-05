@@ -39,11 +39,9 @@ namespace Microsoft.MixedReality.Toolkit.LeapMotion.Input
                 : base(trackingState, controllerHandedness, inputSource, interactions) // todo: controller definition here
         { } 
 
-        internal ArticulatedHandDefinition handDefinition => ControllerDefinition as ArticulatedHandDefinition;
-
         // Set the interactions for each hand to the Default interactions of the hand definition
         [Obsolete("The DefaultInteractions property is obsolete and will be removed in a future version of the Mixed Reality Toolkit. Please use ControllerDefinition to define interactions.")]
-        public override MixedRealityInteractionMapping[] DefaultInteractions => handDefinition?.DefaultInteractions;
+        public override MixedRealityInteractionMapping[] DefaultInteractions => ControllerDefinition?.DefaultInteractions;
 
         private static readonly ProfilerMarker UpdateStatePerfMarker = new ProfilerMarker("[MRTK] LeapMotionArticulatedHand.UpdateState");
 
@@ -60,7 +58,7 @@ namespace Microsoft.MixedReality.Toolkit.LeapMotion.Input
 #if LEAPMOTIONCORE_PRESENT
 
         /// <summary>
-        /// If true, the current joint pose supports far interaction via the default controller ray.  
+        /// If true, the current joint pose supports far interaction via the default controller ray.
         /// </summary>
         public override bool IsInPointingPose => handDefinition.IsInPointingPose;
 
