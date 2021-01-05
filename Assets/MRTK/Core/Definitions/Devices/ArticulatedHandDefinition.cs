@@ -260,9 +260,9 @@ namespace Microsoft.MixedReality.Toolkit.Input
                 }
 
                 // We close middle finger to signal spider-man gesture, and as being ready for teleport
-                isIndexGrabbing = HandPoseUtils.IsIndexGrabbing(handedness);
-                isMiddleGrabbing = HandPoseUtils.IsMiddleGrabbing(handedness);
-                isThumbGrabbing = HandPoseUtils.IsThumbGrabbing(handedness);
+                isIndexGrabbing = HandPoseUtils.IsIndexGrabbing(Handedness);
+                isMiddleGrabbing = HandPoseUtils.IsMiddleGrabbing(Handedness);
+                isThumbGrabbing = HandPoseUtils.IsThumbGrabbing(Handedness);
                 bool isReadyForTeleport = !anyPointersLockedWithHand && IsInTeleportPose;
 
                 // Tracks the input vector that should be sent out based on the gesture that is made
@@ -285,7 +285,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                 // If our value changed raise it
                 if (interactionMapping.Changed)
                 {
-                    CoreServices.InputSystem?.RaisePositionInputChanged(inputSource, handedness, interactionMapping.MixedRealityInputAction, stickInput);
+                    CoreServices.InputSystem?.RaisePositionInputChanged(inputSource, Handedness, interactionMapping.MixedRealityInputAction, stickInput);
                 }
 
                 previousStickInput = stickInput;
