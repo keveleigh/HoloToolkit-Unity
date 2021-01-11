@@ -85,7 +85,7 @@ jobs:
     - template: templates/package.yml
       parameters:
         version: '$(MRTKVersion)-$(MRTKReleaseTag)'
-        packDestination: '$(Build.SourcesDirectory)\artifacts\release'        
+        packDestination: '$(Build.SourcesDirectory)\artifacts\release'
 
   - template: templates/tasks/signing.yml
     parameters:
@@ -100,7 +100,7 @@ jobs:
       targetType: filePath
       filePath: '$(ToolsDir)\signCheck.ps1'
       arguments: '$(Build.SourcesDirectory)\artifacts\release -tmpDir $(Build.ArtifactStagingDirectory)'
-  
+
   - powershell: |
       Remove-Item "$(Build.SourcesDirectory)/artifacts/release/Microsoft.MixedReality.Toolkit.Tests.*" -Exclude "*.Utilities.*"
     displayName: "Delete MixedReality.Toolkit.Tests package from the release artifacts"

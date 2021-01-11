@@ -2,8 +2,6 @@
 
 variables:
 - template: config/settings.yml
-- name: packagingEnabled
-  value: false
 
 jobs:
 - job: DailyUnity2019Validation
@@ -18,7 +16,6 @@ jobs:
   steps:
   - template: templates/common-Unity2019.yml
     parameters:
-      packagingEnabled: false
       UnityVersion: $(Unity2019Version)
       MRTKVersion: $(MRTKVersion)
 
@@ -33,6 +30,5 @@ jobs:
   steps:
   - template: templates/ci-common.yml
     parameters:
-      packagingEnabled: false
       UnityVersion: $(Unity2018Version)
       MRTKVersion: $(MRTKVersion)

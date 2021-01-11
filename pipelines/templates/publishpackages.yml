@@ -4,7 +4,7 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Packages'
   inputs:
-    PathtoPublish: '$(Build.SourcesDirectory)\artifacts'
+    PathToPublish: '$(Build.SourcesDirectory)\artifacts'
     ArtifactName: 'mrtk-unity-packages'
 - task: PowerShell@2
   displayName: 'UPM packages to registry'

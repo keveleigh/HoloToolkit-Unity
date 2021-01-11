@@ -1,7 +1,7 @@
 # CI build for developer builds.
 parameters:
-  packagingEnabled: true
-  packagePublishing: true
+  packagingEnabled: false
+  packagePublishing: false
   UnityVersion: ""
   MRTKVersion: ""
 
