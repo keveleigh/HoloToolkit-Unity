@@ -6,6 +6,11 @@ variables:
   value: false
 
 jobs:
+- job: CodeValidation
+  pool:
+    vmImage: windows-2019
+  steps:
+  - template: templates/validation.yml
 - job: CIDeveloperValidation
   timeoutInMinutes: 120
   pool:

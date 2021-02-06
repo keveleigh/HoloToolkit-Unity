@@ -4,6 +4,11 @@ variables:
 - template: config/settings.yml
 
 jobs:
+- job: CICodeValidation
+  pool:
+    vmImage: windows-2019
+  steps:
+  - template: templates/validation.yml
 - job: CIDeveloperValidation
   timeoutInMinutes: 90
   pool:
