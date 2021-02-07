@@ -3,7 +3,7 @@ parameters:
   UnityVersion: ""
 
 steps:
-- template: generateprojects.yml
+- template: tasks/generate-projects.yml
   parameters:
     UnityVersion: ${{ parameters.UnityVersion }}
 
