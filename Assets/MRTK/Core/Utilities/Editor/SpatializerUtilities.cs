@@ -88,9 +88,6 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Editor
             AudioSettings.SetSpatializerPluginName(spatializer);
             spatializerPlugin.stringValue = spatializer;
             audioMgrSettings.ApplyModifiedProperties();
-
-            // Cache the count of installed spatializers
-            MixedRealityProjectPreferences.AudioSpatializerCount = InstalledSpatializers.Length;
         }
 
         /// <summary>
@@ -101,6 +98,10 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Editor
         {
             int previousCount = MixedRealityProjectPreferences.AudioSpatializerCount;
             int currentCount = InstalledSpatializers.Length;
+            Debug.Log("Count checked");
+
+            // Cache the count of installed spatializers
+            MixedRealityProjectPreferences.AudioSpatializerCount = currentCount;
 
             return (previousCount == currentCount);
         }
