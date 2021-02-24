@@ -59,14 +59,10 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Editor
                             filePath = Path.Combine(modulePath, DEFAULT_FILE_NAME);
                             _instance = CreateInstance<ProjectPreferences>();
                             AssetDatabase.CreateAsset(_instance, filePath);
-                            AssetDatabase.SaveAssets();
                         }
                     }
                     else
                     {
-                        // Sometimes Unity has weird bug where asset file exists but Unity will not load it resulting in _instance = null. 
-                        // Force refresh of asset database before we try to access our preferences file
-                        AssetDatabase.Refresh();
                         _instance = (ProjectPreferences)AssetDatabase.LoadAssetAtPath(filePath, typeof(ProjectPreferences));
                     }
                 }
