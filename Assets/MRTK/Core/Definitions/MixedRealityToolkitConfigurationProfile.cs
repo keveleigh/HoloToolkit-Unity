@@ -69,11 +69,7 @@ namespace Microsoft.MixedReality.Toolkit
         /// <summary>
         /// Enable and configure the Camera Profile for the Mixed Reality Toolkit
         /// </summary>
-        public bool IsCameraSystemEnabled
-        {
-            get { return CameraProfile != null && cameraSystemType != null && cameraSystemType.Type != null && enableCameraSystem; }
-            internal set { enableCameraSystem = value; }
-        }
+        public bool IsCameraSystemEnabled => CameraProfile != null && cameraSystemType != null && cameraSystemType.Type != null && enableCameraSystem;
 
         [SerializeField]
         [Tooltip("Camera profile.")]
@@ -83,25 +79,17 @@ namespace Microsoft.MixedReality.Toolkit
         /// Profile for customizing your camera and quality settings based on if your 
         /// head mounted display (HMD) is a transparent device or an occluded device.
         /// </summary>
-        public MixedRealityCameraProfile CameraProfile
-        {
-            get { return cameraProfile; }
-            internal set { cameraProfile = value; }
-        }
-
-        /// <summary>
-        /// Camera System class to instantiate at runtime.
-        /// </summary>
-        public SystemType CameraSystemType
-        {
-            get { return cameraSystemType; }
-            internal set { cameraSystemType = value; }
-        }
+        public MixedRealityCameraProfile CameraProfile => cameraProfile;
 
         [SerializeField]
         [Tooltip("Camera System Class to instantiate at runtime.")]
         [Implements(typeof(IMixedRealityCameraSystem), TypeGrouping.ByNamespaceFlat)]
         private SystemType cameraSystemType;
+
+        /// <summary>
+        /// Camera System class to instantiate at runtime.
+        /// </summary>
+        public SystemType CameraSystemType => cameraSystemType;
 
         [SerializeField]
         [Tooltip("Enable the Input System on Startup.")]
@@ -110,11 +98,7 @@ namespace Microsoft.MixedReality.Toolkit
         /// <summary>
         /// Enable and configure the Input System component for the Mixed Reality Toolkit
         /// </summary>
-        public bool IsInputSystemEnabled
-        {
-            get { return inputSystemProfile != null && inputSystemType != null && inputSystemType.Type != null && enableInputSystem; }
-            internal set { enableInputSystem = value; }
-        }
+        public bool IsInputSystemEnabled => inputSystemProfile != null && inputSystemType != null && inputSystemType.Type != null && enableInputSystem;
 
         [SerializeField]
         [Tooltip("Input System profile for setting wiring up events and actions to input devices.")]
@@ -137,11 +121,7 @@ namespace Microsoft.MixedReality.Toolkit
         /// <summary>
         /// Input System class to instantiate at runtime.
         /// </summary>
-        public SystemType InputSystemType
-        {
-            get { return inputSystemType; }
-            internal set { inputSystemType = value; }
-        }
+        public SystemType InputSystemType => inputSystemType;
 
         [SerializeField]
         [Tooltip("Enable the Boundary on Startup")]
@@ -150,11 +130,7 @@ namespace Microsoft.MixedReality.Toolkit
         /// <summary>
         /// Enable and configure the boundary system.
         /// </summary>
-        public bool IsBoundarySystemEnabled
-        {
-            get { return BoundarySystemSystemType != null && BoundarySystemSystemType.Type != null && enableBoundarySystem && boundaryVisualizationProfile != null; }
-            internal set { enableBoundarySystem = value; }
-        }
+        public bool IsBoundarySystemEnabled => BoundarySystemSystemType != null && BoundarySystemSystemType.Type != null && enableBoundarySystem && boundaryVisualizationProfile != null;
 
         [SerializeField]
         [Tooltip("Boundary system class to instantiate at runtime for legacy XR.")]
@@ -178,11 +154,7 @@ namespace Microsoft.MixedReality.Toolkit
         /// <summary>
         /// Active profile for boundary visualization.
         /// </summary>
-        public MixedRealityBoundaryVisualizationProfile BoundaryVisualizationProfile
-        {
-            get { return boundaryVisualizationProfile; }
-            internal set { boundaryVisualizationProfile = value; }
-        }
+        public MixedRealityBoundaryVisualizationProfile BoundaryVisualizationProfile => boundaryVisualizationProfile;
 
         [SerializeField]
         [Tooltip("Enable the Teleport System on Startup")]
@@ -191,11 +163,7 @@ namespace Microsoft.MixedReality.Toolkit
         /// <summary>
         /// Enable and configure the teleport system.
         /// </summary>
-        public bool IsTeleportSystemEnabled
-        {
-            get { return teleportSystemType != null && teleportSystemType.Type != null && enableTeleportSystem; }
-            internal set { enableTeleportSystem = value; }
-        }
+        public bool IsTeleportSystemEnabled => teleportSystemType != null && teleportSystemType.Type != null && enableTeleportSystem;
 
         [SerializeField]
         [Tooltip("Boundary System Class to instantiate at runtime.")]
@@ -205,11 +173,7 @@ namespace Microsoft.MixedReality.Toolkit
         /// <summary>
         /// Teleport System class to instantiate at runtime.
         /// </summary>
-        public SystemType TeleportSystemSystemType
-        {
-            get { return teleportSystemType; }
-            internal set { teleportSystemType = value; }
-        }
+        public SystemType TeleportSystemSystemType => teleportSystemType;
 
         [SerializeField]
         [Tooltip("Enable the Spatial Awareness system on startup")]
@@ -232,11 +196,7 @@ namespace Microsoft.MixedReality.Toolkit
         /// <summary>
         /// Spatial Awareness System class to instantiate at runtime.
         /// </summary>
-        public SystemType SpatialAwarenessSystemSystemType
-        {
-            get { return spatialAwarenessSystemType; }
-            internal set { spatialAwarenessSystemType = value; }
-        }
+        public SystemType SpatialAwarenessSystemSystemType => spatialAwarenessSystemType;
 
         [SerializeField]
         [Tooltip("Profile for configuring the spatial awareness system.")]
@@ -258,11 +218,7 @@ namespace Microsoft.MixedReality.Toolkit
         /// <summary>
         /// Active profile for diagnostic configuration
         /// </summary>
-        public MixedRealityDiagnosticsProfile DiagnosticsSystemProfile
-        {
-            get { return diagnosticsSystemProfile; }
-            internal set { diagnosticsSystemProfile = value; }
-        }
+        public MixedRealityDiagnosticsProfile DiagnosticsSystemProfile => diagnosticsSystemProfile;
 
         [SerializeField]
         [Tooltip("Enable diagnostic system")]
@@ -271,11 +227,7 @@ namespace Microsoft.MixedReality.Toolkit
         /// <summary>
         /// Is the Diagnostics System enabled?
         /// </summary>
-        public bool IsDiagnosticsSystemEnabled
-        {
-            get { return enableDiagnosticsSystem && DiagnosticsSystemSystemType?.Type != null && diagnosticsSystemProfile != null; }
-            internal set { enableDiagnosticsSystem = value; }
-        }
+        public bool IsDiagnosticsSystemEnabled => enableDiagnosticsSystem && DiagnosticsSystemSystemType?.Type != null && diagnosticsSystemProfile != null;
 
         [SerializeField]
         [Tooltip("Diagnostics System class to instantiate at runtime.")]
@@ -285,11 +237,7 @@ namespace Microsoft.MixedReality.Toolkit
         /// <summary>
         /// Diagnostics System Script File to instantiate at runtime
         /// </summary>
-        public SystemType DiagnosticsSystemSystemType
-        {
-            get { return diagnosticsSystemType; }
-            internal set { diagnosticsSystemType = value; }
-        }
+        public SystemType DiagnosticsSystemSystemType => diagnosticsSystemType;
 
         [SerializeField]
         [Tooltip("Profile for configuring scene system components.")]
@@ -298,11 +246,7 @@ namespace Microsoft.MixedReality.Toolkit
         /// <summary>
         /// Active profile for scene configuration
         /// </summary>
-        public MixedRealitySceneSystemProfile SceneSystemProfile
-        {
-            get { return sceneSystemProfile; }
-            internal set { sceneSystemProfile = value; }
-        }
+        public MixedRealitySceneSystemProfile SceneSystemProfile => sceneSystemProfile;
 
         [SerializeField]
         [Tooltip("Enable scene system")]
@@ -311,11 +255,7 @@ namespace Microsoft.MixedReality.Toolkit
         /// <summary>
         /// Is the Scene System enabled?
         /// </summary>
-        public bool IsSceneSystemEnabled
-        {
-            get { return enableSceneSystem && SceneSystemSystemType?.Type != null && sceneSystemProfile != null; }
-            internal set { enableSceneSystem = value; }
-        }
+        public bool IsSceneSystemEnabled => enableSceneSystem && SceneSystemSystemType?.Type != null && sceneSystemProfile != null;
 
         [SerializeField]
         [Tooltip("Scene System class to instantiate at runtime.")]
@@ -325,11 +265,7 @@ namespace Microsoft.MixedReality.Toolkit
         /// <summary>
         /// Scene System Script File to instantiate at runtime
         /// </summary>
-        public SystemType SceneSystemSystemType
-        {
-            get { return sceneSystemType; }
-            internal set { sceneSystemType = value; }
-        }
+        public SystemType SceneSystemSystemType => sceneSystemType;
 
         [SerializeField]
         [Tooltip("All the additional non-required services registered with the Mixed Reality Toolkit.")]
@@ -340,31 +276,30 @@ namespace Microsoft.MixedReality.Toolkit
         /// </summary>
         public MixedRealityRegisteredServiceProvidersProfile RegisteredServiceProvidersProfile => registeredServiceProvidersProfile;
 
-        /// <summary>
-        /// If true, MRTK will generate components that let you to view the state of running services. These objects will not be generated at runtime.
-        /// </summary>
-        [Obsolete("Service inspectors will be removed in an upcoming release")]
-        public bool UseServiceInspectors
-        {
-            get { return useServiceInspectors; }
-        }
-
         [Obsolete("Service inspectors will be removed in an upcoming release")]
         [SerializeField]
         [Tooltip("Deprecated: If true, MRTK will generate components that let you to view the state of running services. These objects will not be generated at runtime.")]
         private bool useServiceInspectors = false;
 
         /// <summary>
-        /// If true, MRTK will render the depth buffer as color. Only valid in editor.
+        /// If true, MRTK will generate components that let you to view the state of running services. These objects will not be generated at runtime.
         /// </summary>
-        public bool RenderDepthBuffer
-        {
-            get { return renderDepthBuffer; }
-        }
+        [Obsolete("Service inspectors will be removed in an upcoming release")]
+        public bool UseServiceInspectors => useServiceInspectors;
 
         [SerializeField]
-        [Tooltip("If true, MRTK will render the depth buffer as color. Only valid in editor.")]
+        [Tooltip("If true, MRTK will render the depth buffer as color. Only valid in-editor.")]
         private bool renderDepthBuffer = false;
+
+        /// <summary>
+        /// If true, MRTK will render the depth buffer as color.
+        /// </summary>
+        /// <remarks>Only valid in-editor.</remarks>
+        public bool RenderDepthBuffer => renderDepthBuffer;
+
+        [SerializeField]
+        [Tooltip("If true, verbose logging will be enabled for MRTK components.")]
+        private bool enableVerboseLogging = false;
 
         /// <summary>
         /// If true, verbose logging will be enabled for MRTK components.
@@ -374,10 +309,6 @@ namespace Microsoft.MixedReality.Toolkit
             get { return enableVerboseLogging; }
             set { enableVerboseLogging = value; }
         }
-
-        [SerializeField]
-        [Tooltip("If true, verbose logging will be enabled for MRTK components.")]
-        private bool enableVerboseLogging = false;
 
         #endregion Mixed Reality Toolkit configurable properties
     }
