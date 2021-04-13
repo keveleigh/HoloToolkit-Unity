@@ -11,11 +11,9 @@
 // play mode tests in this check.
 
 using Microsoft.MixedReality.Toolkit.SpatialAwareness;
-using Microsoft.MixedReality.Toolkit.Utilities;
 using NUnit.Framework;
 using System.Collections;
 using UnityEditor;
-using UnityEngine;
 using UnityEngine.TestTools;
 
 namespace Microsoft.MixedReality.Toolkit.Tests
@@ -40,7 +38,9 @@ namespace Microsoft.MixedReality.Toolkit.Tests
         [UnityTest]
         public IEnumerator TestAutoStartObserver()
         {
-            var mrtkProfile = CreateMRTKTestProfile(TestSpatialAwarenessSystemProfilePath);
+            MixedRealityToolkitConfigurationProfile mrtkProfile = MixedRealityToolkit.Instance.ActiveProfile;
+            mrtkProfile.SpatialAwarenessSystemProfile = AssetDatabase.LoadAssetAtPath<MixedRealitySpatialAwarenessSystemProfile>(TestSpatialAwarenessSystemProfilePath);
+
             TestUtilities.InitializeMixedRealityToolkit(mrtkProfile);
             yield return PlayModeTestUtilities.WaitForInputSystemUpdate();
 
@@ -68,7 +68,9 @@ namespace Microsoft.MixedReality.Toolkit.Tests
         [UnityTest]
         public IEnumerator TestManualStartObserver()
         {
-            var mrtkProfile = CreateMRTKTestProfile(TestSpatialAwarenessSystemProfilePath_ManualStart);
+            MixedRealityToolkitConfigurationProfile mrtkProfile = MixedRealityToolkit.Instance.ActiveProfile;
+            mrtkProfile.SpatialAwarenessSystemProfile = AssetDatabase.LoadAssetAtPath<MixedRealitySpatialAwarenessSystemProfile>(TestSpatialAwarenessSystemProfilePath_ManualStart);
+
             TestUtilities.InitializeMixedRealityToolkit(mrtkProfile);
             yield return PlayModeTestUtilities.WaitForInputSystemUpdate();
 
@@ -110,25 +112,14 @@ namespace Microsoft.MixedReality.Toolkit.Tests
         [UnityTest]
         public IEnumerator TestDisableSpatialAwarenessSystem()
         {
-            var mrtkProfile = CreateMRTKTestProfile(TestSpatialAwarenessSystemProfilePath);
-
+            MixedRealityToolkitConfigurationProfile mrtkProfile = MixedRealityToolkit.Instance.ActiveProfile;
+            mrtkProfile.SpatialAwarenessSystemProfile = AssetDatabase.LoadAssetAtPath<MixedRealitySpatialAwarenessSystemProfile>(TestSpatialAwarenessSystemProfilePath);
             mrtkProfile.IsSpatialAwarenessSystemEnabled = false;
 
             TestUtilities.InitializeMixedRealityToolkit(mrtkProfile);
             yield return PlayModeTestUtilities.WaitForInputSystemUpdate();
 
             Assert.IsNull(CoreServices.SpatialAwarenessSystem);
-        }
-
-        private static MixedRealityToolkitConfigurationProfile CreateMRTKTestProfile(string spatialAwarenessSystemPath)
-        {
-            var mrtkProfile = ScriptableObject.CreateInstance<MixedRealityToolkitConfigurationProfile>();
-
-            mrtkProfile.SpatialAwarenessSystemSystemType = new SystemType(typeof(MixedRealitySpatialAwarenessSystem));
-            mrtkProfile.IsSpatialAwarenessSystemEnabled = true;
-            mrtkProfile.SpatialAwarenessSystemProfile = AssetDatabase.LoadAssetAtPath<MixedRealitySpatialAwarenessSystemProfile>(spatialAwarenessSystemPath);
-
-            return mrtkProfile;
         }
     }
 }
