@@ -118,8 +118,8 @@ foreach ($entry in $packages.GetEnumerator()) {
     $samplesFolder = "$packagePath/Samples~"
 
     if ($packageName -eq "foundation") {
-        # The foundation package contains files that are requried to be copied into the Assets folder to be used.
-        # In order to perform the necessary preparaton, without overly complicating this script, we will use a
+        # The foundation package contains files that are required to be copied into the Assets folder to be used.
+        # In order to perform the necessary preparation, without overly complicating this script, we will use a
         # helper script to prepare the folder.
         Start-Process -FilePath "$PSHOME/powershell.exe" -ArgumentList "$scriptPath/foundationpreupm.ps1 -PackageRoot $packagePath" -NoNewWindow -Wait
     }
@@ -132,7 +132,7 @@ foreach ($entry in $packages.GetEnumerator()) {
     }
     elseif ($packageName -eq "examples") {
         # The examples folder is a collection of sample projects. In order to perform the necessary
-        # preparaton, without overly complicating this script, we will use a helper script to prepare
+        # preparation, without overly complicating this script, we will use a helper script to prepare
         # the folder.
         Start-Process -FilePath "$PSHOME/powershell.exe" -ArgumentList "$scriptPath/examplesfolderpreupm.ps1 -PackageRoot $packagePath" -NoNewWindow -Wait
     }
