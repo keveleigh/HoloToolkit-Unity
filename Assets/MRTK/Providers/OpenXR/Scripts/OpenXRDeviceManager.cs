@@ -151,16 +151,9 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.OpenXR
                 // If this is a new input device, search if an existing input device has matching characteristics
                 if (!ActiveControllers.ContainsKey(inputDevice))
                 {
-                    foreach (InputDevice device in ActiveControllers.Keys)
+                    if (TryGetMatchingDevice(inputDevice, out InputDevice device))
                     {
-                        if (((device.characteristics.HasFlag(InputDeviceCharacteristics.Controller) && inputDevice.characteristics.HasFlag(InputDeviceCharacteristics.Controller))
-                            || (device.characteristics.HasFlag(InputDeviceCharacteristics.HandTracking) && inputDevice.characteristics.HasFlag(InputDeviceCharacteristics.HandTracking)))
-                            && ((device.characteristics.HasFlag(InputDeviceCharacteristics.Left) && inputDevice.characteristics.HasFlag(InputDeviceCharacteristics.Left))
-                            || (device.characteristics.HasFlag(InputDeviceCharacteristics.Right) && inputDevice.characteristics.HasFlag(InputDeviceCharacteristics.Right))))
-                        {
-                            ActiveControllers.Add(inputDevice, ActiveControllers[device]);
-                            break;
-                        }
+                        ActiveControllers.Add(inputDevice, ActiveControllers[device]);
                     }
                 }
 
@@ -186,22 +179,34 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.OpenXR
         {
             using (RemoveControllerPerfMarker.Auto())
             {
-                foreach (InputDevice device in ActiveControllers.Keys)
+                if (TryGetMatchingDevice(inputDevice, out _))
                 {
-                    if (device != inputDevice
-                        && ((device.characteristics.HasFlag(InputDeviceCharacteristics.Controller) && inputDevice.characteristics.HasFlag(InputDeviceCharacteristics.Controller))
-                        || (device.characteristics.HasFlag(InputDeviceCharacteristics.HandTracking) && inputDevice.characteristics.HasFlag(InputDeviceCharacteristics.HandTracking)))
-                        && ((device.characteristics.HasFlag(InputDeviceCharacteristics.Left) && inputDevice.characteristics.HasFlag(InputDeviceCharacteristics.Left))
-                        || (device.characteristics.HasFlag(InputDeviceCharacteristics.Right) && inputDevice.characteristics.HasFlag(InputDeviceCharacteristics.Right))))
-                    {
-                        ActiveControllers.Remove(inputDevice);
-                        // Since an additional device exists, return so a lost source isn't reported
-                        return;
-                    }
+                    ActiveControllers.Remove(inputDevice);
+                    // Since an additional device exists, return so a lost source isn't reported
+                    return;
                 }
 
                 base.RemoveController(inputDevice);
             }
+        }
+
+        private bool TryGetMatchingDevice(InputDevice inputDevice, out InputDevice match)
+        {
+            foreach (InputDevice device in ActiveControllers.Keys)
+            {
+                if (device != inputDevice
+                    && ((device.characteristics.HasFlag(InputDeviceCharacteristics.Controller) && inputDevice.characteristics.HasFlag(InputDeviceCharacteristics.Controller))
+                    || (device.characteristics.HasFlag(InputDeviceCharacteristics.HandTracking) && inputDevice.characteristics.HasFlag(InputDeviceCharacteristics.HandTracking)))
+                    && ((device.characteristics.HasFlag(InputDeviceCharacteristics.Left) && inputDevice.characteristics.HasFlag(InputDeviceCharacteristics.Left))
+                    || (device.characteristics.HasFlag(InputDeviceCharacteristics.Right) && inputDevice.characteristics.HasFlag(InputDeviceCharacteristics.Right))))
+                {
+                    match = device;
+                    return true;
+                }
+            }
+
+            match = default;
+            return false;
         }
 
         /// <inheritdoc />
