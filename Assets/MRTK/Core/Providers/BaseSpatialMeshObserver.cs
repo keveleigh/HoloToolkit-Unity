@@ -204,6 +204,12 @@ namespace Microsoft.MixedReality.Toolkit.SpatialAwareness
             base.Initialize();
         }
 
+        public override void Enable()
+        {
+            base.Enable();
+            AddRuntimeSpatialMeshPrefabToHierarchy();
+        }
+
         #endregion IMixedRealityDataProvider Implementation
 
         #region IMixedRealitySpatialMeshObserver Implementation
@@ -347,24 +353,26 @@ namespace Microsoft.MixedReality.Toolkit.SpatialAwareness
             }
         }
 
+        private GameObject runtimeSpatialMeshParent = null;
+
         #endregion IMixedRealitySpatialMeshObserver Implementation
 
         /// <summary>
-        /// Instantiates and appends a prefab to the Runtime (on device and not in editor) 
-        /// Spatial Awareness hierarchy. 
-        /// 
+        /// Instantiates and appends a prefab to the Runtime (on device and not in editor)
+        /// Spatial Awareness hierarchy.
+        ///
         /// The default structure of the Spatial Awareness System:
-        /// 
-        /// Spatial Awareness System 
+        ///
+        /// Spatial Awareness System
         ///     Windows Mixed Reality Spatial Mesh Observer
         ///         Spatial Mesh - ID
         ///         Spatial Mesh - ID
         ///         ...
-        /// 
-        /// If the Runtime Spatial Mesh Prefab field is not null, this method adds the prefab 
+        ///
+        /// If the Runtime Spatial Mesh Prefab field is not null, this method adds the prefab
         /// between the Spatial Awareness System and the Windows Mixed Reality Spatial Mesh Observer which results in this structure:
-        /// 
-        /// Spatial Awareness System 
+        ///
+        /// Spatial Awareness System
         ///         Runtime Spatial Mesh Prefab
         ///             Windows Mixed Reality Spatial Mesh Observer
         ///                 Spatial Mesh - ID
@@ -373,16 +381,16 @@ namespace Microsoft.MixedReality.Toolkit.SpatialAwareness
         /// </summary>
         protected void AddRuntimeSpatialMeshPrefabToHierarchy()
         {
-            if (RuntimeSpatialMeshPrefab != null)
+            if (RuntimeSpatialMeshPrefab != null && runtimeSpatialMeshParent == null)
             {
-                GameObject spatialMeshPrefab = Object.Instantiate(RuntimeSpatialMeshPrefab, Service.SpatialAwarenessObjectParent.transform);
+                runtimeSpatialMeshParent = Object.Instantiate(RuntimeSpatialMeshPrefab, Service.SpatialAwarenessObjectParent.transform);
 
-                if (spatialMeshPrefab.transform.position != Vector3.zero)
+                if (runtimeSpatialMeshParent.transform.position != Vector3.zero)
                 {
-                    spatialMeshPrefab.transform.position = Vector3.zero;
+                    runtimeSpatialMeshParent.transform.position = Vector3.zero;
                 }
 
-                ObservedObjectParent.transform.SetParent(spatialMeshPrefab.transform, false);
+                ObservedObjectParent.transform.SetParent(runtimeSpatialMeshParent.transform, false);
             }
         }
     }

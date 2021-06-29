@@ -128,18 +128,6 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
 
         protected virtual bool? IsActiveLoader => true;
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            if (Service == null || meshSubsystem == null) { return; }
-
-            if (RuntimeSpatialMeshPrefab != null)
-            {
-                AddRuntimeSpatialMeshPrefabToHierarchy();
-            }
-        }
-
         /// <inheritdoc />
         public override void Enable()
         {
