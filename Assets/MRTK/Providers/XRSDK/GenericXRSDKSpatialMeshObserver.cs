@@ -41,35 +41,6 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
             BaseMixedRealityProfile profile = null) : base(spatialAwarenessSystem, name, priority, profile)
         { }
 
-        protected virtual bool? IsActiveLoader => true;
-
-        /// <inheritdoc />
-        public override void Enable()
-        {
-            if (!IsActiveLoader.HasValue)
-            {
-                IsEnabled = false;
-                EnableIfLoaderBecomesActive();
-                return;
-            }
-            else if (!IsActiveLoader.Value)
-            {
-                IsEnabled = false;
-                return;
-            }
-
-            base.Enable();
-        }
-
-        private async void EnableIfLoaderBecomesActive()
-        {
-            await new WaitUntil(() => IsActiveLoader.HasValue);
-            if (IsActiveLoader.Value)
-            {
-                Enable();
-            }
-        }
-
         #region BaseSpatialObserver Implementation
 
         private XRMeshSubsystem meshSubsystem;
@@ -154,6 +125,47 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
         #endregion IMixedRealityCapabilityCheck Implementation
 
         #region IMixedRealityDataProvider Implementation
+
+        protected virtual bool? IsActiveLoader => true;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            if (Service == null || meshSubsystem == null) { return; }
+
+            if (RuntimeSpatialMeshPrefab != null)
+            {
+                AddRuntimeSpatialMeshPrefabToHierarchy();
+            }
+        }
+
+        /// <inheritdoc />
+        public override void Enable()
+        {
+            if (!IsActiveLoader.HasValue)
+            {
+                IsEnabled = false;
+                EnableIfLoaderBecomesActive();
+                return;
+            }
+            else if (!IsActiveLoader.Value)
+            {
+                IsEnabled = false;
+                return;
+            }
+
+            base.Enable();
+        }
+
+        private async void EnableIfLoaderBecomesActive()
+        {
+            await new WaitUntil(() => IsActiveLoader.HasValue);
+            if (IsActiveLoader.Value)
+            {
+                Enable();
+            }
+        }
 
         private static readonly ProfilerMarker UpdatePerfMarker = new ProfilerMarker("[MRTK] GenericXRSDKSpatialMeshObserver.Update");
 
@@ -585,17 +597,5 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
         }
 
         #endregion Helpers
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            if (Service == null || meshSubsystem == null) { return; }
-
-            if (RuntimeSpatialMeshPrefab != null)
-            {
-                AddRuntimeSpatialMeshPrefabToHierarchy();
-            }
-        }
     }
 }
