@@ -83,15 +83,6 @@ namespace Microsoft.MixedReality.Toolkit.SpatialAwareness
         #region IMixedRealityDataProvider Implementation
 
         /// <summary>
-        /// Creates the observer.
-        /// </summary>
-        public override void Initialize()
-        {
-            base.Initialize();
-            CreateObserver();
-        }
-
-        /// <summary>
         /// Suspends the observer, clears observations, cleans up the observer, then re-initializes.
         /// </summary>
         public override void Reset()
@@ -104,6 +95,7 @@ namespace Microsoft.MixedReality.Toolkit.SpatialAwareness
         public override void Enable()
         {
             base.Enable();
+            CreateObserver();
             if (!IsRunning && StartupBehavior == AutoStartBehavior.AutoStart)
             {
                 Resume();
