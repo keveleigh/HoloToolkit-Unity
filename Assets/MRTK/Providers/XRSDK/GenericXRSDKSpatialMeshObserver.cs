@@ -209,7 +209,13 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
         {
             if (IsRunning)
             {
-                Debug.LogWarning("The XR SDK spatial observer is currently running.");
+                Debug.LogWarning($"{Name} is currently running.");
+                return;
+            }
+
+            if (!IsEnabled)
+            {
+                Debug.LogWarning($"{Name} isn't enabled.");
                 return;
             }
 
@@ -235,7 +241,13 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
         {
             if (!IsRunning)
             {
-                Debug.LogWarning("The XR SDK spatial observer is currently stopped.");
+                Debug.LogWarning($"{Name} is currently stopped.");
+                return;
+            }
+
+            if (!IsEnabled)
+            {
+                Debug.LogWarning($"{Name} isn't enabled.");
                 return;
             }
 
