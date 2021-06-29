@@ -107,6 +107,19 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Solvers
             set => hideHandCursorsOnActivate = value;
         }
 
+        [SerializeField]
+        [Tooltip("If this hand constraint should filter out non-IMixedRealityHands.")]
+        private bool filterHandsOnly = false;
+
+        /// <summary>
+        /// If this hand constraint should filter out non-IMixedRealityHands.
+        /// </summary>
+        public bool FilterHandsOnly
+        {
+            get => filterHandsOnly;
+            set => filterHandsOnly = value;
+        }
+
         /// <summary>
         /// Specifies how the solver should rotate when tracking the hand. 
         /// </summary>
@@ -680,11 +693,11 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Solvers
         /// </summary>
         /// <param name="handedness">The handedness of the returned controller</param>
         /// <returns>The IMixedRealityController for the desired handedness, or null if none are present.</returns>
-        protected static IMixedRealityController GetController(Handedness handedness)
+        protected IMixedRealityController GetController(Handedness handedness)
         {
             foreach (IMixedRealityController c in CoreServices.InputSystem.DetectedControllers)
             {
-                if (c.ControllerHandedness.IsMatch(handedness))
+                if ((!filterHandsOnly || c is IMixedRealityHand) && c.ControllerHandedness.IsMatch(handedness))
                 {
                     return c;
                 }
