@@ -68,6 +68,7 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.WindowsMixedReality
                 switch (ObserverVolumeType)
                 {
                     case VolumeType.AxisAlignedCube:
+                        Debug.Log($"{Name} setting new origin to {ObserverOrigin} | {ObservationExtents}");
                         XRSubsystemHelpers.MeshSubsystem.SetBoundingVolume(ObserverOrigin, ObservationExtents);
                         break;
 #if WMR_ENABLED
