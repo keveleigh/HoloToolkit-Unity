@@ -15,7 +15,7 @@ MonoBehaviour:
   isCustomProfile: 0
   startupBehavior: 0
   isStationaryObserver: 0
-  observationExtents: {x: 3, y: 3, z: 3}
+  observationExtents: {x: 1, y: 1, z: 1}
   observerVolumeType: 1
   updateInterval: 3.5
   meshPhysicsLayer: 31
