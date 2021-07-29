@@ -167,6 +167,8 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.Input
                     return controller;
                 }
 
+                Debug.Log($"{inputDevice.name} | {inputDevice.manufacturer} | {Time.frameCount}");
+
                 Handedness controllingHand;
 
                 if (inputDevice.characteristics.HasFlag(InputDeviceCharacteristics.Left))
@@ -230,6 +232,8 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.Input
             {
                 if (ActiveControllers.TryGetValue(inputDevice, out GenericXRSDKController controller))
                 {
+                    Debug.Log($"Removing {inputDevice.name} | {inputDevice.manufacturer} | {Time.frameCount}");
+
                     if (controller != null)
                     {
                         RemoveControllerFromScene(controller);

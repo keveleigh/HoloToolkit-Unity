@@ -151,6 +151,7 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.OpenXR
                 // If this is a new input device, search if an existing input device has matching characteristics
                 if (!ActiveControllers.ContainsKey(inputDevice) && TryGetMatchingHandDevice(inputDevice, out InputDevice device))
                 {
+                    Debug.Log($"Match hand: {inputDevice.name} | {inputDevice.manufacturer} | {Time.frameCount}");
                     ActiveControllers.Add(inputDevice, ActiveControllers[device]);
                 }
 
@@ -178,6 +179,7 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.OpenXR
             {
                 if (TryGetMatchingHandDevice(inputDevice, out _))
                 {
+                    Debug.Log($"Silently removing: {inputDevice.name} | {inputDevice.manufacturer} | {Time.frameCount}");
                     ActiveControllers.Remove(inputDevice);
                     // Since an additional device exists, return so a lost source isn't reported
                     return;
