@@ -149,12 +149,9 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.OpenXR
             using (GetOrAddControllerPerfMarker.Auto())
             {
                 // If this is a new input device, search if an existing input device has matching characteristics
-                if (!ActiveControllers.ContainsKey(inputDevice))
+                if (!ActiveControllers.ContainsKey(inputDevice) && TryGetMatchingHandDevice(inputDevice, out InputDevice device))
                 {
-                    if (TryGetMatchingDevice(inputDevice, out InputDevice device))
-                    {
-                        ActiveControllers.Add(inputDevice, ActiveControllers[device]);
-                    }
+                    ActiveControllers.Add(inputDevice, ActiveControllers[device]);
                 }
 
                 if (inputDevice.characteristics.HasFlag(InputDeviceCharacteristics.HandTracking)
@@ -179,7 +176,7 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.OpenXR
         {
             using (RemoveControllerPerfMarker.Auto())
             {
-                if (TryGetMatchingDevice(inputDevice, out _))
+                if (TryGetMatchingHandDevice(inputDevice, out _))
                 {
                     ActiveControllers.Remove(inputDevice);
                     // Since an additional device exists, return so a lost source isn't reported
@@ -190,13 +187,15 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.OpenXR
             }
         }
 
-        private bool TryGetMatchingDevice(InputDevice inputDevice, out InputDevice match)
+        /// <summary>
+        /// Tries to de-dupe input devices that both represent the same physical hand. This de-duping is not done for controllers and their articulated hand data, since those represent different types of input.
+        /// </summary>
+        private bool TryGetMatchingHandDevice(InputDevice inputDevice, out InputDevice match)
         {
             foreach (InputDevice device in ActiveControllers.Keys)
             {
                 if (device != inputDevice
-                    && ((device.characteristics.HasFlag(InputDeviceCharacteristics.Controller) && inputDevice.characteristics.HasFlag(InputDeviceCharacteristics.Controller))
-                    || (device.characteristics.HasFlag(InputDeviceCharacteristics.HandTracking) && inputDevice.characteristics.HasFlag(InputDeviceCharacteristics.HandTracking)))
+                    && device.characteristics.HasFlag(InputDeviceCharacteristics.HandTracking) && inputDevice.characteristics.HasFlag(InputDeviceCharacteristics.HandTracking)
                     && ((device.characteristics.HasFlag(InputDeviceCharacteristics.Left) && inputDevice.characteristics.HasFlag(InputDeviceCharacteristics.Left))
                     || (device.characteristics.HasFlag(InputDeviceCharacteristics.Right) && inputDevice.characteristics.HasFlag(InputDeviceCharacteristics.Right))))
                 {
