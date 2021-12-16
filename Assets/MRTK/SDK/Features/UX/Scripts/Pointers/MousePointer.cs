@@ -48,12 +48,11 @@ namespace Microsoft.MixedReality.Toolkit.Input
         {
             using (OnInputChangedVector2PerfMarker.Auto())
             {
-                if (eventData.SourceId == Controller?.InputSource.SourceId)
+                if (!UseSourcePoseData
+                    && eventData.SourceId == Controller?.InputSource.SourceId
+                    && PoseAction == eventData.MixedRealityInputAction)
                 {
-                    if (PoseAction == eventData.MixedRealityInputAction && !UseSourcePoseData)
-                    {
-                        UpdateMouseRotation(eventData.InputData);
-                    }
+                    UpdateMouseRotation(eventData.InputData);
                 }
             }
         }
@@ -65,12 +64,9 @@ namespace Microsoft.MixedReality.Toolkit.Input
         {
             using (OnInputChangedPosePerfMarker.Auto())
             {
-                if (eventData.SourceId == Controller?.InputSource.SourceId)
+                if (UseSourcePoseData && eventData.SourceId == Controller?.InputSource.SourceId)
                 {
-                    if (UseSourcePoseData)
-                    {
-                        UpdateMouseRotation(eventData.InputData.Rotation.eulerAngles);
-                    }
+                    UpdateMouseRotation(eventData.InputData.Rotation.eulerAngles);
                 }
             }
         }

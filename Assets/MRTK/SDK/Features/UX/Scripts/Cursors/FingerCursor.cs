@@ -73,16 +73,14 @@ namespace Microsoft.MixedReality.Toolkit.Input
                     indexKnucklePosition = Pointer.Position;
                 }
 
-                float distance = float.MaxValue;
                 Vector3 surfaceNormal = Vector3.zero;
-
-                bool surfaceNormalFound = false;
                 bool showVisual = true;
-                bool nearPokeable = nearPointer.IsNearObject;
 
+                float distance;
+                bool surfaceNormalFound;
 
                 // Show the cursor if we are deemed to be near an object or if it is near a grabbable object
-                if (nearPokeable)
+                if (nearPointer.IsNearObject)
                 {
                     // If the pointer is near an object translate the primary ring to the index finger tip and rotate to surface normal if close.
                     // The secondary ring should be hidden.

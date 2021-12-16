@@ -436,7 +436,7 @@ namespace Microsoft.MixedReality.Toolkit
                 DebugUtilities.LogVerbose("Begin registration of the input system");
 
 #if UNITY_EDITOR
-                // Make sure unity axis mappings are set.	
+                // Make sure unity axis mappings are set.
                 InputMappingAxisUtility.CheckUnityInputManagerMappings(ControllerMappingLibrary.UnityInputManagerAxes);
 #endif
 

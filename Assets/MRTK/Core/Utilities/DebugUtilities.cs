@@ -31,13 +31,13 @@ namespace Microsoft.MixedReality.Toolkit.Utilities
         /// <summary>
         /// This helper defaults to showing all messages of information and above (i.e. including warnings and errors)
         /// </summary>
-        public static LoggingLevel LogLevel = LoggingLevel.Information;
+        public static LoggingLevel LogLevel { get; set; } = LoggingLevel.Information;
 
         /// <summary>
         /// Asserts a condition.
         /// </summary>
         /// <param name="condition">The condition that is expected to be true.</param>
-        /// <param name="message">The message to display if the condition evaluates to false.</param>      
+        /// <param name="message">The message to display if the condition evaluates to false.</param>
         public static void DebugAssert(bool condition, string message)
         {
             Debug.Assert(condition, message);
