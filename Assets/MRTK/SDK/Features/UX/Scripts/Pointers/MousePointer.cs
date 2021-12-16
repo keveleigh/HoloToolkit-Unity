@@ -81,7 +81,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
             {
                 if (isDisabled)
                 {
-                    if (mouseDeltaRotation.magnitude >= MovementThresholdToUnHide)
+                    if (mouseDeltaRotation.sqrMagnitude >= MovementThresholdToUnHideSquared)
                     {
                         // if cursor was hidden reset to center
                         SetVisibility(true);

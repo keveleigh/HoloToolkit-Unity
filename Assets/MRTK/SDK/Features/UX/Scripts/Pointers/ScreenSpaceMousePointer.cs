@@ -37,7 +37,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
 
                 Vector3 currentMousePosition = UInput.mousePosition;
 
-                if ((lastMousePosition - (Vector2)currentMousePosition).magnitude >= MovementThresholdToUnHide)
+                if ((lastMousePosition - (Vector2)currentMousePosition).sqrMagnitude >= MovementThresholdToUnHideSquared)
                 {
                     SetVisibility(true);
                 }

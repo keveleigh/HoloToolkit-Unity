@@ -100,7 +100,6 @@ namespace Microsoft.MixedReality.Toolkit.Input
             }
         }
 
-
         private static readonly ProfilerMarker OnSourceLostPerfMarker = new ProfilerMarker("[MRTK] BaseMousePointer.OnSourceLost");
 
         /// <inheritdoc />
@@ -173,6 +172,8 @@ namespace Microsoft.MixedReality.Toolkit.Input
             }
         }
 
+        protected float MovementThresholdToUnHideSquared { get; private set; }
+
         #region MonoBehaviour Implementation
 
         protected override void Start()
@@ -194,6 +195,8 @@ namespace Microsoft.MixedReality.Toolkit.Input
                     break;
                 }
             }
+
+            MovementThresholdToUnHideSquared = Mathf.Pow(movementThresholdToUnHide, 2);
         }
 
         private static readonly ProfilerMarker UpdatePerfMarker = new ProfilerMarker("[MRTK] BaseMousePointer.Update");
