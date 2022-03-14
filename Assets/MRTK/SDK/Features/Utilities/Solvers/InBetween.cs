@@ -29,7 +29,6 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Solvers
 
         [SerializeField]
         [Tooltip("Tracked object to calculate position and orientation for the second object. If you want to manually override and use a scene object, use the TransformTarget field.")]
-        [HideInInspector]
         [FormerlySerializedAs("trackedObjectForSecondTransform")]
         private TrackedObjectType secondTrackedObjectType = TrackedObjectType.Head;
 
@@ -68,7 +67,6 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Solvers
 
         [SerializeField]
         [Tooltip("This transform overrides any Tracked Object as the second point for the In Between.")]
-        [HideInInspector]
         private Transform secondTransformOverride = null;
 
         /// <summary>
@@ -88,11 +86,6 @@ namespace Microsoft.MixedReality.Toolkit.Utilities.Solvers
         }
 
         private SolverHandler secondSolverHandler;
-
-        protected void OnValidate()
-        {
-            UpdateSecondSolverHandler();
-        }
 
         protected override void Start()
         {

@@ -323,7 +323,6 @@ Shader "Mixed Reality Toolkit/Standard"
                 fixed3 worldNormal : COLOR3;
 #endif
 #endif
-                UNITY_VERTEX_INPUT_INSTANCE_ID
                 UNITY_VERTEX_OUTPUT_STEREO
             };
 
@@ -588,7 +587,6 @@ Shader "Mixed Reality Toolkit/Standard"
                 UNITY_SETUP_INSTANCE_ID(v);
                 UNITY_INITIALIZE_OUTPUT(v2f, o);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-                UNITY_TRANSFER_INSTANCE_ID(v, o);
 
                 float4 vertexPosition = v.vertex;
 
@@ -774,7 +772,7 @@ Shader "Mixed Reality Toolkit/Standard"
 
             fixed4 frag(v2f i, fixed facing : VFACE) : SV_Target
             {
-                UNITY_SETUP_INSTANCE_ID(i);
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
 
 #if defined(_TRIPLANAR_MAPPING)
                 // Calculate triplanar uvs and apply texture scale and offset values like TRANSFORM_TEX.

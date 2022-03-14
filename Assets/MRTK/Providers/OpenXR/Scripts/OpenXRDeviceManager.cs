@@ -158,6 +158,8 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.OpenXR
                             && ((device.characteristics.IsMaskSet(InputDeviceCharacteristics.Left) && inputDevice.characteristics.IsMaskSet(InputDeviceCharacteristics.Left))
                             || (device.characteristics.IsMaskSet(InputDeviceCharacteristics.Right) && inputDevice.characteristics.IsMaskSet(InputDeviceCharacteristics.Right))))
                         {
+                            Debug.Log($"{inputDevice.name}");
+
                             ActiveControllers.Add(inputDevice, ActiveControllers[device]);
                             break;
                         }

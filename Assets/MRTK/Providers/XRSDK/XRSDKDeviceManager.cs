@@ -210,6 +210,8 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.Input
                     detectedController.InputSource.Pointers[i].Controller = detectedController;
                 }
 
+                Debug.Log($"{inputDevice.name}");
+
                 ActiveControllers.Add(inputDevice, detectedController);
 
                 Service?.RaiseSourceDetected(detectedController.InputSource, detectedController);
