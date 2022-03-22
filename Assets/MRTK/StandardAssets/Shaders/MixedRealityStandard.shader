@@ -190,6 +190,9 @@ Shader "Mixed Reality Toolkit/Standard"
             #include "UnityStandardUtils.cginc"
             #include "MixedRealityShaderUtils.cginc"
 
+            // This is required to work around a Vulkan build issue in Unity's shader compiler.
+            #define VFACE VFACE
+
             // This define will get commented in by the UpgradeShaderForUniversalRenderPipeline method.
             //#define _RENDER_PIPELINE
 
