@@ -609,7 +609,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                     if (gazePointer != null && gazeProviderPointingData != null)
                     {
                         // get 3d hit
-                        // This is unneccessary since the gaze pointer has been registered normally along with the other pointers(?)
+                        // This is unnecessary since the gaze pointer has been registered normally along with the other pointers(?)
                         hitResult3d.Clear();
                         IMixedRealityRaycastProvider raycastProvider = InputSystem?.RaycastProvider;
                         LayerMask[] prioritizedLayerMasks = (gazePointer.PrioritizedLayerMasksOverride ?? FocusLayerMasks);
@@ -1279,7 +1279,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                 }
                 else
                 {
-                    // old implementaion
+                    // old implementation
                     QuerySceneInternal(pointer, pointerRays, raycastProvider, prioritizedLayerMasks, hit, maxQuerySceneResults, focusIndividualCompoundCollider);
                 }
             }
