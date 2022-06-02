@@ -15,9 +15,17 @@ namespace Microsoft.MixedReality.Toolkit.Input
     public class DefaultPointerMediator : IMixedRealityPointerMediator
     {
         protected readonly HashSet<IMixedRealityPointer> allPointers = new HashSet<IMixedRealityPointer>();
+        private IEnumerator<IMixedRealityPointer> allPointersEnumerator;
+
         protected readonly HashSet<IMixedRealityPointer> farInteractPointers = new HashSet<IMixedRealityPointer>();
+        private IEnumerator<IMixedRealityPointer> farInteractPointersEnumerator;
+
         protected readonly HashSet<IMixedRealityNearPointer> nearInteractPointers = new HashSet<IMixedRealityNearPointer>();
+        private IEnumerator<IMixedRealityNearPointer> nearInteractPointersEnumerator;
+
         protected readonly HashSet<IMixedRealityTeleportPointer> teleportPointers = new HashSet<IMixedRealityTeleportPointer>();
+        private IEnumerator<IMixedRealityTeleportPointer> teleportPointersEnumerator;
+
         protected readonly HashSet<IMixedRealityPointer> unassignedPointers = new HashSet<IMixedRealityPointer>();
         protected readonly Dictionary<IMixedRealityInputSource, HashSet<IMixedRealityPointer>> pointerByInputSourceParent = new Dictionary<IMixedRealityInputSource, HashSet<IMixedRealityPointer>>();
         protected IPointerPreferences pointerPreferences;
@@ -25,6 +33,10 @@ namespace Microsoft.MixedReality.Toolkit.Input
         public DefaultPointerMediator()
         {
             pointerPreferences = null;
+            allPointersEnumerator = allPointers.GetEnumerator();
+            farInteractPointersEnumerator = farInteractPointers.GetEnumerator();
+            nearInteractPointersEnumerator = nearInteractPointers.GetEnumerator();
+            teleportPointersEnumerator = teleportPointers.GetEnumerator();
         }
 
         [Obsolete("Use DefaultPointerMediator() instead, followed by a call to SetPointerPreferences()")]
@@ -62,8 +74,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
 
                     if (pointer.InputSourceParent != null)
                     {
-                        HashSet<IMixedRealityPointer> children;
-                        if (!pointerByInputSourceParent.TryGetValue(pointer.InputSourceParent, out children))
+                        if (!pointerByInputSourceParent.TryGetValue(pointer.InputSourceParent, out HashSet<IMixedRealityPointer> children))
                         {
                             children = new HashSet<IMixedRealityPointer>();
                             pointerByInputSourceParent.Add(pointer.InputSourceParent, children);
@@ -71,6 +82,11 @@ namespace Microsoft.MixedReality.Toolkit.Input
                         children.Add(pointer);
                     }
                 }
+
+                allPointersEnumerator = allPointers.GetEnumerator();
+                farInteractPointersEnumerator = farInteractPointers.GetEnumerator();
+                nearInteractPointersEnumerator = nearInteractPointers.GetEnumerator();
+                teleportPointersEnumerator = teleportPointers.GetEnumerator();
             }
         }
 
@@ -94,6 +110,11 @@ namespace Microsoft.MixedReality.Toolkit.Input
                         siblingPointers.Remove(pointer);
                     }
                 }
+
+                allPointersEnumerator = allPointers.GetEnumerator();
+                farInteractPointersEnumerator = farInteractPointers.GetEnumerator();
+                nearInteractPointersEnumerator = nearInteractPointers.GetEnumerator();
+                teleportPointersEnumerator = teleportPointers.GetEnumerator();
             }
         }
 
@@ -103,9 +124,15 @@ namespace Microsoft.MixedReality.Toolkit.Input
         {
             using (UpdatePointersPerfMarker.Auto())
             {
+                allPointersEnumerator.Reset();
+                farInteractPointersEnumerator.Reset();
+                nearInteractPointersEnumerator.Reset();
+                teleportPointersEnumerator.Reset();
+
                 // If there's any teleportation going on, disable all pointers except the teleporter
-                foreach (IMixedRealityTeleportPointer pointer in teleportPointers)
+                while (teleportPointersEnumerator.MoveNext())
                 {
+                    IMixedRealityTeleportPointer pointer = teleportPointersEnumerator.Current;
                     if (pointer.TeleportRequestRaised)
                     {
                         pointer.IsActive = true;
@@ -124,7 +151,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                     }
                 }
 
-                // pointers whose active state has not yet been set this frame
+                // Pointers whose active state has not yet been set this frame.
                 unassignedPointers.Clear();
                 foreach (IMixedRealityPointer unassignedPointer in allPointers)
                 {
@@ -133,10 +160,11 @@ namespace Microsoft.MixedReality.Toolkit.Input
 
                 ApplyCustomPointerBehaviors();
 
-                // If any pointers are locked, they have priority. 
-                // Deactivate all other pointers that are on that input source
-                foreach (IMixedRealityPointer pointer in allPointers)
+                // If any pointers are locked, they have priority.
+                // Deactivate all other pointers that are on that input source.
+                while (allPointersEnumerator.MoveNext())
                 {
+                    IMixedRealityPointer pointer = allPointersEnumerator.Current;
                     if (pointer.IsFocusLocked)
                     {
                         pointer.IsActive = true;
@@ -160,8 +188,9 @@ namespace Microsoft.MixedReality.Toolkit.Input
 
                 // Check for near and far interactions
                 // Any far interact pointers become disabled when a near pointer is near an object
-                foreach (IMixedRealityNearPointer pointer in nearInteractPointers)
+                while (nearInteractPointersEnumerator.MoveNext())
                 {
+                    IMixedRealityNearPointer pointer = nearInteractPointersEnumerator.Current;
                     if (!unassignedPointers.Contains(pointer))
                     {
                         continue;
@@ -198,8 +227,9 @@ namespace Microsoft.MixedReality.Toolkit.Input
 
                 // Check for far interactions
                 // Any far pointer other than GGV has priority over GGV
-                foreach (IMixedRealityPointer pointer in farInteractPointers)
+                while (farInteractPointersEnumerator.MoveNext())
                 {
+                    IMixedRealityPointer pointer = farInteractPointersEnumerator.Current;
                     if (!unassignedPointers.Contains(pointer))
                     {
                         continue;
@@ -214,12 +244,9 @@ namespace Microsoft.MixedReality.Toolkit.Input
                         {
                             foreach (IMixedRealityPointer otherPointer in pointerByInputSourceParent[pointer.InputSourceParent])
                             {
-                                if (!unassignedPointers.Contains(otherPointer) || !farInteractPointers.Contains(otherPointer))
-                                {
-                                    continue;
-                                }
-
-                                if (otherPointer is GGVPointer)
+                                if (otherPointer is GGVPointer
+                                    && unassignedPointers.Contains(otherPointer)
+                                    && farInteractPointers.Contains(otherPointer))
                                 {
                                     // Disable the GGV pointer of an input source
                                     // when there is another far pointer belonging to the same source
