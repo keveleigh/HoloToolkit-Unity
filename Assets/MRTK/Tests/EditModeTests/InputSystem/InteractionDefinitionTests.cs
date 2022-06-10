@@ -31,7 +31,7 @@ namespace Microsoft.MixedReality.Toolkit.Tests.EditMode.InputSystem
             var setValue1 = interaction.RawData;
 
             Assert.IsNotNull(setValue1);
-            Assert.AreEqual(setValue1, testValue1);
+            Assert.AreEqual(testValue1, setValue1);
             Assert.IsFalse(interaction.Changed);
 
             interaction.RawData = testValue2;
@@ -41,7 +41,7 @@ namespace Microsoft.MixedReality.Toolkit.Tests.EditMode.InputSystem
             var setValue2 = interaction.RawData;
 
             Assert.IsNotNull(setValue2);
-            Assert.AreEqual(setValue2, testValue2);
+            Assert.AreEqual(testValue2, setValue2);
             Assert.IsFalse(interaction.Changed);
         }
 
@@ -155,7 +155,7 @@ namespace Microsoft.MixedReality.Toolkit.Tests.EditMode.InputSystem
 
             var initialValue = interaction.FloatData;
 
-            Assert.AreEqual(initialValue, 0d, double.Epsilon);
+            Assert.AreEqual(0d, initialValue, double.Epsilon);
             Assert.IsFalse(interaction.Changed);
 
             interaction.FloatData = testValue1;
@@ -164,7 +164,7 @@ namespace Microsoft.MixedReality.Toolkit.Tests.EditMode.InputSystem
 
             var setValue1 = interaction.FloatData;
 
-            Assert.AreEqual(setValue1, testValue1, double.Epsilon);
+            Assert.AreEqual(testValue1, setValue1, double.Epsilon);
             Assert.IsFalse(interaction.Changed);
 
             interaction.FloatData = testValue2;
@@ -173,7 +173,7 @@ namespace Microsoft.MixedReality.Toolkit.Tests.EditMode.InputSystem
 
             var setValue2 = interaction.FloatData;
 
-            Assert.AreEqual(setValue2, testValue2, double.Epsilon);
+            Assert.AreEqual(testValue2, setValue2, double.Epsilon);
             Assert.IsFalse(interaction.Changed);
         }
 
@@ -185,7 +185,7 @@ namespace Microsoft.MixedReality.Toolkit.Tests.EditMode.InputSystem
 
             var initialValue = interaction.FloatData;
 
-            Assert.AreEqual(initialValue, 0d, double.Epsilon);
+            Assert.AreEqual(0d, initialValue, double.Epsilon);
             Assert.IsFalse(interaction.Changed);
 
             interaction.FloatData = testValue;
@@ -455,7 +455,7 @@ namespace Microsoft.MixedReality.Toolkit.Tests.EditMode.InputSystem
 
             Assert.IsNotNull(setValue1);
             Assert.IsNotNull(setValue1.RawData);
-            Assert.AreEqual(setValue1.RawData, testValue1);
+            Assert.AreEqual(testValue1, setValue1.RawData);
             Assert.IsFalse(setValue1.Changed);
 
             setValue1.RawData = testValue2;
@@ -466,7 +466,7 @@ namespace Microsoft.MixedReality.Toolkit.Tests.EditMode.InputSystem
 
             Assert.IsNotNull(setValue2);
             Assert.IsNotNull(setValue2.RawData);
-            Assert.AreEqual(setValue2.RawData, testValue2);
+            Assert.AreEqual(testValue2, setValue2.RawData);
             Assert.IsFalse(setValue2.Changed);
         }
 
@@ -524,7 +524,7 @@ namespace Microsoft.MixedReality.Toolkit.Tests.EditMode.InputSystem
             var initialValue = interactions[0];
 
             Assert.IsNotNull(initialValue);
-            Assert.AreEqual(initialValue.FloatData, 0d, double.Epsilon);
+            Assert.AreEqual(0d, initialValue.FloatData, double.Epsilon);
             Assert.IsFalse(initialValue.Changed);
 
             initialValue.FloatData = testValue1;
@@ -534,7 +534,7 @@ namespace Microsoft.MixedReality.Toolkit.Tests.EditMode.InputSystem
             var setValue1 = interactions[0];
 
             Assert.IsNotNull(setValue1);
-            Assert.AreEqual(setValue1.FloatData, testValue1, double.Epsilon);
+            Assert.AreEqual(testValue1, setValue1.FloatData, double.Epsilon);
             Assert.IsFalse(setValue1.Changed);
 
             setValue1.FloatData = testValue2;
@@ -544,7 +544,7 @@ namespace Microsoft.MixedReality.Toolkit.Tests.EditMode.InputSystem
             var setValue2 = interactions[0];
 
             Assert.IsNotNull(setValue2);
-            Assert.AreEqual(setValue2.FloatData, testValue2, double.Epsilon);
+            Assert.AreEqual(testValue2, setValue2.FloatData, double.Epsilon);
             Assert.IsFalse(setValue2.Changed);
         }
 
