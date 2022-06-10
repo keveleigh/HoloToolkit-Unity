@@ -151,7 +151,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             var objectToMove = dockPositions[from].DockedObject;
             objectToMove.Undock();
             objectToMove.Dock(dockPositions[to]);
-            Assert.AreEqual(dockPositions[to].DockedObject, objectToMove, "The object we just moved needs to match the object docked in the new position.");
+            Assert.AreEqual(objectToMove, dockPositions[to].DockedObject, "The object we just moved needs to match the object docked in the new position.");
         }
     }
 }

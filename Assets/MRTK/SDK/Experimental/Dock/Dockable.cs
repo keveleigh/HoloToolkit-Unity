@@ -132,7 +132,7 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
             if (dockingState == DockingState.Docked || dockingState == DockingState.Docking)
             {
                 Assert.IsNotNull(dockedPosition, "When a dockable is docked, its dockedPosition must be valid.");
-                Assert.AreEqual(dockedPosition.DockedObject, this, "When a dockable is docked, its dockedPosition reference the dockable.");
+                Assert.AreEqual(this, dockedPosition.DockedObject, "When a dockable is docked, its dockedPosition reference the dockable.");
 
                 var lerpTime = dockingState == DockingState.Docked ? moveLerpTimeWhenDocked : moveLerpTime;
 
