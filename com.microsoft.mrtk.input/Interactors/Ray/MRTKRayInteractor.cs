@@ -105,15 +105,12 @@ namespace Microsoft.MixedReality.Toolkit.Input
         {
             get
             {
-                // When the gaze pinch interactor is already selecting an object, use the default interactor behavior
-                if (hasSelection)
-                {
-                    return base.isHoverActive;
-                }
+                bool hoverActive = base.isHoverActive;
+
+                // When the ray interactor is already selecting an object, use the default interactor behavior
                 // Otherwise, this selector is only allowed to hover if we can tell that the palm for the corresponding hand/controller is facing away from the user.
-                else
+                if (!hasSelection)
                 {
-                    bool hoverActive = base.isHoverActive;
                     if (hoverActive)
                     {
                         if (xrController is ArticulatedHandController handController)
@@ -132,9 +129,9 @@ namespace Microsoft.MixedReality.Toolkit.Input
                             }
                         }
                     }
-
-                    return hoverActive && IsTracked;
                 }
+
+                return hoverActive && IsTracked;
             }
         }
 
