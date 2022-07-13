@@ -140,6 +140,11 @@ namespace Microsoft.MixedReality.Toolkit.Input
 
         public override void ProcessInteractor(XRInteractionUpdateOrder.UpdatePhase updatePhase)
         {
+            if (!IsTracked)
+            {
+                return;
+            }
+
             base.ProcessInteractor(updatePhase);
 
             using (ProcessInteractorPerfMarker.Auto())
