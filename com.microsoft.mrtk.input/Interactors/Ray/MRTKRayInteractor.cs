@@ -37,7 +37,9 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// Used to check if the parent controller is tracked or not
         /// Hopefully this becomes part of the base Unity XRI API.
         /// </summary>
-        private bool IsTracked => xrController.currentControllerState.inputTrackingState.HasPositionAndRotation();
+        private bool IsTracked => xrController.currentControllerState.inputTrackingState.HasPositionAndRotation()
+            && xrController.currentControllerState.position != Vector3.zero
+            && xrController.currentControllerState.rotation != Quaternion.identity;
 
         /// <summary>
         /// How unselected the interactor must be to initiate a new hover or selection on a new target.
