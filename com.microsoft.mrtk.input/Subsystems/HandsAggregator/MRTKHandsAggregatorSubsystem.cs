@@ -266,8 +266,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
             /// <inheritdoc/>
             public override bool TryGetPinchProgress(XRNode handNode, out bool isReadyToPinch, out bool isPinching, out float pinchAmount)
             {
-                bool gotData = true;
-                gotData &= TryGetJoint(TrackedHandJoint.Palm, handNode, out HandJointPose palm);
+                bool gotData = TryGetJoint(TrackedHandJoint.Palm, handNode, out HandJointPose palm);
 
                 // Is the hand far enough up/in view to be eligible for pinching?
                 bool handIsUp = Vector3.Angle(CameraCache.Main.transform.forward, (palm.Position - CameraCache.Main.transform.position)) < Config.HandRaiseCameraFov;
@@ -302,7 +301,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                 // Are we actually fully pinching?
                 isPinching = (normalizedPinch < Config.PinchOpenThreshold);
 
-                // Calculate pinch amount as the inverse lerp of the current pinch norm vs the open/closed thresholds. 
+                // Calculate pinch amount as the inverse lerp of the current pinch norm vs the open/closed thresholds.
                 pinchAmount = 1.0f - Mathf.InverseLerp(Config.PinchClosedThreshold, Config.PinchOpenThreshold, normalizedPinch);
 
                 return gotData;

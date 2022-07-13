@@ -211,7 +211,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// it is no longer meant to be used in the scene.
         /// </summary>
         /// <remarks>
-        /// Not called by the InteractionManager itself, because we would recieve an unregistration
+        /// Not called by the InteractionManager itself, because we would receive an unregistration
         /// every time we disabled an interactor. We only call this when we are removing an interactor from
         /// scene completely, e.g. when a controller is destroyed.
         /// </remarks>
@@ -242,7 +242,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                 List<IXRInteractor> interactors = new List<IXRInteractor>();
                 InteractionManager.GetRegisteredInteractors(interactors);
 
-                // Fire a registration event for all pre-existing interactors.
+                // Fire a registration event for all preexisting interactors.
                 foreach (IXRInteractor interactor in interactors)
                 {
                     if (interactor is XRBaseControllerInteractor controllerInteractor)
@@ -252,7 +252,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                 }
             }
 
-            // Valdiate that the list of Interaction Modes is valid
+            // Validate that the list of Interaction Modes is valid
             OnValidate();
 
             // Go find all detectors.

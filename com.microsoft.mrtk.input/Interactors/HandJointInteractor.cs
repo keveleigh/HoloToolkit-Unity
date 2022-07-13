@@ -70,6 +70,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
             // Showing interactor visuals
             SetVisuals(true);
         }
+
         protected override void OnDisable()
         {
             base.OnDisable();

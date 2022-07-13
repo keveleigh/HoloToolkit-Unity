@@ -184,7 +184,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                 // TODO: Replace PinchPose with explicit binding to OpenXR pinch/grip pose when the standard is available.
                 Vector3 objectOffset = PinchPose.position - pinchCentroid.position;
 
-                // Compute the final attachtransform's position by transforming the interactor-local original attach point
+                // Compute the final attachTransform's position by transforming the interactor-local original attach point
                 // by the ray rotation, scaling by the body-distance ratio, and then finally applying the virtual hand offset.
                 // TODO: Replace transform.position with explicit binding to OpenXR grip pose when the standard is available.
                 positionToApply = transform.position + objectOffset + (rayRotation * interactorLocalAttachPoint) * distanceRatio;
@@ -298,7 +298,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
 
             Vector3 virtualAttachTransform = snapPoint + objectOffset;
 
-            // Transform this virtual attachtransform into the interactor-local coordinate space.
+            // Transform this virtual attachTransform into the interactor-local coordinate space.
             interactorLocalAttachPoint = Quaternion.Inverse(rayRotation) * (virtualAttachTransform - transform.position);
 
             // Record the distance from the controller to the body of the user, to use as reference for subsequent
@@ -307,7 +307,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
         }
 
         /// <summary>
-        /// Computes the geometric centroid between all PinchPoses of participtaing GazePinchInteractors.
+        /// Computes the geometric centroid between all PinchPoses of participating GazePinchInteractors.
         /// </summary>
         private Pose GetPinchCentroid(IXRSelectInteractable interactable)
         {
