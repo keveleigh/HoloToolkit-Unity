@@ -179,12 +179,17 @@ namespace Microsoft.MixedReality.Toolkit.Input
 
                     if (gotData)
                     {
-                        indexFingerLength = Vector3.Distance(indexKnuckle.Position, indexMiddle.Position) +
-                                            Vector3.Distance(indexMiddle.Position, indexDistal.Position) +
-                                            Vector3.Distance(indexDistal.Position, indexTip.Position);
+                        length = Vector3.Distance(indexKnuckle.Position, indexMiddle.Position) +
+                                 Vector3.Distance(indexMiddle.Position, indexDistal.Position) +
+                                 Vector3.Distance(indexDistal.Position, indexTip.Position);
 
-                        length = indexFingerLength.Value;
-                        return true;
+                        if (!Mathf.Approximately(length, 0))
+                        {
+                            indexFingerLength = length;
+                            return true;
+                        }
+
+                        return false;
                     }
                     else
                     {
