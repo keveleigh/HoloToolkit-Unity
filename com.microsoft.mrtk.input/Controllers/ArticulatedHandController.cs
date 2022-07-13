@@ -45,6 +45,8 @@ namespace Microsoft.MixedReality.Toolkit.Input
         public Pose PinchSelectPose => (currentControllerState is ArticulatedHandControllerState handControllerState) ?
                                                 handControllerState.PinchPose : Pose.identity;
 
+        private bool wasPinching = false;
+
         #endregion Associated hand select values
 
         #region Properties
@@ -99,6 +101,15 @@ namespace Microsoft.MixedReality.Toolkit.Input
                 // If we got pinch data, write it into our select interaction state.
                 if (gotPinchData)
                 {
+                    // If we're not obtaining any data from the underlying action map, fully override with our pinch calculation.
+                    if (Mathf.Approximately(controllerState.selectInteractionState.value, 0))
+                    {
+                        controllerState.selectInteractionState.activatedThisFrame = !wasPinching && isPinching;
+                        controllerState.selectInteractionState.deactivatedThisFrame = wasPinching && !isPinching;
+                        controllerState.selectInteractionState.active = isPinching;
+                        wasPinching = isPinching;
+                    }
+
                     controllerState.selectInteractionState.value = pinchAmount;
                 }
 
