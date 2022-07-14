@@ -38,8 +38,8 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// Hopefully this becomes part of the base Unity XRI API.
         /// </summary>
         private bool IsTracked => xrController.currentControllerState.inputTrackingState.HasPositionAndRotation()
-            && xrController.currentControllerState.position != Vector3.zero
-            && xrController.currentControllerState.rotation != Quaternion.identity;
+            && xrController.currentControllerState.position != default
+            && xrController.currentControllerState.rotation != default;
 
         /// <summary>
         /// How unselected the interactor must be to initiate a new hover or selection on a new target.
