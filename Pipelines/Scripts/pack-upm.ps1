@@ -69,6 +69,11 @@ try {
         $packagePath = $_.Directory
         $docFolder = "$packagePath/Documentation~"
 
+        # Reset local AssemblyInfo.cs files to ensure predictable state.
+        Get-ChildItem -Path $packagePath/AssemblyInfo.cs -Recurse | ForEach-Object {
+            git -C $packagePath checkout $_
+        }
+
         Write-Output ""
         Write-Output "====================="
         Write-Output "Creating $packageName"
@@ -93,8 +98,21 @@ try {
 
         Write-Output "Patching assembly version to $Version$BuildNumber"
         Get-ChildItem -Path $packagePath/AssemblyInfo.cs -Recurse | ForEach-Object {
-            Add-Content -Path $_ -Value "[assembly: AssemblyFileVersion(`"$Version$BuildNumber`")]"
-            Add-Content -Path $_ -Value "[assembly: AssemblyInformationalVersion(`"$Version$PreviewTag`")]"
+            $content = Get-Content -Path $_ -Raw
+
+            if ($content -match "AssemblyFileVersion") {
+                ($content -replace "AssemblyFileVersion(`"[\w.]+`")", "AssemblyFileVersion(`"$Version$BuildNumber`")") | Set-Content -Path $_ -NoNewline
+            }
+            else {
+                Add-Content -Path $_ -Value "[assembly: AssemblyFileVersion(`"$Version$BuildNumber`")]"
+            }
+
+            if ($content -match "AssemblyInformationalVersion") {
+                ($content -replace "AssemblyInformationalVersion(`"[\w.]+`")", "AssemblyInformationalVersion(`"$Version$PreviewTag`")") | Set-Content -Path $_ -NoNewline
+            }
+            else {
+                Add-Content -Path $_ -Value "[assembly: AssemblyInformationalVersion(`"$Version$PreviewTag`")]"
+            }
         }
 
         Write-Output "Packing $packageFriendlyName"
@@ -110,6 +128,7 @@ try {
             }
         }
 
+        # Reset any changes made to local state.
         git -C $packagePath checkout $_
         Get-ChildItem -Path $packagePath/AssemblyInfo.cs -Recurse | ForEach-Object {
             git -C $packagePath checkout $_
