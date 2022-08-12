@@ -1,10 +1,9 @@
 ---
-name: Documentation Issue
-about: 'Something in our doc is missing or incorrect '
+name: Documentation Issue (MRTK v2)
+about: Something in our docs is missing or incorrect
 title: ''
-labels: Documentation
+labels: Documentation, MRTK2
 assignees: ''
-
 ---
 
 ## Describe the issue

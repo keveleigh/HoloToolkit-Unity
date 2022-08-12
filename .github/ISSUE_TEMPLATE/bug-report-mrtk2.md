@@ -1,10 +1,9 @@
 ---
-name: Bug report
+name: Bug report (MRTK v2)
 about: Create a bug report to help us improve
 title: ''
-labels: Bug
+labels: Bug, MRTK2
 assignees: ''
-
 ---
 
 ## Describe the bug
