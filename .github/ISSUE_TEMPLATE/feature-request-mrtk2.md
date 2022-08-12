@@ -1,11 +1,9 @@
----
 name: Feature Request
 about: Suggest an idea for the MRTK
 title: ''
 labels: Feature Request
 assignees: ''
-
----
+body:
 
 ## Describe the problem
 
