@@ -75,12 +75,12 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// The default poke radius returned by <see cref="IPokeInteractor.PokeRadius"/>
         /// if no joint data is obtained.
         /// </summary>
-        private const float defaultPokeRadius = 0.005f;
+        private const float DefaultPokeRadius = 0.005f;
 
         #region IPokeInteractor
 
         /// <inheritdoc />
-        public virtual float PokeRadius => defaultPokeRadius;
+        public virtual float PokeRadius => DefaultPokeRadius;
 
         private PokePath pokeTrajectory;
 

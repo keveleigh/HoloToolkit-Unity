@@ -17,11 +17,25 @@ namespace Microsoft.MixedReality.Toolkit
         public HandJointPose(
             Vector3 position,
             Quaternion rotation,
-            float radius)
+            float? radius = null)
         {
-            this.pose = new Pose(position, rotation);
-            this.radius = radius;
+            pose = new Pose(position, rotation);
+
+            if (radius.HasValue)
+            {
+                hasRadius = true;
+                this.radius = radius.Value;
+            }
+            else
+            {
+                hasRadius = false;
+                this.radius = 0;
+            }
         }
+
+        // Defaults to true in case this class is only used in serialized form.
+        // If this is created through the constructor, this may be false.
+        private bool? hasRadius;
 
         [SerializeField]
         [Tooltip("The pose of the hand joint.")]
@@ -52,7 +66,22 @@ namespace Microsoft.MixedReality.Toolkit
         /// <summary>
         /// The radius of the object.
         /// </summary>
-        public float Radius { get => radius; set => radius = value; }
+        public float? Radius
+        {
+            get => !hasRadius.HasValue || hasRadius.Value ? radius : default(float?);
+            set
+            {
+                if (value.HasValue)
+                {
+                    hasRadius = true;
+                    radius = value.Value;
+                }
+                else
+                {
+                    hasRadius = false;
+                }
+            }
+        }
 
         /// <summary>
         /// The Z axis of the pose in world space.
