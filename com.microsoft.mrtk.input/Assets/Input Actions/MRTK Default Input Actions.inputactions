@@ -216,6 +216,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "PokeTrackingState",
+                    "type": "Value",
+                    "id": "97d87118-375e-4be6-a2f3-f0db9d2bd64e",
+                    "expectedControlType": "Integer",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "PinchPosition",
                     "type": "Value",
                     "id": "374f59b2-37b2-4374-9093-d7c9e307feeb",
@@ -229,6 +238,15 @@
                     "type": "Value",
                     "id": "55173018-9b8f-4ddc-81c0-52ed2ada1794",
                     "expectedControlType": "Quaternion",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "PinchTrackingState",
+                    "type": "Value",
+                    "id": "3febbd8f-e21a-4789-b499-b8e91c7f6807",
+                    "expectedControlType": "Integer",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -630,6 +648,28 @@
                     "action": "PinchPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d720ccba-e7c5-474e-b96c-d9d58f27767a",
+                    "path": "<HandInteraction>{LeftHand}/pinchPose/trackingState",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "PinchTrackingState",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "85516e0e-b699-4698-b046-93fbfb469c29",
+                    "path": "<HandInteraction>{LeftHand}/pokePose/trackingState",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "PokeTrackingState",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -800,6 +840,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "PokeTrackingState",
+                    "type": "Value",
+                    "id": "5545b016-177b-421c-b8e1-b223ee15d549",
+                    "expectedControlType": "Integer",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "PinchPosition",
                     "type": "Value",
                     "id": "a3cfda0a-2938-43e5-9457-eb156e14e88e",
@@ -813,6 +862,15 @@
                     "type": "Value",
                     "id": "efcbb070-7339-48fe-97c4-a3a9ed64c9b6",
                     "expectedControlType": "Quaternion",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "PinchTrackingState",
+                    "type": "Value",
+                    "id": "f6b00213-dc65-43cc-b99a-07367f1c6298",
+                    "expectedControlType": "Integer",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -1201,6 +1259,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "PinchRotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "51d2671c-31d6-45da-9a68-57967d49c24d",
+                    "path": "<HandInteraction>{RightHand}/pokePose/trackingState",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "PokeTrackingState",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a45702f4-3039-4230-96fc-b6420185a820",
+                    "path": "<HandInteraction>{RightHand}/pinchPose/trackingState",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "PinchTrackingState",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
