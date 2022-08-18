@@ -21,7 +21,7 @@ namespace Microsoft.MixedReality.Toolkit.Input.Editor
 
         public override void OnGUI(Rect rect, SerializedProperty property, GUIContent content)
         {
-            InteractionModeManager instance = InteractionModeManager.Instance;
+            InteractionModeManager instance = property.serializedObject.targetObject as InteractionModeManager;
             profile = instance != null ? instance.PrioritizedInteractionModes : null;
 
             if (profile == null || profile.Count == 0)
@@ -77,7 +77,7 @@ namespace Microsoft.MixedReality.Toolkit.Input.Editor
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return InteractionModeManager.Instance != null ?
+            return property.serializedObject.targetObject is InteractionModeManager imm && imm != null ?
                 base.GetPropertyHeight(property, label)
                 : MessageRectOffset + MessageRectHeight;
         }

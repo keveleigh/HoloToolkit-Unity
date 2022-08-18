@@ -89,7 +89,7 @@ namespace Microsoft.MixedReality.Toolkit.Input.Tests
             yield return rightHand.MoveTo(cube.transform.position + new Vector3(3.0f,0,0));
             yield return RuntimeTestUtilities.WaitForUpdates();
 
-            currentMode = InteractionModeManager.Instance.DefaultMode;
+            currentMode = InteractionModeManager.DefaultMode;
             ValidateInteractionModeActive(rightHandController, currentMode);
         }
 
@@ -163,8 +163,8 @@ namespace Microsoft.MixedReality.Toolkit.Input.Tests
         {
             // We construct the list of managed interactor types manually because we don't want to expose the internal controller mapping implementation to even internal use, since
             // we don't want any other class to be able to modify those collections without going through the Mode Manager or it's in-editor inspector.
-            HashSet<System.Type> managedInteractorTypes = new HashSet<System.Type>(InteractionModeManager.Instance.PrioritizedInteractionModes.SelectMany(x => x.AssociatedTypes));
-            HashSet<System.Type> activeInteractorTypes = InteractionModeManager.Instance.PrioritizedInteractionModes.Find(x => x.ModeName == currentMode.name).AssociatedTypes;
+            HashSet<System.Type> managedInteractorTypes = new HashSet<System.Type>(InteractionModeManager.PrioritizedInteractionModes.SelectMany(x => x.AssociatedTypes));
+            HashSet<System.Type> activeInteractorTypes = InteractionModeManager.PrioritizedInteractionModes.Find(x => x.ModeName == currentMode.name).AssociatedTypes;
 
             // Ensure the prox detector has actually had the desired effect of enabling/disabling interactors.
             foreach (System.Type interactorType in managedInteractorTypes)
@@ -191,6 +191,7 @@ namespace Microsoft.MixedReality.Toolkit.Input.Tests
 
             return false;
         }
+
+        private InteractionModeManager InteractionModeManager => Object.FindObjectOfType<InteractionModeManager>();
     }
 }
-

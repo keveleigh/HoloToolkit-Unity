@@ -39,24 +39,6 @@ namespace Microsoft.MixedReality.Toolkit.Input
         }
 
 #if UNITY_EDITOR
-        private static InteractionModeManager activeInstance;
-        /// <summary>
-        /// The current active instance of the Interaction Mode Manager
-        /// Only one interaction mode manager should be present in a scene at any given time
-        /// </summary>
-        public static InteractionModeManager Instance
-        {
-            get
-            {
-                if (activeInstance == null)
-                {
-                    activeInstance = UnityEditor.SceneManagement.StageUtility.GetCurrentStageHandle().FindComponentOfType<InteractionModeManager>();
-                }
-
-                return activeInstance;
-            }
-        }
-
         /// <summary>
         /// Editor only function for initializing the Interaction Mode Manager with the existing XR controllers in the scene
         /// </summary>
