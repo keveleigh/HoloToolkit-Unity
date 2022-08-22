@@ -176,6 +176,33 @@
       "source": "local-tarball",
       "dependencies": {}
     },
+    "com.ultraleap.tracking": {
+      "version": "6.0.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
+    },
+    "com.ultraleap.tracking.openxr": {
+      "version": "1.0.0-pre.8",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.ultraleap.tracking": "6.0.0",
+        "com.unity.xr.openxr": "1.3.1"
+      },
+      "url": "https://package.openupm.com"
+    },
+    "com.ultraleap.tracking.preview": {
+      "version": "file:com.ultraleap.tracking.preview@6.0.0",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.ultraleap.tracking": "6.0.0",
+        "com.unity.inputsystem": "1.0.2",
+        "com.unity.xr.interaction.toolkit": "2.0.0"
+      }
+    },
     "com.unity.burst": {
       "version": "1.6.6",
       "depth": 1,
