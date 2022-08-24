@@ -325,7 +325,7 @@ namespace Microsoft.MixedReality.Toolkit.Tools
                         {
                             EditorUtility.DisplayDialog(
                                 "MRTK3 Subsystem Wizard",
-                                $"Unable to create {subsystemGenerator.SubsystemName}\n\n{e.Message} ({e.GetType()})",
+                                $"Unable to create {subsystemGenerator.SubsystemName}\n\n{e} | {e.Message} ({e.GetType()})",
                                 "Ok");
                         }
                     }

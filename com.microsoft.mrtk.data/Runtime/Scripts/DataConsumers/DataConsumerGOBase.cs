@@ -518,7 +518,7 @@ namespace Microsoft.MixedReality.Toolkit.Data
                         return dataSource;
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
                     // exception means resolved keypath was invalid. So not likely a good data source.
                 }

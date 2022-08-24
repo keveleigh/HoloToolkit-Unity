@@ -347,9 +347,9 @@ namespace Microsoft.MixedReality.Toolkit.Editor
                         }
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    EditorGUILayout.LabelField("Couldn't draw character icon. UnicodeValue may not be available in the font asset.");
+                    EditorGUILayout.LabelField($"Couldn't draw character icon. UnicodeValue may not be available in the font asset. {e}");
                 }
             }
         }

@@ -13,7 +13,6 @@ namespace Microsoft.MixedReality.Toolkit.Data
     [Serializable]
     public class DataBindingConfigurator : IDataBindingConfigurator
     {
-
         public void ConfigureBinding(GameObject gameObject, UXBindingProfileTemplate bindingProfile)
         {
             ConfigureTextBinding(gameObject, bindingProfile);
@@ -41,9 +40,9 @@ namespace Microsoft.MixedReality.Toolkit.Data
                         UnityEngine.Object.Destroy(dataBindableComponent);
                     }
                 }
-                catch
+                catch (Exception e)
                 {
-                    Debug.LogError("Attempting to bind to class " + classBinding.ClassName + " which could not be found.");
+                    Debug.LogError($"Attempting to bind to class {classBinding.ClassName}, which could not be found. {e}");
                 }
             }
         }
