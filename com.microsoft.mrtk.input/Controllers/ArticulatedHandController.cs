@@ -50,9 +50,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
 
         #region Properties
 
-        private HandsAggregatorSubsystem handsAggregator;
-
-        protected HandsAggregatorSubsystem HandsAggregator => handsAggregator;
+        protected HandsAggregatorSubsystem HandsAggregator { get; private set; }
 
         #endregion Properties
 
@@ -96,15 +94,12 @@ namespace Microsoft.MixedReality.Toolkit.Input
 
                 // Get hands aggregator subsystem reference, if still null.
                 // Should avoid per-frame allocs by only acquiring aggregator reference once.
-                if (handsAggregator == null)
-                {
-                    handsAggregator = HandsUtils.GetSubsystem();
-                }
+                HandsAggregator ??= HandsUtils.GetSubsystem();
 
                 // If we still don't have an aggregator, then don't update selects.
-                if (handsAggregator == null) { return; }
+                if (HandsAggregator == null) { return; }
 
-                bool gotPinchData = handsAggregator.TryGetPinchProgress(handNode, out bool isPinchReady, out bool isPinching, out float pinchAmount);
+                bool gotPinchData = HandsAggregator.TryGetPinchProgress(handNode, out bool isPinchReady, out bool isPinching, out float pinchAmount);
 
                 // If we got pinch data, write it into our select interaction state.
                 if (gotPinchData)
@@ -120,16 +115,17 @@ namespace Microsoft.MixedReality.Toolkit.Input
                         bool isPinched = pinchAmount >= (pinchedLastFrame ? 0.9f : 1.0f);
 
                         controllerState.selectInteractionState.active = isPinched;
-                        controllerState.selectInteractionState.activatedThisFrame = isPinched && !pinchedLastFrame;
-                        controllerState.selectInteractionState.deactivatedThisFrame = !isPinched && pinchedLastFrame;
+                        controllerState.selectInteractionState.SetFrameDependent(pinchedLastFrame);
 
                         pinchedLastFrame = isPinched;
                     }
                 }
 
+                if (handControllerState == null) { return; }
+
                 handControllerState.PinchSelectReady = isPinchReady;
 
-                if (isPinching && handsAggregator.TryGetPinchingPoint(handNode, out HandJointPose pinchPose))
+                if (isPinching && HandsAggregator.TryGetPinchingPoint(handNode, out HandJointPose pinchPose))
                 {
                     handControllerState.PinchPose.position = pinchPose.Position;
                     handControllerState.PinchPose.rotation = pinchPose.Rotation;
@@ -150,13 +146,13 @@ namespace Microsoft.MixedReality.Toolkit.Input
             // Workaround for missing aim/pointing-pose on devices without interaction profiles
             // for hands, such as Varjo and Quest. Should be removed once we have universal
             // hand interaction profile(s) across vendors.
-            if (handsAggregator != null && (positionAction.action?.controls.Count ?? 0) == 0)
+            if (HandsAggregator != null && (positionAction.action?.controls.Count ?? 0) == 0)
             {
-                if (!handsAggregator.TryGetJoint(TrackedHandJoint.IndexProximal, HandNode, out HandJointPose knuckle))
+                if (!HandsAggregator.TryGetJoint(TrackedHandJoint.IndexProximal, HandNode, out HandJointPose knuckle))
                 {
                     return;
                 }
-                if (!handsAggregator.TryGetJoint(TrackedHandJoint.Palm, HandNode, out HandJointPose palm))
+                if (!HandsAggregator.TryGetJoint(TrackedHandJoint.Palm, HandNode, out HandJointPose palm))
                 {
                     return;
                 }
