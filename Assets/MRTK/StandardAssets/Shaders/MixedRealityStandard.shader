@@ -193,6 +193,8 @@ Shader "Mixed Reality Toolkit/Standard"
             // This define will get commented in by the UpgradeShaderForUniversalRenderPipeline method.
             //#define _RENDER_PIPELINE
 
+#define VFACE VFACE
+
 #if defined(_TRIPLANAR_MAPPING) || defined(_DIRECTIONAL_LIGHT) || defined(_SPHERICAL_HARMONICS) || defined(_REFLECTIONS) || defined(_RIM_LIGHT) || defined(_PROXIMITY_LIGHT) || defined(_ENVIRONMENT_COLORING)
             #define _NORMAL
 #else
@@ -772,7 +774,7 @@ Shader "Mixed Reality Toolkit/Standard"
                 return o;
             }
 
-            fixed4 frag(v2f i, fixed facing : VFACE) : SV_Target
+            fixed4 frag(fixed facing : VFACE, v2f i) : SV_Target
             {
                 UNITY_SETUP_INSTANCE_ID(i);
 
