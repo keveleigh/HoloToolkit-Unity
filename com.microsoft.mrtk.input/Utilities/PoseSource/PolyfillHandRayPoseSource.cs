@@ -18,29 +18,17 @@ namespace Microsoft.MixedReality.Toolkit.Input
         private HandRay handRay = new HandRay();
 
         /// <summary>
-        /// A cache of the knuckle joint pose returned by the hands aggregator.
-        /// </summary>
-        private HandJointPose knuckle;
-
-        /// <summary>
-        /// A cache of the knuckle joint pose returned by the hands aggregator.
-        /// </summary>
-        private HandJointPose palm;
-
-        /// <summary>
         /// Tries to get the pose of the hand ray in world space by deriving it from the
         /// palm and knuckle positions
         /// </summary>
         public override bool TryGetPose(out Pose pose)
         {
             XRNode? handNode = Hand.ToXRNode();
-
-            bool poseRetrieved = handNode.HasValue;
-            poseRetrieved &= HandsAggregator != null && HandsAggregator.TryGetJoint(TrackedHandJoint.IndexProximal, handNode.Value, out knuckle);
-            poseRetrieved &= HandsAggregator != null && HandsAggregator.TryGetJoint(TrackedHandJoint.Palm, handNode.Value, out palm);
-
             // Tick the hand ray generator function. Uses index knuckle for position.
-            if (poseRetrieved)
+            if (handNode.HasValue
+                && HandsAggregator != null
+                && HandsAggregator.TryGetJoint(TrackedHandJoint.IndexProximal, handNode.Value, out HandJointPose knuckle)
+                && HandsAggregator.TryGetJoint(TrackedHandJoint.Palm, handNode.Value, out HandJointPose palm))
             {
                 handRay.Update(knuckle.Position, -palm.Up, Camera.main.transform, Hand);
                 Ray ray = handRay.Ray;
@@ -49,13 +37,11 @@ namespace Microsoft.MixedReality.Toolkit.Input
                 pose.position = PlayspaceUtilities.ReferenceTransform.InverseTransformPoint(ray.origin);
                 pose.rotation = Quaternion.LookRotation(PlayspaceUtilities.ReferenceTransform.InverseTransformVector(ray.direction),
                                                         PlayspaceUtilities.ReferenceTransform.InverseTransformVector(palm.Up));
-            }
-            else
-            {
-                pose = Pose.identity;
+                return true;
             }
 
-            return poseRetrieved;
+            pose = Pose.identity;
+            return false;
         }
     }
 }
