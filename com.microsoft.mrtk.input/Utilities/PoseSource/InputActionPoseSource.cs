@@ -8,11 +8,10 @@ using UnityEngine.XR;
 
 namespace Microsoft.MixedReality.Toolkit.Input
 {
-    [Serializable]
-
     /// <summary>
     /// A pose source which gets the pose composed of a tracked position and rotation input action
     /// </summary>
+    [Serializable]
     public class InputActionPoseSource : IPoseSource
     {
         [SerializeField]

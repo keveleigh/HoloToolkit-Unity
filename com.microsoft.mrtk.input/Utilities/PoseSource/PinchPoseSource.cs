@@ -7,10 +7,10 @@ using UnityEngine.XR;
 
 namespace Microsoft.MixedReality.Toolkit.Input
 {
-    [Serializable]
     /// <summary>
     /// A pose source which gets the pinch pose of a specific hand
     /// </summary>
+    [Serializable]
     public class PinchPoseSource : HandBasedPoseSource
     {
         /// <summary>
