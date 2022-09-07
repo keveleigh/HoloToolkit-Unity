@@ -377,8 +377,9 @@ namespace Microsoft.MixedReality.Toolkit.Input
                     // TODO: Replace PinchPose with explicit binding to OpenXR pinch/grip pose when the standard is available.
                     // We currently compute our own pinch pose from joint data; controllers/other devices will expose their
                     // own relevant "pinch" poses when the extension is ratified.
-                    sumPos += gazePinchInteractor.PinchPose.position;
-                    sumDir += gazePinchInteractor.PinchPose.rotation * Vector3.forward;
+                    Pose pinchPose = gazePinchInteractor.PinchPose;
+                    sumPos += pinchPose.position;
+                    sumDir += pinchPose.rotation * Vector3.forward;
                     count++;
                 }
             }
