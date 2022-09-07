@@ -40,14 +40,11 @@ namespace Microsoft.MixedReality.Toolkit.Input
                 // Transform the pose into worldspace, as input actions are returned in rig space
                 pose.position = PlayspaceUtilities.ReferenceTransform.TransformPoint(positionAction.ReadValue<Vector3>());
                 pose.rotation = PlayspaceUtilities.ReferenceTransform.rotation * rotationAction.ReadValue<Quaternion>();
-
                 return true;
             }
-            else
-            {
-                pose = Pose.identity;
-                return false;
-            }
+
+            pose = Pose.identity;
+            return false;
         }
     }
 }
