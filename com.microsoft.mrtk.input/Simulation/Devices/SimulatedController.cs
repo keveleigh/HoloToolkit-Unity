@@ -304,11 +304,7 @@ namespace Microsoft.MixedReality.Toolkit.Input.Simulation
                         moveDelta.z,
                         MoveSmoothingTime, Time.fixedDeltaTime) : moveDelta.z);
 
-                    // This value helps control jitter severity.
-                    const float jitterSeverity = 0.002f;
-                    Vector3 jitter = jitterStrength * jitterSeverity * UnityEngine.Random.insideUnitSphere;
-
-                    SimulatedInputPosition += smoothedMoveDelta + jitter;
+                    SimulatedInputPosition += smoothedMoveDelta;
 
                     // If we not have been told to face the camera, apply the rotation delta.
                     if (rotationMode == ControllerRotationMode.UserControl)
@@ -316,9 +312,10 @@ namespace Microsoft.MixedReality.Toolkit.Input.Simulation
                         SimulatedInputRotation *= rotationDelta;
                     }
 
-                    Vector3 offset = WorldPosition - anchorPosition;
-
-                    SetRelativePoseWithOffset(SimulatedInputPosition, SimulatedInputRotation, offset, rotationMode, shouldUseRayVector);
+                    // This value helps control jitter severity.
+                    const float JitterSeverity = 0.002f;
+                    Vector3 jitter = jitterStrength * JitterSeverity * UnityEngine.Random.insideUnitSphere;
+                    SetRelativePoseWithOffset(SimulatedInputPosition, SimulatedInputRotation, WorldPosition - anchorPosition + jitter, rotationMode, shouldUseRayVector);
                 }
 
                 ApplyState(controls);
@@ -572,7 +569,7 @@ namespace Microsoft.MixedReality.Toolkit.Input.Simulation
                 {
                     // If prompted to use the ray vector, this is pose is calculated by simulating a hand ray initialized at the device pose.
                     // This occurs when the simulation mode is set to ArticulatedHand
-                    handRay.Update(PlayspaceUtilities.ReferenceTransform.TransformPoint(simulatedControllerState.devicePosition), -palmPose.Up, Camera.main.transform, Handedness);
+                    handRay.Update(PlayspaceUtilities.ReferenceTransform.TransformPoint(SimulatedInputPosition), -palmPose.Up, Camera.main.transform, Handedness);
                     Ray ray = handRay.Ray;
                     simulatedControllerState.pointerPosition = PlayspaceUtilities.ReferenceTransform.InverseTransformPoint(ray.origin);
                     simulatedControllerState.pointerRotation = Quaternion.Inverse(PlayspaceUtilities.ReferenceTransform.rotation) * Quaternion.LookRotation(ray.direction);
