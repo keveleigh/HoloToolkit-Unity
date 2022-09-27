@@ -116,7 +116,7 @@ MonoBehaviour:
   m_TrackingType: 0
   m_UpdateType: 0
   m_PositionInput:
-    m_UseReference: 0
+    m_UseReference: 1
     m_Action:
       m_Name: Main Camera - TPD - Position
       m_Type: 0
@@ -134,9 +134,9 @@ MonoBehaviour:
         m_Action: Main Camera - TPD - Position
         m_Flags: 0
       m_Flags: 0
-    m_Reference: {fileID: 0}
+    m_Reference: {fileID: 7862207684358717888, guid: 18c412191cdc9274897f101c7fd5316f, type: 3}
   m_RotationInput:
-    m_UseReference: 0
+    m_UseReference: 1
     m_Action:
       m_Name: Main Camera - TPD - Rotation
       m_Type: 0
@@ -154,7 +154,7 @@ MonoBehaviour:
         m_Action: Main Camera - TPD - Rotation
         m_Flags: 0
       m_Flags: 0
-    m_Reference: {fileID: 0}
+    m_Reference: {fileID: -530380113134220495, guid: 18c412191cdc9274897f101c7fd5316f, type: 3}
   m_PositionAction:
     m_Name: Main Camera - TPD - Position
     m_Type: 0
