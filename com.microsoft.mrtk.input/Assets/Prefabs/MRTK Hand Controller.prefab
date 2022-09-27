@@ -593,11 +593,52 @@ MonoBehaviour:
             id: 1
         - source:
             id: 2
+        - source:
+            id: 3
     00000001:
+      type: {class: InputActionPoseSource, ns: Microsoft.MixedReality.Toolkit.Input, asm: Microsoft.MixedReality.Toolkit.Input}
+      data:
+        trackingStateActionProperty:
+          m_UseReference: 1
+          m_Action:
+            m_Name: Tracking State Action Property
+            m_Type: 0
+            m_ExpectedControlType: 
+            m_Id: 1ca71eff-df33-4fa2-ac86-4c85a7524e39
+            m_Processors: 
+            m_Interactions: 
+            m_SingletonActionBindings: []
+            m_Flags: 0
+          m_Reference: {fileID: 5392355786457646683, guid: 18c412191cdc9274897f101c7fd5316f, type: 3}
+        positionActionProperty:
+          m_UseReference: 1
+          m_Action:
+            m_Name: Position Action Property
+            m_Type: 0
+            m_ExpectedControlType: 
+            m_Id: e90aeddc-8231-479b-bbce-0848f5b4cd08
+            m_Processors: 
+            m_Interactions: 
+            m_SingletonActionBindings: []
+            m_Flags: 0
+          m_Reference: {fileID: 2772631108110974900, guid: 18c412191cdc9274897f101c7fd5316f, type: 3}
+        rotationActionProperty:
+          m_UseReference: 1
+          m_Action:
+            m_Name: Rotation Action Property
+            m_Type: 0
+            m_ExpectedControlType: 
+            m_Id: f60ead9b-3b94-44fb-96f1-0156d1132820
+            m_Processors: 
+            m_Interactions: 
+            m_SingletonActionBindings: []
+            m_Flags: 0
+          m_Reference: {fileID: -1709626204400082014, guid: 18c412191cdc9274897f101c7fd5316f, type: 3}
+    00000002:
       type: {class: PinchPoseSource, ns: Microsoft.MixedReality.Toolkit.Input, asm: Microsoft.MixedReality.Toolkit.Input}
       data:
         hand: 0
-    00000002:
+    00000003:
       type: {class: InputActionPoseSource, ns: Microsoft.MixedReality.Toolkit.Input, asm: Microsoft.MixedReality.Toolkit.Input}
       data:
         trackingStateActionProperty:
@@ -623,7 +664,7 @@ MonoBehaviour:
             m_Interactions: 
             m_SingletonActionBindings: []
             m_Flags: 0
-          m_Reference: {fileID: -2024308242397127297, guid: 18c412191cdc9274897f101c7fd5316f, type: 3}
+          m_Reference: {fileID: 5671224385460781980, guid: 18c412191cdc9274897f101c7fd5316f, type: 3}
         rotationActionProperty:
           m_UseReference: 1
           m_Action:
@@ -635,7 +676,7 @@ MonoBehaviour:
             m_Interactions: 
             m_SingletonActionBindings: []
             m_Flags: 0
-          m_Reference: {fileID: 8248158260566104461, guid: 18c412191cdc9274897f101c7fd5316f, type: 3}
+          m_Reference: {fileID: -4531104493956672492, guid: 18c412191cdc9274897f101c7fd5316f, type: 3}
 --- !u!54 &5296314582960356879
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1002,12 +1043,53 @@ MonoBehaviour:
             id: 1
         - source:
             id: 2
+        - source:
+            id: 3
     00000001:
+      type: {class: InputActionPoseSource, ns: Microsoft.MixedReality.Toolkit.Input, asm: Microsoft.MixedReality.Toolkit.Input}
+      data:
+        trackingStateActionProperty:
+          m_UseReference: 1
+          m_Action:
+            m_Name: Tracking State Action Property
+            m_Type: 0
+            m_ExpectedControlType: 
+            m_Id: 41eaca39-24e7-41ad-9037-28e606b6e896
+            m_Processors: 
+            m_Interactions: 
+            m_SingletonActionBindings: []
+            m_Flags: 0
+          m_Reference: {fileID: -2269787006492962051, guid: 18c412191cdc9274897f101c7fd5316f, type: 3}
+        positionActionProperty:
+          m_UseReference: 1
+          m_Action:
+            m_Name: Position Action Property
+            m_Type: 0
+            m_ExpectedControlType: 
+            m_Id: 34165545-28f2-4ecd-8570-08837dbcdcdc
+            m_Processors: 
+            m_Interactions: 
+            m_SingletonActionBindings: []
+            m_Flags: 0
+          m_Reference: {fileID: 6345803156186989850, guid: 18c412191cdc9274897f101c7fd5316f, type: 3}
+        rotationActionProperty:
+          m_UseReference: 1
+          m_Action:
+            m_Name: Rotation Action Property
+            m_Type: 0
+            m_ExpectedControlType: 
+            m_Id: 0b8f31ff-a123-41f8-a9db-32aee371e135
+            m_Processors: 
+            m_Interactions: 
+            m_SingletonActionBindings: []
+            m_Flags: 0
+          m_Reference: {fileID: 839287586357947611, guid: 18c412191cdc9274897f101c7fd5316f, type: 3}
+    00000002:
       type: {class: HandJointPoseSource, ns: Microsoft.MixedReality.Toolkit.Input, asm: Microsoft.MixedReality.Toolkit.Input}
       data:
         hand: 0
         joint: 10
-    00000002:
+    00000003:
       type: {class: InputActionPoseSource, ns: Microsoft.MixedReality.Toolkit.Input, asm: Microsoft.MixedReality.Toolkit.Input}
       data:
         trackingStateActionProperty:
@@ -1073,7 +1155,7 @@ GameObject:
   - component: {fileID: 8326700373702288692}
   - component: {fileID: 4299642553989019653}
   - component: {fileID: 6450185055475174866}
-  - component: {fileID: 7678414244376504105}
+  - component: {fileID: 7718727990790997480}
   m_Layer: 0
   m_Name: NearInteractionModeDetector
   m_TagString: Untagged
@@ -1145,7 +1227,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7678414244376504105
+--- !u!114 &7718727990790997480
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1154,15 +1236,65 @@ MonoBehaviour:
   m_GameObject: {fileID: 4299642553989019656}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb2a8d0053b7d3e4d82d6169d852feff, type: 3}
+  m_Script: {fileID: 11500000, guid: 911420bfc4317664084379b7bee2c10c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jointPoseSource:
-    hand: 0
-    joint: 10
-  migratedSuccessfully: 1
-  hand: 0
-  joint: 10
+  poseSource:
+    id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: FallbackCompositePoseSource, ns: Microsoft.MixedReality.Toolkit.Input, asm: Microsoft.MixedReality.Toolkit.Input}
+      data:
+        poseSources:
+        - source:
+            id: 1
+        - source:
+            id: 2
+    00000001:
+      type: {class: InputActionPoseSource, ns: Microsoft.MixedReality.Toolkit.Input, asm: Microsoft.MixedReality.Toolkit.Input}
+      data:
+        trackingStateActionProperty:
+          m_UseReference: 1
+          m_Action:
+            m_Name: Tracking State Action Property
+            m_Type: 0
+            m_ExpectedControlType: 
+            m_Id: 1e2dada5-5cda-421c-8fa5-ac93c74cc660
+            m_Processors: 
+            m_Interactions: 
+            m_SingletonActionBindings: []
+            m_Flags: 0
+          m_Reference: {fileID: -2269787006492962051, guid: 18c412191cdc9274897f101c7fd5316f, type: 3}
+        positionActionProperty:
+          m_UseReference: 1
+          m_Action:
+            m_Name: Position Action Property
+            m_Type: 0
+            m_ExpectedControlType: 
+            m_Id: deb77201-2ee9-41d2-86bb-352483e1f8ec
+            m_Processors: 
+            m_Interactions: 
+            m_SingletonActionBindings: []
+            m_Flags: 0
+          m_Reference: {fileID: 6345803156186989850, guid: 18c412191cdc9274897f101c7fd5316f, type: 3}
+        rotationActionProperty:
+          m_UseReference: 1
+          m_Action:
+            m_Name: Rotation Action Property
+            m_Type: 0
+            m_ExpectedControlType: 
+            m_Id: 34b3a85f-6bc3-4183-8d92-6848bc731dcb
+            m_Processors: 
+            m_Interactions: 
+            m_SingletonActionBindings: []
+            m_Flags: 0
+          m_Reference: {fileID: 839287586357947611, guid: 18c412191cdc9274897f101c7fd5316f, type: 3}
+    00000002:
+      type: {class: HandJointPoseSource, ns: Microsoft.MixedReality.Toolkit.Input, asm: Microsoft.MixedReality.Toolkit.Input}
+      data:
+        hand: 0
+        joint: 10
 --- !u!1 &5224294193116514423
 GameObject:
   m_ObjectHideFlags: 0
@@ -1294,10 +1426,6 @@ MonoBehaviour:
         - source:
             id: 4
     00000001:
-      type: {class: PinchPoseSource, ns: Microsoft.MixedReality.Toolkit.Input, asm: Microsoft.MixedReality.Toolkit.Input}
-      data:
-        hand: 0
-    00000002:
       type: {class: FallbackCompositePoseSource, ns: Microsoft.MixedReality.Toolkit.Input, asm: Microsoft.MixedReality.Toolkit.Input}
       data:
         poseSources:
@@ -1305,6 +1433,14 @@ MonoBehaviour:
             id: 5
         - source:
             id: 6
+    00000002:
+      type: {class: FallbackCompositePoseSource, ns: Microsoft.MixedReality.Toolkit.Input, asm: Microsoft.MixedReality.Toolkit.Input}
+      data:
+        poseSources:
+        - source:
+            id: 7
+        - source:
+            id: 8
     00000003:
       type: {class: InputActionPoseSource, ns: Microsoft.MixedReality.Toolkit.Input, asm: Microsoft.MixedReality.Toolkit.Input}
       data:
@@ -1358,6 +1494,49 @@ MonoBehaviour:
             m_Name: Tracking State Action Property
             m_Type: 0
             m_ExpectedControlType: 
+            m_Id: 97bebe70-5745-46bd-9fca-7c89804c5344
+            m_Processors: 
+            m_Interactions: 
+            m_SingletonActionBindings: []
+            m_Flags: 0
+          m_Reference: {fileID: 5392355786457646683, guid: 18c412191cdc9274897f101c7fd5316f, type: 3}
+        positionActionProperty:
+          m_UseReference: 1
+          m_Action:
+            m_Name: Position Action Property
+            m_Type: 0
+            m_ExpectedControlType: 
+            m_Id: 22bc45f9-655f-4daa-b704-c2cbb705db85
+            m_Processors: 
+            m_Interactions: 
+            m_SingletonActionBindings: []
+            m_Flags: 0
+          m_Reference: {fileID: 2772631108110974900, guid: 18c412191cdc9274897f101c7fd5316f, type: 3}
+        rotationActionProperty:
+          m_UseReference: 1
+          m_Action:
+            m_Name: Rotation Action Property
+            m_Type: 0
+            m_ExpectedControlType: 
+            m_Id: f3928063-3b9c-40d1-90a3-9c022dc10297
+            m_Processors: 
+            m_Interactions: 
+            m_SingletonActionBindings: []
+            m_Flags: 0
+          m_Reference: {fileID: -1709626204400082014, guid: 18c412191cdc9274897f101c7fd5316f, type: 3}
+    00000006:
+      type: {class: PinchPoseSource, ns: Microsoft.MixedReality.Toolkit.Input, asm: Microsoft.MixedReality.Toolkit.Input}
+      data:
+        hand: 0
+    00000007:
+      type: {class: InputActionPoseSource, ns: Microsoft.MixedReality.Toolkit.Input, asm: Microsoft.MixedReality.Toolkit.Input}
+      data:
+        trackingStateActionProperty:
+          m_UseReference: 1
+          m_Action:
+            m_Name: Tracking State Action Property
+            m_Type: 0
+            m_ExpectedControlType: 
             m_Id: 7fd01eeb-b1cc-4182-9bba-a0e49a6ad85d
             m_Processors: 
             m_Interactions: 
@@ -1388,7 +1567,7 @@ MonoBehaviour:
             m_SingletonActionBindings: []
             m_Flags: 0
           m_Reference: {fileID: 8248158260566104461, guid: 18c412191cdc9274897f101c7fd5316f, type: 3}
-    00000006:
+    00000008:
       type: {class: PolyfillHandRayPoseSource, ns: Microsoft.MixedReality.Toolkit.Input, asm: Microsoft.MixedReality.Toolkit.Input}
       data:
         hand: 0
