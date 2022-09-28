@@ -1135,6 +1135,17 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "",
+                    "id": "b6881f6b-9e60-467b-8677-61807fdfab9b",
+                    "path": "<HandheldARInputDevice>/devicePosition",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Position",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "Quaternion Fallback",
                     "id": "ece733df-1f75-47f5-90f4-587ff5399449",
                     "path": "QuaternionFallback",
@@ -1169,6 +1180,17 @@
                 },
                 {
                     "name": "",
+                    "id": "4f7992a7-3a17-4628-8bda-e171c5788046",
+                    "path": "<HandheldARInputDevice>/deviceRotation",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "5767d3c1-74f7-41e1-813e-eb3f37f19ce3",
                     "path": "*/{gaze}/trackingState",
                     "interactions": "",
@@ -1185,6 +1207,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Generic XR Controller",
+                    "action": "Tracking State",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a1e0622a-c529-4dd0-8036-51bca0a83418",
+                    "path": "<TrackedDevice>/trackingState",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "Tracking State",
                     "isComposite": false,
                     "isPartOfComposite": false
