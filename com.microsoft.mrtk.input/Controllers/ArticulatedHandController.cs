@@ -104,8 +104,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                         bool isPinched = pinchAmount >= (pinchedLastFrame ? 0.9f : 1.0f);
 
                         controllerState.selectInteractionState.active = isPinched;
-                        controllerState.selectInteractionState.activatedThisFrame = isPinched && !pinchedLastFrame;
-                        controllerState.selectInteractionState.deactivatedThisFrame = !isPinched && pinchedLastFrame;
+                        controllerState.selectInteractionState.SetFrameDependent(pinchedLastFrame);
 
                         pinchedLastFrame = isPinched;
                     }
