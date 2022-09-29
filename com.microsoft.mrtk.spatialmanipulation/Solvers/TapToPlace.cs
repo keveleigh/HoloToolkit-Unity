@@ -238,10 +238,8 @@ namespace Microsoft.MixedReality.Toolkit.SpatialManipulation
 
         #region MonoBehaviour Implementation
 
-        protected override void Start()
+        protected virtual void Start()
         {
-            base.Start();
-
             Debug.Assert(IsColliderPresent, $"The game object {gameObject.name} does not have a collider attached, please attach a collider to use Tap to Place");
 
             // When a game object is created via script, the bounds of the collider remain at the default size 

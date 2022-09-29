@@ -39,28 +39,6 @@ namespace Microsoft.MixedReality.Toolkit.Input.Tests
             }
         }
 
-        private ControllerLookup cachedLookup = null;
-
-        /// <summary>
-        /// A cached reference to the <see cref="ControllerLookup"/> on the XR rig.
-        /// Cleared during <see cref="TearDown"/> at the end of each test.
-        /// </summary>
-        protected ControllerLookup CachedLookup
-        {
-            get
-            {
-                if (cachedLookup == null)
-                {
-                    if (CachedInteractionManager == null)
-                    {
-                        return null;
-                    }
-                    cachedLookup = CachedInteractionManager.gameObject.GetComponent<ControllerLookup>();
-                }
-                return cachedLookup;
-            }
-        }
-
         public override IEnumerator Setup()
         {
             yield return base.Setup();
@@ -83,7 +61,6 @@ namespace Microsoft.MixedReality.Toolkit.Input.Tests
             InputTestUtilities.TeardownRig();
             InputTestUtilities.TeardownSimulation();
             cachedInteractionManager = null;
-            cachedLookup = null;
 
             input.TearDown();
 

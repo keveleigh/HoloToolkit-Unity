@@ -22,10 +22,16 @@ namespace Microsoft.MixedReality.Toolkit
         /// <summary>
         /// The camera rig's gaze controller.
         /// </summary>
-        public XRBaseController GazeController
+        public static XRBaseController GazeController
         {
-            get => gazeController;
-            set => gazeController = value;
+            get => Instance != null ? Instance.gazeController : null;
+            set
+            {
+                if (Instance != null)
+                {
+                    Instance.gazeController = value;
+                }
+            }
         }
 
         // Left Hand
@@ -36,10 +42,16 @@ namespace Microsoft.MixedReality.Toolkit
         /// <summary>
         /// The camera rig's left hand controller.
         /// </summary>
-        public XRBaseController LeftHandController
+        public static XRBaseController LeftHandController
         {
-            get => leftHandController;
-            set => leftHandController = value;
+            get => Instance != null ? Instance.leftHandController : null;
+            set
+            {
+                if (Instance != null)
+                {
+                    Instance.leftHandController = value;
+                }
+            }
         }
 
         // Right Hand
@@ -50,11 +62,49 @@ namespace Microsoft.MixedReality.Toolkit
         /// <summary>
         /// The camera rig's right hand controller.
         /// </summary>
-        public XRBaseController RightHandController
+        public static XRBaseController RightHandController
         {
-            get => rightHandController;
-            set => rightHandController = value;
+            get => Instance != null ? Instance.rightHandController : null;
+            set
+            {
+                if (Instance != null)
+                {
+                    Instance.rightHandController = value;
+                }
+            }
         }
 
+        private static ControllerLookup instance;
+        private static ControllerLookup Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    ControllerLookup[] lookups = FindObjectsOfType<ControllerLookup>();
+                    if (lookups.Length == 0)
+                    {
+                        Debug.LogError("Could not locate an instance of the ControllerLookup class in the hierarchy. It is recommended to add ControllerLookup to your camera rig.");
+                    }
+                    else
+                    {
+                        if (lookups.Length > 1)
+                        {
+                            Debug.LogWarning("Found more than one instance of the ControllerLookup class in the hierarchy. Defaulting to the first instance.");
+                        }
+
+                        instance = lookups[0];
+                    }
+                }
+
+                return instance;
+            }
+        }
+
+        protected void Awake()
+        {
+            // Poke Instance so the local cache is set.
+            _ = Instance;
+        }
     }
 }

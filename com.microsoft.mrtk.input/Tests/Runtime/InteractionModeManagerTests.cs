@@ -32,7 +32,7 @@ namespace Microsoft.MixedReality.Toolkit.Input.Tests
             var rightHand = new TestHand(Handedness.Right);
             yield return rightHand.Show(new Vector3(0, 0, 0.5f));
 
-            XRBaseController rightHandController = CachedLookup.RightHandController;
+            XRBaseController rightHandController = ControllerLookup.RightHandController;
             Assert.IsTrue(rightHandController != null, "No controllers found for right hand.");
 
             // Magic number is tuned for a prox detector on the index tip with
@@ -67,7 +67,7 @@ namespace Microsoft.MixedReality.Toolkit.Input.Tests
             var rightHand = new TestHand(Handedness.Right);
             yield return rightHand.Show(InputTestUtilities.InFrontOfUser());
 
-            XRBaseController rightHandController = CachedLookup.RightHandController;
+            XRBaseController rightHandController = ControllerLookup.RightHandController;
             Assert.IsTrue(rightHandController != null, "No controllers found for right hand.");
 
             // Moving the hand to a position where it's far ray is hovering over the cube
@@ -108,7 +108,7 @@ namespace Microsoft.MixedReality.Toolkit.Input.Tests
             var rightHand = new TestHand(Handedness.Right);
             yield return rightHand.Show(InputTestUtilities.InFrontOfUser());
 
-            XRBaseController rightHandController = CachedLookup.RightHandController;
+            XRBaseController rightHandController = ControllerLookup.RightHandController;
             Assert.IsTrue(rightHandController != null, "No controllers found for right hand.");
 
             // Grab stabilization == ray stabilization

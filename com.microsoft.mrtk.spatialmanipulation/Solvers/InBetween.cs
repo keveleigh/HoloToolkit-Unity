@@ -112,10 +112,8 @@ namespace Microsoft.MixedReality.Toolkit.SpatialManipulation
 
         private SolverHandler secondSolverHandler;
 
-        protected override void Start()
+        protected virtual void Start()
         {
-            base.Start();
-
             // We need to get the secondSolverHandler ready before we tell them both to seek a tracked object.
             secondSolverHandler = gameObject.AddComponent<SolverHandler>();
             secondSolverHandler.LeftInteractor = SolverHandler.LeftInteractor;

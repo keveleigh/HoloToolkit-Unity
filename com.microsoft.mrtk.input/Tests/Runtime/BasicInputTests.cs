@@ -45,9 +45,9 @@ namespace Microsoft.MixedReality.Toolkit.Input.Tests
         public IEnumerator InputBindingSmoketest()
         {
             var controllers = new[] {
-                CachedLookup.LeftHandController,
-                CachedLookup.RightHandController,
-                CachedLookup.GazeController
+                ControllerLookup.LeftHandController,
+                ControllerLookup.RightHandController,
+                ControllerLookup.GazeController
             };
 
             foreach (var controller in controllers)
@@ -68,7 +68,7 @@ namespace Microsoft.MixedReality.Toolkit.Input.Tests
         [UnityTest]
         public IEnumerator HandMovingSmoketest()
         {
-            var controller = CachedLookup.RightHandController as ActionBasedController;
+            var controller = ControllerLookup.RightHandController as ActionBasedController;
 
             var testHand = new TestHand(Handedness.Right);
             InputTestUtilities.SetHandAnchorPoint(Handedness.Right, ControllerAnchorPoint.Device);
@@ -433,7 +433,7 @@ namespace Microsoft.MixedReality.Toolkit.Input.Tests
             Assert.IsFalse(AnyProximityDetectorsTriggered(),
                            "ProximityInteractor was still hovering after re-enabling faraway object.");
 
-            XRBaseController rightHandController = CachedLookup.RightHandController;
+            XRBaseController rightHandController = ControllerLookup.RightHandController;
             Assert.IsTrue(rightHandController != null, "No controllers found for right hand.");
 
             Assert.IsTrue(rightHandController.GetComponentInChildren<MRTKRayInteractor>().enabled, "Ray didn't reactivate");
@@ -459,7 +459,7 @@ namespace Microsoft.MixedReality.Toolkit.Input.Tests
             Assert.IsFalse(AnyProximityDetectorsTriggered(), "Prox detector started out triggered, when it shouldn't be (no cube yet!)");
 
             // Rays should start enabled
-            XRBaseController rightHandController = CachedLookup.RightHandController;
+            XRBaseController rightHandController = ControllerLookup.RightHandController;
             Assert.IsTrue(rightHandController != null, "No controllers found for right hand.");
 
             Assert.IsTrue(rightHandController.GetComponentInChildren<MRTKRayInteractor>().enabled, "Ray didn't start active");
@@ -564,7 +564,7 @@ namespace Microsoft.MixedReality.Toolkit.Input.Tests
             Assert.IsFalse(AnyProximityDetectorsTriggered(),
                            "ProximityInteractor was still hovering after re-enabling faraway object.");
 
-            XRBaseController rightHandController = CachedLookup.RightHandController;
+            XRBaseController rightHandController = ControllerLookup.RightHandController;
             Assert.IsTrue(rightHandController != null, "No controllers found for right hand.");
 
             Assert.IsTrue(rightHandController.GetComponentInChildren<MRTKRayInteractor>().enabled, "Ray didn't reactivate");

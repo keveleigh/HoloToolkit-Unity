@@ -15,8 +15,6 @@ namespace Microsoft.MixedReality.Toolkit.SpatialManipulation
     [HelpURL("https://docs.microsoft.com/windows/mixed-reality/mrtk-unity/features/ux-building-blocks/solvers/solver")]
     public abstract class Solver : MonoBehaviour
     {
-        protected static ControllerLookup controllerLookup = null;
-
         [SerializeField]
         [Tooltip("If true, the position and orientation will be calculated, but not applied, for other components to use")]
         private bool updateLinkedTransform = false;
@@ -237,32 +235,6 @@ namespace Microsoft.MixedReality.Toolkit.SpatialManipulation
             if (SolverHandler != null)
             {
                 SolverHandler.UnregisterSolver(this);
-            }
-        }
-
-        protected virtual void Start()
-        {
-            // Find the controller lookup class in the hierarchy. Solvers that require access to the
-            // left, right or gaze controllers will use the references stored in this class.
-            //
-            // While FindObjectsOfType can be an expensive method, the controllerLookup variable is
-            // static. The hierarchy traversal will occur a maximum of once per scene.
-            if (controllerLookup == null)
-            {
-                ControllerLookup[] lookups = GameObject.FindObjectsOfType(typeof(ControllerLookup)) as ControllerLookup[];
-                if (lookups.Length == 0)
-                {
-                    Debug.LogError("Could not locate an instance of the ControllerLookup class in the hierarchy. It is recommended to add ControllerLookup to your camera rig.");
-                }
-                else if (lookups.Length > 1)
-                {
-                    Debug.LogWarning("Found more than one instance of the ControllerLookup class in the hierarchy. Defaulting to the first instance.");
-                    controllerLookup = lookups[0];
-                }
-                else
-                {
-                    controllerLookup = lookups[0];
-                }
             }
         }
 

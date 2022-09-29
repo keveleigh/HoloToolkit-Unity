@@ -55,10 +55,8 @@ namespace Microsoft.MixedReality.Toolkit.SpatialManipulation
         // Private scratchpad to reduce allocs.
         private static List<Renderer> childRenderers = new List<Renderer>();
 
-        protected override void Start()
+        protected virtual void Start()
         {
-            base.Start();
-
             SetIndicatorVisibility(ShouldShowIndicator());
         }
 
