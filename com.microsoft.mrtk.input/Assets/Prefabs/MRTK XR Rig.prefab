@@ -283,6 +283,7 @@ GameObject:
   - component: {fileID: 2351505567455720332}
   - component: {fileID: 4160709927669568829}
   - component: {fileID: 6400715630075217958}
+  - component: {fileID: 4973529365703207921}
   m_Layer: 0
   m_Name: MRTK XR Rig
   m_TagString: Untagged
@@ -334,6 +335,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a107350295baaf4489642caa92f05de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4973529365703207921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2351505567455720334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3859a92a05d4f5d418cb6ca605290e74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AttemptUpdate: 1
+  m_MatchFrameRate: 1
+  m_TrackingMode: 2
 --- !u!1 &7735890427496681069
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,11 +763,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 82333e6e543cb7e4dbd5b1d47aff3f58, type: 3}
---- !u!4 &5727148871348114050 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8544718171901067399, guid: 82333e6e543cb7e4dbd5b1d47aff3f58, type: 3}
-  m_PrefabInstance: {fileID: 4174278757018161669}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &142007140022173312 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4041565961123392645, guid: 82333e6e543cb7e4dbd5b1d47aff3f58, type: 3}
@@ -763,6 +774,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6533afcc1a3776848a226f74fce34856, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &5727148871348114050 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8544718171901067399, guid: 82333e6e543cb7e4dbd5b1d47aff3f58, type: 3}
+  m_PrefabInstance: {fileID: 4174278757018161669}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5364037230396944427
 PrefabInstance:
   m_ObjectHideFlags: 0
