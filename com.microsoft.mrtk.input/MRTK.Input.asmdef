@@ -5,6 +5,8 @@
         "Microsoft.MixedReality.OpenXR",
         "Microsoft.MixedReality.Toolkit.Core",
         "Unity.InputSystem",
+        "Unity.XR.ARFoundation",
+        "Unity.XR.ARSubsystems",
         "Unity.XR.CoreUtils",
         "Unity.XR.Interaction.Toolkit",
         "glTFast"

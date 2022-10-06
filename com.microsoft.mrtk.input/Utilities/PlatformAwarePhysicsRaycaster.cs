@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License
 
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Microsoft.MixedReality.Toolkit.Input
@@ -23,9 +21,9 @@ namespace Microsoft.MixedReality.Toolkit.Input
         {
             base.Awake();
 
-            // Are we on an XR device? If so, we don't want to
+            // Are we on an XR device (but not mobile AR)? If so, we don't want to
             // use camera raycasting at all.
-            if (XRDisplaySubsystemHelpers.AreAnyActive())
+            if (XRDisplaySubsystemHelpers.AreAnyActive() && !ARDeviceManager.IsMobileAR)
             {
                 enabled = false;
             }
