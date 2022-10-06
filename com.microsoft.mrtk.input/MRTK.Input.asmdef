@@ -7,8 +7,7 @@
         "Unity.InputSystem",
         "Unity.XR.CoreUtils",
         "Unity.XR.Interaction.Toolkit",
-        "glTFast",
-        "Ktx"
+        "glTFast"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -32,11 +31,6 @@
             "name": "com.atteneder.gltfast",
             "expression": "",
             "define": "GLTFAST_PRESENT"
-        },
-        {
-            "name": "com.atteneder.ktx",
-            "expression": "",
-            "define": "KTX_PRESENT"
         }
     ],
     "noEngineReferences": false
