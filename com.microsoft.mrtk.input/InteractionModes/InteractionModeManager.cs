@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Profiling;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit;
 
 namespace Microsoft.MixedReality.Toolkit.Input
@@ -111,9 +112,17 @@ namespace Microsoft.MixedReality.Toolkit.Input
             // PERFORMANCE FIXME: This is not great for performance. Find better way to register detectors?
             // We would query interactors and then add all interactors that happen to be a detector, but
             // detectors may not necessarily be interactors.
-            foreach (IInteractionModeDetector detector in FindObjectsOfType<MonoBehaviour>().OfType<IInteractionModeDetector>())
+
+            GameObject[] rootGameObjects = SceneManager.GetActiveScene().GetRootGameObjects();
+            int rootGameObjectsLength = rootGameObjects.Length;
+            for (int i = 0; i < rootGameObjectsLength; i++)
             {
-                interactionModeDectectors.Add(detector);
+                IInteractionModeDetector[] childrenInterfaces = rootGameObjects[i].GetComponentsInChildren<IInteractionModeDetector>();
+                int childrenInterfacesLength = childrenInterfaces.Length;
+                for (int j = 0; j < childrenInterfacesLength; j++)
+                {
+                    interactionModeDectectors.Add(childrenInterfaces[j]);
+                }
             }
         }
 
