@@ -6,10 +6,6 @@ using System.Collections;
 using System.IO;
 using UnityEngine.SceneManagement;
 
-#if ENABLE_INPUT_SYSTEM
-using UnityEngine.InputSystem;
-#endif
-
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -100,14 +96,14 @@ namespace Microsoft.MixedReality.Toolkit.Core.Tests
 #endif
         }
 
+#if UNITY_EDITOR
         private static bool testPaused;
         /// <summary>
         /// Used for debugging. Pauses the test until the dialog is cleared.
         /// </summary>
         public static IEnumerator PauseTest()
         {
-#if UNITY_EDITOR
-            if(!Application.isBatchMode)
+            if (!Application.isBatchMode)
             {
                 PauseDialogWindow.ShowWindow();
                 while (testPaused)
@@ -115,7 +111,6 @@ namespace Microsoft.MixedReality.Toolkit.Core.Tests
                     yield return null;
                 };
             }
-#endif
         }
 
         private class PauseDialogWindow : EditorWindow
@@ -146,6 +141,7 @@ namespace Microsoft.MixedReality.Toolkit.Core.Tests
                 testPaused = false;
             }
         }
+#endif
 
         /// <summary>
         /// Sometimes it take a few frames for XRI to process input events.
