@@ -205,7 +205,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
             private Dictionary<XRNode, AggregateHandContainer> hands = null;
 
             // Reusable pinch pose structs to reduce allocs.
-            private HandJointPose leftPinchPose, rightPinchPose;
+            private HandJointPose leftPinchPose = default, rightPinchPose = default;
 
             public override void Start()
             {
