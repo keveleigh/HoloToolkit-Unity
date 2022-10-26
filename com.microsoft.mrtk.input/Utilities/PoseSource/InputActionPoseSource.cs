@@ -5,14 +5,14 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR;
+using UnityEngine.XR.Interaction.Toolkit.Inputs;
 
 namespace Microsoft.MixedReality.Toolkit.Input
 {
-    [Serializable]
-
     /// <summary>
     /// A pose source which gets the pose composed of a tracked position and rotation input action
     /// </summary>
+    [Serializable]
     public class InputActionPoseSource : IPoseSource
     {
         [SerializeField]
@@ -29,6 +29,10 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// </summary>
         public bool TryGetPose(out Pose pose)
         {
+            trackingStateActionProperty.EnableDirectAction();
+            positionActionProperty.EnableDirectAction();
+            rotationActionProperty.EnableDirectAction();
+
             InputAction trackingStateAction = trackingStateActionProperty.action;
             InputAction positionAction = positionActionProperty.action;
             InputAction rotationAction = rotationActionProperty.action;
