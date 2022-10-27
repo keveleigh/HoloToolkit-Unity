@@ -136,6 +136,7 @@ MonoBehaviour:
   - {fileID: -9160837235444078365}
   - {fileID: 7184792380987883228}
   - {fileID: -3675173896095908783}
+  - {fileID: -4623745661938893786}
   - {fileID: -45282039415450401}
   - {fileID: -6001689167010836115}
   - {fileID: -3189435746241105910}
@@ -253,6 +254,7 @@ MonoBehaviour:
   - {fileID: -4098015567780229219}
   - {fileID: 3767529871019855277}
   - {fileID: 6023169588298778005}
+  - {fileID: 6822353008894883836}
   - {fileID: 8988399328746489734}
   m_renderMode: 1
   m_depthSubmissionMode: 1
@@ -281,6 +283,26 @@ MonoBehaviour:
   rightHandTrackingOptions:
     motionRange: 2
   questHandTrackingMode: 1
+--- !u!114 &-4623745661938893786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1927c045052a06d49a9b21fdcaa26db6, type: 3}
+  m_Name: OculusXRFeature Standalone
+  m_EditorClassIdentifier: 
+  m_enabled: 1
+  nameUi: OculusXR Feature
+  version: 0.0.1
+  featureIdInternal: com.oculus.openxr.feature.oculusxr
+  openxrExtensionStrings: 
+  company: Oculus
+  priority: 0
+  required: 0
 --- !u!114 &-4098015567780229219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -782,6 +804,26 @@ MonoBehaviour:
   featureIdInternal: com.unity.openxr.feature.input.handtracking
   openxrExtensionStrings: XR_MSFT_hand_interaction
   company: Unity
+  priority: 0
+  required: 0
+--- !u!114 &6822353008894883836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1927c045052a06d49a9b21fdcaa26db6, type: 3}
+  m_Name: OculusXRFeature Android
+  m_EditorClassIdentifier: 
+  m_enabled: 1
+  nameUi: OculusXR Feature
+  version: 0.0.1
+  featureIdInternal: com.oculus.openxr.feature.oculusxr
+  openxrExtensionStrings: 
+  company: Oculus
   priority: 0
   required: 0
 --- !u!114 &6828806840034173759
