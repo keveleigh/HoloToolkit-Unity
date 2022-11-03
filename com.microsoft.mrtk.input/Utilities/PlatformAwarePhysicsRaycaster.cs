@@ -23,10 +23,10 @@ namespace Microsoft.MixedReality.Toolkit.Input
 
             // Are we on an XR device (but not mobile AR)? If so, we don't want to
             // use camera raycasting at all.
-            if (XRDisplaySubsystemHelpers.AreAnyActive() && !ARDeviceManager.IsMobileAR)
-            {
-                enabled = false;
-            }
+            //if (XRDisplaySubsystemHelpers.AreAnyActive() && !ARDeviceManager.IsMobileAR)
+            //{
+            //    enabled = false;
+            //}
         }
     }
 }
