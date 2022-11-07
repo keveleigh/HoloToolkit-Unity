@@ -18,6 +18,9 @@ namespace Microsoft.MixedReality.Toolkit
         [Implements(typeof(IXRInteractor), TypeGrouping.ByNamespaceFlat, AllowAbstract = true)]
         private List<SystemInterfaceType> disabledInteractorTypes = new List<SystemInterfaceType>();
 
+        [field: SerializeField]
+        public bool AlignWithSqueeze = false;
+
         /// <inheritdoc />
         public override bool IsSelectableBy(IXRSelectInteractor interactor)
         {

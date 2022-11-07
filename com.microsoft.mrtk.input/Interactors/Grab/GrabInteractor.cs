@@ -54,13 +54,15 @@ namespace Microsoft.MixedReality.Toolkit.Input
 
             using (ProcessInteractorPerfMarker.Auto())
             {
-                if (updatePhase == XRInteractionUpdateOrder.UpdatePhase.Dynamic)
+                if (updatePhase == XRInteractionUpdateOrder.UpdatePhase.Dynamic
+                    && hasSelection
+                    && firstInteractableSelected is MRTKGrabInteractable grabInteractable
+                    && grabInteractable.AlignWithSqueeze
+                    && GripPoseSource != null
+                    && GripPoseSource.TryGetPose(out Pose pose))
                 {
-                    if (GripPoseSource != null && GripPoseSource.TryGetPose(out Pose pose))
-                    {
-                        // Ensure that the attachTransform tightly follows the grip pose
-                        attachTransform.SetPositionAndRotation(pose.position, pose.rotation);
-                    }
+                    // Ensure that the attachTransform tightly follows the grip pose
+                    attachTransform.SetPositionAndRotation(pose.position, pose.rotation);
                 }
             }
         }
