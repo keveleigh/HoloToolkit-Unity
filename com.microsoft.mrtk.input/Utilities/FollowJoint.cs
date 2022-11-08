@@ -14,7 +14,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
     /// Packaging-wise, this should be considered part of the Hands feature. This also does
     /// not depend on XRI.
     /// </remarks>
-    [AddComponentMenu("MRTK/Input/Follow Joint")]
+    [Obsolete("Use a PoseSourceDriver with a HandJointPoseSource instead.")]
     internal class FollowJoint : MonoBehaviour, ISerializationCallbackReceiver
     {
         [SerializeField]
