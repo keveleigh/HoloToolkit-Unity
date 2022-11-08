@@ -1221,7 +1221,7 @@
                 {
                     "name": "",
                     "id": "f2db7f2c-5178-436f-899c-e27c73523e9d",
-                    "path": "<HandInteraction>{RightHand}/pokePose/position",
+                    "path": "<XRController>{RightHand}/pokePosition",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1232,7 +1232,7 @@
                 {
                     "name": "",
                     "id": "29c8c1cf-1224-4ee7-8a4f-1805072b80cf",
-                    "path": "<HandInteraction>{RightHand}/pokePose/rotation",
+                    "path": "<XRController>{RightHand}/pokeRotation",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1243,7 +1243,7 @@
                 {
                     "name": "",
                     "id": "79bc92a4-e923-403a-8798-53b4cb1dd76e",
-                    "path": "<HandInteraction>{RightHand}/pinchPose/position",
+                    "path": "<XRController>{RightHand}/pinchPosition",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1254,7 +1254,7 @@
                 {
                     "name": "",
                     "id": "c11ef8cc-27bd-4ba0-b3a6-f6604d16820b",
-                    "path": "<HandInteraction>{RightHand}/pinchPose/rotation",
+                    "path": "<XRController>{RightHand}/pinchRotation",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
