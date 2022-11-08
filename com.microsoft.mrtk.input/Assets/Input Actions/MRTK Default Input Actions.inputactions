@@ -252,6 +252,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "PinchReady",
+                    "type": "Button",
+                    "id": "ba43d52e-fba4-4fcc-a690-6f5c445d9eb1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "PointerTrackingState",
                     "type": "Value",
                     "id": "c9a8c8e1-156a-4927-b63a-a3f4cbcbe046",
@@ -259,6 +268,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "PointerActivateReady",
+                    "type": "Button",
+                    "id": "a5490a2e-eabd-4bf4-b85e-98611287ee42",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "GraspReady",
+                    "type": "Button",
+                    "id": "4e3858fd-e6f2-4715-a4ba-748bc1232534",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -690,6 +717,39 @@
                     "action": "PointerTrackingState",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cfa08a44-5507-4f12-a47e-9eabc6d0a258",
+                    "path": "<XRController>{LeftHand}/pointerActivateReady",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PointerActivateReady",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4de3d82a-5e91-44f7-af97-5766c09777e3",
+                    "path": "<XRController>{LeftHand}/graspReady",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GraspReady",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3ccf128f-fdae-4e57-89e9-bcb802253eef",
+                    "path": "<XRController>{LeftHand}/pinchReady",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PinchReady",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -896,6 +956,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "PinchReady",
+                    "type": "Button",
+                    "id": "4f502aa6-d779-4302-aaf8-937114805092",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "PointerTrackingState",
                     "type": "Value",
                     "id": "fac85a95-5a7b-4f69-8e14-82eb4aecc162",
@@ -903,6 +972,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "PointerActivateReady",
+                    "type": "Button",
+                    "id": "d8330667-007a-4f8c-9bbd-311045e9ac7e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GraspReady",
+                    "type": "Button",
+                    "id": "f0c3c7a6-8bc8-4ac9-bec9-69c4debe1152",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1321,6 +1408,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "PointerTrackingState",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2d46899b-9b16-4e4e-8787-ec779df1b3b4",
+                    "path": "<XRController>{RightHand}/pointerActivateReady",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PointerActivateReady",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "12a0b339-1170-4e9b-ac50-4bb3f31786bc",
+                    "path": "<XRController>{RightHand}/graspReady",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GraspReady",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "772cdc96-84dd-41fb-92b8-e095415b2593",
+                    "path": "<XRController>{RightHand}/pinchReady",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PinchReady",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
