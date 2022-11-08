@@ -36,9 +36,6 @@ namespace Microsoft.MixedReality.Toolkit.Input
         public bool PinchSelectReady => (currentControllerState is ArticulatedHandControllerState handControllerState) ?
                                                 handControllerState.PinchSelectReady : false;
 
-        [Obsolete("Please use the selectInteractionState.value instead.")]
-        public float PinchSelectProgress => currentControllerState.selectInteractionState.value;
-
         /// <summary>
         /// The worldspace pose of the pinch selection.
         /// </summary>

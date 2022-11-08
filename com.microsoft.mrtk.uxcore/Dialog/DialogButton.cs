@@ -30,12 +30,6 @@ namespace Microsoft.MixedReality.Toolkit.UX
         /// </summary>
         public Dialog ParentDialog { get; set; }
 
-        /// <summary>
-        /// The type description of the button.
-        /// </summary>
-        [Obsolete("Use ButtonContext instead.")]
-        public DialogButtonTypes ButtonTypeEnum => DialogProperty.Convert(ButtonContext.ButtonType);
-
         [SerializeField, Tooltip("The type description of the button.")]
         private DialogButtonContext buttonContext;
 
@@ -61,9 +55,6 @@ namespace Microsoft.MixedReality.Toolkit.UX
                 ParentDialog.Dismiss();
             }
         }
-
-        [Obsolete("Use SetLabel or SetButtonContext instead.")]
-        public void SetTitle(string title) => SetLabel(title);
 
         /// <summary>
         /// Sets the label text on the button.
