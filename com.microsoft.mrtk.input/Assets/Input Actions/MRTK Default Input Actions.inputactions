@@ -250,6 +250,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "PointerTrackingState",
+                    "type": "Value",
+                    "id": "c9a8c8e1-156a-4927-b63a-a3f4cbcbe046",
+                    "expectedControlType": "Integer",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -670,6 +679,17 @@
                     "action": "PokeTrackingState",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f40884c4-7ee8-43f4-b8a4-662fd5ebee2b",
+                    "path": "<HandInteraction>{LeftHand}/pointer/trackingState",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PointerTrackingState",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -870,6 +890,15 @@
                     "name": "PinchTrackingState",
                     "type": "Value",
                     "id": "f6b00213-dc65-43cc-b99a-07367f1c6298",
+                    "expectedControlType": "Integer",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "PointerTrackingState",
+                    "type": "Value",
+                    "id": "fac85a95-5a7b-4f69-8e14-82eb4aecc162",
                     "expectedControlType": "Integer",
                     "processors": "",
                     "interactions": "",
@@ -1281,6 +1310,17 @@
                     "processors": "",
                     "groups": "Generic XR Controller",
                     "action": "PinchTrackingState",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f4018ded-1844-4b72-9918-20779d62f066",
+                    "path": "<HandInteraction>{RightHand}/pointer/trackingState",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PointerTrackingState",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
