@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2644,6 +2644,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87b5dae2c37568d4b93b1add68554deb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &393379808 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2351505566903569412, guid: 4d7e2f87fefe0ba468719b15288b46e7, type: 3}
+  m_PrefabInstance: {fileID: 1530487694}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &422166483 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100022, guid: f9a8072f5d9b92347a999f10f01b8012, type: 3}
@@ -8245,6 +8250,35 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1001 &1240916582
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 393379808}
+    m_Modifications:
+    - target: {fileID: 7166565430514323851, guid: a29e0489a202c7b45a8b06f0af8ce0b1, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7166565430514323851, guid: a29e0489a202c7b45a8b06f0af8ce0b1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7166565430514323851, guid: a29e0489a202c7b45a8b06f0af8ce0b1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7166565430514323851, guid: a29e0489a202c7b45a8b06f0af8ce0b1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7166565430514323852, guid: a29e0489a202c7b45a8b06f0af8ce0b1, type: 3}
+      propertyPath: m_Name
+      value: InputDebugging
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a29e0489a202c7b45a8b06f0af8ce0b1, type: 3}
 --- !u!1 &1256458037 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3482465368609989420, guid: 8beb1e0a00bf1eb42921a53ffb52bdeb, type: 3}
