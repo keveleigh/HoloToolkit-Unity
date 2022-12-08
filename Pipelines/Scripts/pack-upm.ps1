@@ -16,6 +16,8 @@
     The fourth digit (revision) for the full version.
 .PARAMETER PreviewTag
     The tag to append after the version, including the preview number (e.g. "internal.0" or "pre.100")
+.PARAMETER Repack
+    Add this switch if ProjectRoot represents a folder with existing tarballs to be patched and repacked.
 #>
 param(
     [Parameter(Mandatory = $true)]
@@ -30,7 +32,9 @@ param(
     [string]$BuildNumber,
 
     [ValidatePattern("[A-Za-z]+\.\d+[\.\d+]*")]
-    [string]$PreviewTag
+    [string]$PreviewTag,
+
+    [switch]$Repack
 )
 
 $ProjectRoot = Resolve-Path -Path $ProjectRoot
@@ -52,11 +56,16 @@ $OutputDirectory = Resolve-Path -Path $OutputDirectory
 Write-Output "OutputDirectory: $OutputDirectory"
 
 try {
-    Push-Location $OutputDirectory
-
     $parseVersion = -not $Version
 
-    Get-ChildItem -Path $ProjectRoot/*/package.json | ForEach-Object {
+    if ($Repack.IsPresent) {
+        Get-ChildItem -Path (Join-Path $ProjectRoot "*.tgz") | ForEach-Object {
+            New-Item -ItemType Directory -Force (Join-Path $OutputDirectory $_.BaseName)
+            tar -xzf $_ -C (Join-Path $OutputDirectory $_.BaseName)
+        }
+    }
+
+    Get-ChildItem -Path (Join-Path $ProjectRoot "package.json") -Recurse | ForEach-Object {
         $packageName = Select-String -Pattern "com\.microsoft\.mrtk\.\w+" -Path $_ | Select-Object -First 1
 
         if (-not $packageName) {
@@ -74,13 +83,15 @@ try {
         Write-Output "Creating $packageName"
         Write-Output "====================="
 
-        Write-Output "Copying Documentation~ to $packageFriendlyName"
+        if (-not $Repack.IsPresent) {
+            Write-Output "Copying Documentation~ to $packageFriendlyName"
 
-        if (Test-Path -Path $docFolder) {
-            Copy-Item -Path "$ProjectRoot/Pipelines/UPM/Documentation~/*" -Destination $docFolder -Recurse
-        }
-        else {
-            Copy-Item -Path "$ProjectRoot/Pipelines/UPM/Documentation~" -Destination $docFolder -Recurse
+            if (Test-Path -Path $docFolder) {
+                Copy-Item -Path "$ProjectRoot/Pipelines/UPM/Documentation~/*" -Destination $docFolder -Recurse
+            }
+            else {
+                Copy-Item -Path "$ProjectRoot/Pipelines/UPM/Documentation~" -Destination $docFolder -Recurse
+            }
         }
 
         if ($parseVersion) {
@@ -91,31 +102,51 @@ try {
         Write-Output "Patching package version to $Version$PreviewTag"
         ((Get-Content -Path $_ -Raw) -Replace '("version": |"com\.microsoft\.mrtk\.\w+" *: *)"(?:[0-9.]+|%version%)-?[a-zA-Z0-9.]*', "`$1`"$Version$PreviewTag") | Set-Content -Path $_ -NoNewline
 
-        Write-Output "Patching assembly version to $Version$BuildNumber"
-        Get-ChildItem -Path $packagePath/AssemblyInfo.cs -Recurse | ForEach-Object {
-            Add-Content -Path $_ -Value "[assembly: AssemblyFileVersion(`"$Version$BuildNumber`")]"
-            Add-Content -Path $_ -Value "[assembly: AssemblyInformationalVersion(`"$Version$PreviewTag`")]"
-        }
+        Get-ChildItem -Path (Join-Path $packagePath "AssemblyInfo.cs") -Recurse | ForEach-Object {
+            if ($Repack.IsPresent -and (-not $BuildNumber)) {
+                $parsedBuildNumber = (Select-String "assembly: AssemblyFileVersion.`"([0-9.]+)`"" -InputObject (Get-Content -Path $_)).Matches.Groups[1].Value.Split('.')
+                if ($parsedBuildNumber.Count -gt 3) {
+                    $BuildNumber = ".$($parsedBuildNumber[3])"
+                }
+            }
 
-        Write-Output "Packing $packageFriendlyName"
-        npm pack $packagePath
+            Write-Output "Patching assembly version to $Version$BuildNumber"
 
-        if (Test-Path -Path $docFolder) {
-            Write-Output "Cleaning up Documentation~ from $packageFriendlyName"
-            # A documentation folder was created. Remove it.
-            Remove-Item -Path $docFolder -Recurse -Force
-            # But restore anything that's checked-in.
-            if (git ls-files $docFolder) {
-                git -C $packagePath checkout $docFolder
+            if ($Repack.IsPresent) {
+                ((Get-Content -Path $_ -Raw) -Replace "(assembly: AssemblyFileVersion.)`"(?:[0-9.]+)", "`$1`"$Version$BuildNumber") | Set-Content -Path $_ -NoNewline
+                ((Get-Content -Path $_ -Raw) -Replace "(assembly: AssemblyInformationalVersion.)`"(?:[0-9.]+)-?[a-zA-Z0-9.]*", "`$1`"$Version$PreviewTag") | Set-Content -Path $_ -NoNewline
+            }
+            else {
+                Add-Content -Path $_ -Value "[assembly: AssemblyFileVersion(`"$Version$BuildNumber`")]"
+                Add-Content -Path $_ -Value "[assembly: AssemblyInformationalVersion(`"$Version$PreviewTag`")]"
             }
         }
 
-        git -C $packagePath checkout $_
-        Get-ChildItem -Path $packagePath/AssemblyInfo.cs -Recurse | ForEach-Object {
+        Write-Output "Packing $packageFriendlyName"
+        npm pack $packagePath -pack-destination $OutputDirectory
+
+        if (-not $Repack.IsPresent) {
+            if (Test-Path -Path $docFolder) {
+                Write-Output "Cleaning up Documentation~ from $packageFriendlyName"
+                # A documentation folder was created. Remove it.
+                Remove-Item -Path $docFolder -Recurse -Force
+                # But restore anything that's checked-in.
+                if (git ls-files $docFolder) {
+                    git -C $packagePath checkout $docFolder
+                }
+            }
+
             git -C $packagePath checkout $_
+            Get-ChildItem -Path $packagePath/AssemblyInfo.cs -Recurse | ForEach-Object {
+                git -C $packagePath checkout $_
+            }
         }
     }
 }
 finally {
-    Pop-Location
+    if ($Repack.IsPresent) {
+        Get-ChildItem -Path (Join-Path $ProjectRoot "*.tgz") | ForEach-Object {
+            Remove-Item (Join-Path $OutputDirectory $_.BaseName) -Force -Recurse
+        }
+    }
 }
