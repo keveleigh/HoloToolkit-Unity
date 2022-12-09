@@ -1,0 +1,38 @@
+# Create UPM packages for public release
+
+variables:
+- template: Config/settings.yml
+
+parameters:
+- name: PreviewTag
+  type: string
+  default: pre
+
+- name: PreviewNumber
+  type: number
+  default: -1
+
+jobs:
+- job: UPMPublicRelease
+  timeoutInMinutes: 30
+  pool: EDT-1ES-WindowsLatest
+  steps:
+  - task: DownloadPipelineArtifact@2
+    displayName: Download tarballs
+    inputs:
+      source: specific
+      project: $(System.TeamProjectId)
+      pipeline: 216 # MRTK3_CI
+      runVersion: latestFromBranch
+      runBranch: $(Build.SourceBranch)
+      artifactName: mrtk-upm
+      path: $(Agent.TempDirectory)
+
+  - template: Templates/upm.yaml
+    parameters:
+      ${{ if ge(parameters.PreviewNumber, 0) }}:
+        previewTag: "-${{ parameters.PreviewTag }}.${{ parameters.PreviewNumber }}"
+      ${{ if lt(parameters.PreviewNumber, 0) }}:
+        previewTag: ""
+      projectRoot: $(Agent.TempDirectory)
+      repack: true

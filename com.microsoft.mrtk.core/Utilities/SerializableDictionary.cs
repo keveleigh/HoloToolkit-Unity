@@ -19,23 +19,47 @@ namespace Microsoft.MixedReality.Toolkit
         [SerializeField]
         private List<SerializableDictionaryEntry> entries = new List<SerializableDictionaryEntry>();
 
+        private readonly List<SerializableDictionaryEntry> nonNullEntries = new List<SerializableDictionaryEntry>();
+
         void ISerializationCallbackReceiver.OnBeforeSerialize()
         {
-            entries.Clear();
+            nonNullEntries.Clear();
 
             foreach (KeyValuePair<TKey, TValue> pair in this)
             {
-                entries.Add(new SerializableDictionaryEntry(pair.Key, pair.Value));
+                nonNullEntries.Add(new SerializableDictionaryEntry(pair.Key, pair.Value));
+            }
+
+            int entriesCount = entries.Count;
+            for (int i = 0; i < entriesCount; i++)
+            {
+                SerializableDictionaryEntry entry = entries[i];
+
+                if (entry.Key != null && !nonNullEntries.Contains(entry))
+                {
+                    entries.Remove(entry);
+                    i--;
+                    entriesCount--;
+                }
             }
         }
 
         void ISerializationCallbackReceiver.OnAfterDeserialize()
         {
-            this.Clear();
+            Clear();
+            nonNullEntries.Clear();
 
             foreach (SerializableDictionaryEntry entry in entries)
             {
-                this.Add(entry.Key, entry.Value);
+                if (entry.Key != null)
+                {
+                    nonNullEntries.Add(entry);
+                }
+            }
+
+            foreach (SerializableDictionaryEntry entry in nonNullEntries)
+            {
+                Add(entry.Key, entry.Value);
             }
         }
 

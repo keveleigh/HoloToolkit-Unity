@@ -10,6 +10,7 @@ parameters:
   previewTag: $(MRTKReleaseTag)
   publishToArtifacts: true
   publishToFeed: false
+  repack: false
 
 steps:
 - task: PowerShell@2
@@ -18,11 +19,32 @@ steps:
     pwsh: true
     targetType: filePath
     filePath: ${{ parameters.projectRoot }}/Pipelines/Scripts/pack-upm.ps1
-    arguments: >
-      -ProjectRoot: ${{ parameters.projectRoot }}
-      -OutputDirectory: ${{ parameters.outputDirectory }}
-      -BuildNumber: ${{ parameters.buildNumber }}
-      -PreviewTag: ${{ parameters.previewTag }}
+    ${{ if not(eq(parameters.previewTag, '')) }}:
+      ${{ if eq(parameters.repack, true) }}:
+        arguments: >
+          -ProjectRoot: ${{ parameters.projectRoot }}
+          -OutputDirectory: ${{ parameters.outputDirectory }}
+          -BuildNumber: ${{ parameters.buildNumber }}
+          -PreviewTag: ${{ parameters.previewTag }}
+          -Repack
+      ${{ if eq(parameters.repack, false) }}:
+        arguments: >
+          -ProjectRoot: ${{ parameters.projectRoot }}
+          -OutputDirectory: ${{ parameters.outputDirectory }}
+          -BuildNumber: ${{ parameters.buildNumber }}
+          -PreviewTag: ${{ parameters.previewTag }}
+    ${{ if eq(parameters.previewTag, '') }}:
+      ${{ if eq(parameters.repack, true) }}:
+        arguments: >
+          -ProjectRoot: ${{ parameters.projectRoot }}
+          -OutputDirectory: ${{ parameters.outputDirectory }}
+          -BuildNumber: ${{ parameters.buildNumber }}
+          -Repack
+      ${{ if eq(parameters.repack, false) }}:
+        arguments: >
+          -ProjectRoot: ${{ parameters.projectRoot }}
+          -OutputDirectory: ${{ parameters.outputDirectory }}
+          -BuildNumber: ${{ parameters.buildNumber }}
 
 - ${{ if eq(parameters.publishToArtifacts, true) }}:
   - task: PublishBuildArtifacts@1
