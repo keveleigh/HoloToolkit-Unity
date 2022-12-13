@@ -5,7 +5,6 @@ using Microsoft.MixedReality.Toolkit.Subsystems;
 using System.Collections.Generic;
 using Unity.Profiling;
 using UnityEngine;
-using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 using PokePath = Microsoft.MixedReality.Toolkit.IPokeInteractor.PokePath;
 
@@ -60,7 +59,8 @@ namespace Microsoft.MixedReality.Toolkit.Input
         private const float DefaultPokeRadius = 0.005f;
 
         /// <inheritdoc />
-        public virtual float PokeRadius => DefaultPokeRadius;
+        public virtual float PokeRadius => lastPokeRadius > 0 ? lastPokeRadius : DefaultPokeRadius;
+        private float lastPokeRadius = -1;
 
         /// <inheritdoc />
         public virtual PokePath PokeTrajectory => pokeTrajectory;
@@ -121,6 +121,9 @@ namespace Microsoft.MixedReality.Toolkit.Input
         private static readonly ProfilerMarker ProcessInteractorPerfMarker =
             new ProfilerMarker("[MRTK] PokeInteractor.ProcessInteractor");
 
+        private HandsAggregatorSubsystem HandsAggregator => handsAggregator ??= HandsUtils.GetSubsystem();
+        private HandsAggregatorSubsystem handsAggregator;
+
         /// <inheritdoc />
         public override void ProcessInteractor(XRInteractionUpdateOrder.UpdatePhase updatePhase)
         {
@@ -154,13 +157,24 @@ namespace Microsoft.MixedReality.Toolkit.Input
                     // if this interactor set the attachTransform or whether we are just on a motion controller.
                     pokeTrajectory.End = attachTransform.position;
 
+                    if (xrController is ArticulatedHandController handController
+                        && HandsAggregator != null
+                        && HandsAggregator.TryGetJoint(TrackedHandJoint.IndexTip, handController.HandNode, out HandJointPose handJointPose))
+                    {
+                        lastPokeRadius = handJointPose.Radius;
+                    }
+                    else
+                    {
+                        lastPokeRadius = -1;
+                    }
+
                     targets.Clear();
 
                     // If the trajectory is essentially stationary, we'll do a sphere overlap instead.
                     // SphereCasts return nothing if the start/end are the same.
                     if ((pokeTrajectory.End - pokeTrajectory.Start).sqrMagnitude <= 0.0001f)
                     {
-                        int numOverlaps = UnityEngine.Physics.OverlapSphereNonAlloc(pokeTrajectory.End, PokeRadius, overlaps, UnityEngine.Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
+                        int numOverlaps = Physics.OverlapSphereNonAlloc(pokeTrajectory.End, PokeRadius, overlaps, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
 
                         for (int i = 0; i < numOverlaps; i++)
                         {
@@ -176,13 +190,13 @@ namespace Microsoft.MixedReality.Toolkit.Input
                         // Otherwise, we perform a spherecast (essentially, a thick raycast)
                         // from the start to the end of the recorded trajectory, with a radius/thickness
                         // corresponding to the joint radius.
-                        int numHits = UnityEngine.Physics.SphereCastNonAlloc(
+                        int numHits = Physics.SphereCastNonAlloc(
                             pokeTrajectory.Start,
                             PokeRadius,
                             (pokeTrajectory.End - pokeTrajectory.Start).normalized,
                             results,
                             (pokeTrajectory.End - pokeTrajectory.Start).magnitude,
-                            UnityEngine.Physics.DefaultRaycastLayers,
+                            Physics.DefaultRaycastLayers,
                             QueryTriggerInteraction.Ignore);
 
                         for (int i = 0; i < numHits; i++)

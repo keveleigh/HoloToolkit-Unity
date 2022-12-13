@@ -93,7 +93,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                 // If we got pinch data, write it into our select interaction state.
                 if (gotPinchData)
                 {
-                    controllerState.selectInteractionState.value = pinchAmount;
+                    controllerState.selectInteractionState.value = Mathf.Max(controllerState.selectInteractionState.value, pinchAmount);
 
                     // Workaround for missing select actions on devices without interaction profiles
                     // for hands, such as Varjo and Quest. Should be removed once we have universal
@@ -140,12 +140,11 @@ namespace Microsoft.MixedReality.Toolkit.Input
             {
                 controllerState.position = devicePose.position;
                 controllerState.rotation = devicePose.rotation;
-                
+
                 // Polyfill the tracking state, too.
                 controllerState.inputTrackingState = InputTrackingState.Position | InputTrackingState.Rotation;
             }
         }
-
 
         private static readonly Quaternion rightPalmOffset = Quaternion.Inverse(new Quaternion(Mathf.Sqrt(0.125f), Mathf.Sqrt(0.125f), -Mathf.Sqrt(1.5f) / 2.0f, Mathf.Sqrt(1.5f) / 2.0f));
         private static readonly Quaternion leftPalmOffset = Quaternion.Inverse(new Quaternion(Mathf.Sqrt(0.125f), -Mathf.Sqrt(0.125f), Mathf.Sqrt(1.5f) / 2.0f, Mathf.Sqrt(1.5f) / 2.0f));

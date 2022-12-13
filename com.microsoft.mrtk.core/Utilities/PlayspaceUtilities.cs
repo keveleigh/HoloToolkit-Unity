@@ -34,7 +34,7 @@ namespace Microsoft.MixedReality.Toolkit
                 return xrOrigin;
             }
         }
-        
+
         [ObsoleteAttribute("For transforming trackables poses into worldspace, use XROrigin.CameraFloorOffsetObject.transform.")]
         public static Transform ReferenceTransform => XROrigin.CameraFloorOffsetObject.transform;
 

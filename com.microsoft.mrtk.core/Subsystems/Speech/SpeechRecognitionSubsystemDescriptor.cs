@@ -57,15 +57,15 @@ namespace Microsoft.MixedReality.Toolkit.Subsystems
         /// </returns>
         internal static SpeechRecognitionSubsystemDescriptor Create(SpeechRecognitionSubsystemCinfo cinfo)
         {
-           // Validates cinfo.
-           if (!XRSubsystemHelpers.CheckTypes<SpeechRecognitionSubsystem, SpeechRecognitionSubsystem.Provider>(cinfo.Name,
-                                                                                                               cinfo.SubsystemTypeOverride,
-                                                                                                               cinfo.ProviderType))
-           {
-               throw new ArgumentException("Could not create SpeechRecognitionSubsystemDescriptor.");
-           }
+            // Validates cinfo.
+            if (!XRSubsystemHelpers.CheckTypes<SpeechRecognitionSubsystem, SpeechRecognitionSubsystem.Provider>(cinfo.Name,
+                                                                                                                cinfo.SubsystemTypeOverride,
+                                                                                                                cinfo.ProviderType))
+            {
+                throw new ArgumentException("Could not create SpeechRecognitionSubsystemDescriptor.");
+            }
 
-           return new SpeechRecognitionSubsystemDescriptor(cinfo);
+            return new SpeechRecognitionSubsystemDescriptor(cinfo);
         }
     }
 }

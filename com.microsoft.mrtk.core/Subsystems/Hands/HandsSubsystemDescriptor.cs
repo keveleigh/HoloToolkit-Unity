@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using UnityEngine.SubsystemsImplementation;
 
 namespace Microsoft.MixedReality.Toolkit.Subsystems
 {

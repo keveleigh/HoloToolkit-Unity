@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using UnityEngine.SubsystemsImplementation;
 
 namespace Microsoft.MixedReality.Toolkit.Subsystems
 {
@@ -58,15 +57,15 @@ namespace Microsoft.MixedReality.Toolkit.Subsystems
         /// </returns>
         internal static PhraseRecognitionSubsystemDescriptor Create(PhraseRecognitionSubsystemCinfo cinfo)
         {
-           // Validates cinfo.
-           if (!XRSubsystemHelpers.CheckTypes<PhraseRecognitionSubsystem, PhraseRecognitionSubsystem.Provider>(cinfo.Name,
-                                                                                                               cinfo.SubsystemTypeOverride,
-                                                                                                               cinfo.ProviderType))
-           {
-               throw new ArgumentException("Could not create PhraseRecognitionSubsystemDescriptor.");
-           }
+            // Validates cinfo.
+            if (!XRSubsystemHelpers.CheckTypes<PhraseRecognitionSubsystem, PhraseRecognitionSubsystem.Provider>(cinfo.Name,
+                                                                                                                cinfo.SubsystemTypeOverride,
+                                                                                                                cinfo.ProviderType))
+            {
+                throw new ArgumentException("Could not create PhraseRecognitionSubsystemDescriptor.");
+            }
 
-           return new PhraseRecognitionSubsystemDescriptor(cinfo);
+            return new PhraseRecognitionSubsystemDescriptor(cinfo);
         }
     }
 }

@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-using System;
 using Unity.Profiling;
 using UnityEngine;
 using UnityEngine.Events;
@@ -126,7 +125,7 @@ namespace Microsoft.MixedReality.Toolkit
                 }
             }
         }
-        
+
         /// <summary>
         /// Does the voice command require this to have focus?
         /// If true, then the voice command will only respond to voice commands while this Interactable has focus.
