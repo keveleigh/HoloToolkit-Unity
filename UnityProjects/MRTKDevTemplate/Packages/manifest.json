@@ -12,6 +12,7 @@
     "com.microsoft.mrtk.extendedassets": "file:../../../com.microsoft.mrtk.extendedassets",
     "com.microsoft.mrtk.graphicstools.unity": "https://github.com/microsoft/MixedReality-GraphicsTools-Unity.git?path=/com.microsoft.mrtk.graphicstools.unity#v0.4.0",
     "com.microsoft.mrtk.input": "file:../../../com.microsoft.mrtk.input",
+    "com.microsoft.mrtk.preview.handinteraction": "file:../../../../mixedreality.unity.samples/MRTK3/Packages/com.microsoft.mrtk.preview.handinteraction",
     "com.microsoft.mrtk.spatialmanipulation": "file:../../../com.microsoft.mrtk.spatialmanipulation",
     "com.microsoft.mrtk.standardassets": "file:../../../com.microsoft.mrtk.standardassets",
     "com.microsoft.mrtk.tools": "file:../../../com.microsoft.mrtk.tools",

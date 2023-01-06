@@ -115,6 +115,17 @@
         "com.unity.xr.core-utils": "2.1.0"
       }
     },
+    "com.microsoft.mrtk.preview.handinteraction": {
+      "version": "file:../../../../mixedreality.unity.samples/MRTK3/Packages/com.microsoft.mrtk.preview.handinteraction",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "com.microsoft.mrtk.core": "3.0.0-development",
+        "com.microsoft.mrtk.input": "3.0.0-development",
+        "com.microsoft.mrtk.standardassets": "3.0.0-development",
+        "com.unity.xr.interaction.toolkit": "2.2.0"
+      }
+    },
     "com.microsoft.mrtk.spatialmanipulation": {
       "version": "file:../../../com.microsoft.mrtk.spatialmanipulation",
       "depth": 0,
