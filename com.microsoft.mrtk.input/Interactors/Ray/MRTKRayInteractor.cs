@@ -4,7 +4,6 @@
 using Microsoft.MixedReality.Toolkit.Subsystems;
 using Unity.Profiling;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.UI;
 
@@ -133,11 +132,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                     bool hoverActive = base.isHoverActive;
                     if (hoverActive)
                     {
-                        if (pointerActivateReady.action.HasAnyControls())
-                        {
-                            hoverActive &= pointerActivateReady.action.IsPressed();
-                        }
-                        else if (xrController is ArticulatedHandController handController)
+                        if (xrController is ArticulatedHandController handController)
                         {
                             bool isPalmFacingAway = false;
                             if (HandsAggregator?.TryGetPalmFacingAway(handController.HandNode, out isPalmFacingAway) ?? true)
@@ -171,10 +166,6 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// The pose source representing the device this interactor uses for rotation.
         /// </summary>
         protected IPoseSource DevicePoseSource { get => devicePoseSource; set => devicePoseSource = value; }
-
-        [SerializeField]
-        [Tooltip("An action representing if the pose is ready for pointing.")]
-        private InputActionReference pointerActivateReady;
 
         private static readonly ProfilerMarker ProcessInteractorPerfMarker =
             new ProfilerMarker("[MRTK] MRTKRayInteractor.ProcessInteractor");
