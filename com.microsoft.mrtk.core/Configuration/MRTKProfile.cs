@@ -16,12 +16,11 @@ namespace Microsoft.MixedReality.Toolkit
     [CreateAssetMenu(fileName = "MRTKProfile.asset", menuName = "MRTK/MRTKProfile")]
     public class MRTKProfile : BaseMRTKProfile
     {
+        private static MRTKProfile instance = null;
+
         /// <summary>
         /// Static instance that will hold the runtime asset instance we created in our build process.
         /// </summary>
-        /// <see cref="SampleBuildProcessor"/>
-        private static MRTKProfile instance = null;
-
         public static MRTKProfile Instance
         {
             get => instance;

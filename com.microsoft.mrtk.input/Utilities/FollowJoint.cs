@@ -15,6 +15,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
     /// not depend on XRI.
     /// </remarks>
     [AddComponentMenu("MRTK/Input/Follow Joint")]
+    [Obsolete("Use " + nameof(PoseSourceDriver) + " with a pose source type of " + nameof(HandJointPoseSource) + " instead.")]
     internal class FollowJoint : MonoBehaviour, ISerializationCallbackReceiver
     {
         [SerializeField]

@@ -66,21 +66,12 @@ namespace Microsoft.MixedReality.Toolkit.Input
 
             using (UpdateTrackingInputPerfMarker.Auto())
             {
-                if (controllerState == null)
-                    return;
-
-                // Cast to expose hand state.
-                ArticulatedHandControllerState handControllerState = controllerState as ArticulatedHandControllerState;
-
                 // If we still don't have an aggregator, then don't update selects.
-                if (HandsAggregator == null) { return; }
-
-                bool gotPinchData = HandsAggregator.TryGetPinchProgress(handNode, out bool isPinchReady, out bool isPinching, out float pinchAmount);
+                if (controllerState == null || HandsAggregator == null) { return; }
 
                 // If we got pinch data, write it into our select interaction state.
-                if (gotPinchData)
+                if (HandsAggregator.TryGetPinchProgress(handNode, out bool isPinchReady, out _, out float pinchAmount))
                 {
-
                     // Workaround for missing select actions on devices without interaction profiles
                     // for hands, such as Varjo and Quest. Should be removed once we have universal
                     // hand interaction profile(s) across vendors.
@@ -89,6 +80,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                     bool isPinched = pinchAmount >= (pinchedLastFrame ? 0.9f : 1.0f);
 
                     // Inject our own polyfilled state into the Select state if no other control is bound.
+                    //
                     if (!selectAction.action.HasAnyControls())
                     {
                         controllerState.selectInteractionState.active = isPinched;
@@ -98,7 +90,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                     }
 
                     // Also make sure we update the UI press state.
-                    if (!uiPressAction.action.HasAnyControls())
+                    if (!uiPressAction.action.HasAnyControls() && !uiPressActionValue.action.HasAnyControls())
                     {
                         controllerState.uiPressInteractionState.active = isPinched;
                         controllerState.uiPressInteractionState.activatedThisFrame = isPinched && !pinchedLastFrame;
@@ -109,7 +101,11 @@ namespace Microsoft.MixedReality.Toolkit.Input
                     pinchedLastFrame = isPinched;
                 }
 
-                handControllerState.PinchSelectReady = isPinchReady;
+                // Cast to expose hand state.
+                if (controllerState is ArticulatedHandControllerState handControllerState)
+                {
+                    handControllerState.PinchSelectReady = isPinchReady;
+                }
             }
         }
 

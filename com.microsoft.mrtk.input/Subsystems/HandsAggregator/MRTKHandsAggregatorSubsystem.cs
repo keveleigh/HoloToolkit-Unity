@@ -301,9 +301,9 @@ namespace Microsoft.MixedReality.Toolkit.Input
                 isReadyToPinch = handIsUp && handIsFacingAway;
 
                 // Are we actually fully pinching?
-                isPinching = (normalizedPinch < Config.PinchOpenThreshold);
+                isPinching = (normalizedPinch < Config.PinchClosedThreshold);
 
-                // Calculate pinch amount as the inverse lerp of the current pinch norm vs the open/closed thresholds. 
+                // Calculate pinch amount as the inverse lerp of the current pinch norm vs the open/closed thresholds.
                 pinchAmount = 1.0f - Mathf.InverseLerp(Config.PinchClosedThreshold, Config.PinchOpenThreshold, normalizedPinch);
 
                 return gotData;
