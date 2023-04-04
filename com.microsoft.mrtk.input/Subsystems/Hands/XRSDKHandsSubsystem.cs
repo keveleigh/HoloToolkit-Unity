@@ -254,7 +254,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                     handJoints[HandsUtils.ConvertToIndex(jointID)] = new HandJointPose(
                         playspaceTransform.TransformPoint(position),
                         playspaceTransform.rotation * rotation,
-                        0.005f);
+                        HandsUtils.DefaultHandJointRadius);
 
                     return true;
                 }
