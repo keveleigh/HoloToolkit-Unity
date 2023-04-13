@@ -358,8 +358,8 @@ namespace Microsoft.MixedReality.Toolkit.Input
                 }
             }
 
-            private static readonly ProfilerMarker UpdatehandshapePerfMarker =
-                new ProfilerMarker("[MRTK] SyntheticHandsSubsystem.Updatehandshape");
+            private static readonly ProfilerMarker UpdateHandshapePerfMarker =
+                new ProfilerMarker("[MRTK] SyntheticHandsSubsystem.UpdateHandshape");
 
             /// <summary/>
             /// Given the current state of the various input actions,
@@ -367,7 +367,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
             /// </summary>
             private void UpdateHandshape()
             {
-                using (UpdatehandshapePerfMarker.Auto())
+                using (UpdateHandshapePerfMarker.Auto())
                 {
                     SimulatedArticulatedHandshapes.GetHandshapeJointPoseData(NeturalHandshape, out HandJointPose[] baseData);
                     SimulatedArticulatedHandshapes.GetHandshapeJointPoseData(SelectionHandshape, out HandJointPose[] pinchData);
