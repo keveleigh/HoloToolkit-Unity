@@ -54,7 +54,6 @@ namespace Microsoft.MixedReality.Toolkit.Input
         protected override void Awake()
         {
             base.Awake();
-
             currentControllerState = new ArticulatedHandControllerState();
         }
 
@@ -71,16 +70,13 @@ namespace Microsoft.MixedReality.Toolkit.Input
                 if (controllerState == null)
                     return;
 
-                // Cast to expose hand state.
-                ArticulatedHandControllerState handControllerState = controllerState as ArticulatedHandControllerState;
-
                 // If we still don't have an aggregator, then don't update selects.
                 if (XRSubsystemHelpers.HandsAggregator == null) { return; }
 
                 bool gotPinchData = XRSubsystemHelpers.HandsAggregator.TryGetPinchProgress(
                     handNode,
                     out bool isPinchReady,
-                    out bool isPinching,
+                    out _,
                     out float pinchAmount
                 );
 
@@ -90,7 +86,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                     // Workaround for missing select actions on devices without interaction profiles
                     // for hands, such as Varjo and Quest. Should be removed once we have universal
                     // hand interaction profile(s) across vendors.
-                    
+
                     // Debounce the polyfill pinch action value.
                     bool isPinched = pinchAmount >= (pinchedLastFrame ? 0.9f : 1.0f);
 
@@ -98,8 +94,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                     if (!selectAction.action.HasAnyControls())
                     {
                         controllerState.selectInteractionState.active = isPinched;
-                        controllerState.selectInteractionState.activatedThisFrame = isPinched && !pinchedLastFrame;
-                        controllerState.selectInteractionState.deactivatedThisFrame = !isPinched && pinchedLastFrame;
+                        controllerState.selectInteractionState.SetFrameDependent(pinchedLastFrame);
                     }
 
                     if (!selectActionValue.action.HasAnyControls())
@@ -111,19 +106,22 @@ namespace Microsoft.MixedReality.Toolkit.Input
                     if (!uiPressAction.action.HasAnyControls())
                     {
                         controllerState.uiPressInteractionState.active = isPinched;
-                        controllerState.uiPressInteractionState.activatedThisFrame = isPinched && !pinchedLastFrame;
-                        controllerState.uiPressInteractionState.deactivatedThisFrame = !isPinched && pinchedLastFrame;
+                        controllerState.uiPressInteractionState.SetFrameDependent(pinchedLastFrame);
                     }
 
                     if (!uiPressActionValue.action.HasAnyControls())
                     {
                         controllerState.uiPressInteractionState.value = pinchAmount;
                     }
-                    
+
                     pinchedLastFrame = isPinched;
                 }
 
-                handControllerState.PinchSelectReady = isPinchReady;
+                // Cast to expose hand state.
+                if (currentControllerState is ArticulatedHandControllerState handControllerState)
+                {
+                    handControllerState.PinchSelectReady = isPinchReady;
+                }
             }
         }
 
@@ -145,13 +143,13 @@ namespace Microsoft.MixedReality.Toolkit.Input
             }
         }
 
-        private static readonly Quaternion rightPalmOffset = Quaternion.Inverse(
+        private static readonly Quaternion RightPalmOffset = Quaternion.Inverse(
             new Quaternion(
                 Mathf.Sqrt(0.125f),
                 Mathf.Sqrt(0.125f),
                 -Mathf.Sqrt(1.5f) / 2.0f,
                 Mathf.Sqrt(1.5f) / 2.0f));
-        private static readonly Quaternion leftPalmOffset = Quaternion.Inverse(
+        private static readonly Quaternion LeftPalmOffset = Quaternion.Inverse(
             new Quaternion(
                 Mathf.Sqrt(0.125f),
                 -Mathf.Sqrt(0.125f),
@@ -177,11 +175,11 @@ namespace Microsoft.MixedReality.Toolkit.Input
                 switch (handedness)
                 {
                     case Handedness.Left:
-                        devicePose.rotation *= leftPalmOffset;
+                        devicePose.rotation *= LeftPalmOffset;
                         poseRetrieved = true;
                         break;
                     case Handedness.Right:
-                        devicePose.rotation *= rightPalmOffset;
+                        devicePose.rotation *= RightPalmOffset;
                         poseRetrieved = true;
                         break;
                     default:
