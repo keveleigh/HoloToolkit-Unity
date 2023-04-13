@@ -33,6 +33,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
         /// represents whether the hand is in a pinching pose,
         /// within the FOV set by the aggregator config.
         /// </summary>
+        [Obsolete("Deprecated. Query this controller's currentControllerState's PinchSelectReady after casting as ArticulatedHandControllerState.")]
         public bool PinchSelectReady => (currentControllerState is ArticulatedHandControllerState handControllerState) && handControllerState.PinchSelectReady;
 
         #endregion Associated hand select values
