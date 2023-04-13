@@ -77,6 +77,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                 using (TryGetJointPerfMarker.Auto())
                 {
                     bool thisQueryValid = false;
+                    int index = HandsUtils.ConvertToIndex(joint);
 
                     // If we happened to have already queried the entire
                     // hand data this frame, we don't need to re-query for
@@ -90,7 +91,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                         // and return immediately.
                         if (!handDevice.HasValue)
                         {
-                            pose = handJoints[HandsUtils.ConvertToIndex(joint)];
+                            pose = handJoints[index];
                             return false;
                         }
 
@@ -98,15 +99,17 @@ namespace Microsoft.MixedReality.Toolkit.Input
                         Transform origin = PlayspaceUtilities.XROrigin.CameraFloorOffsetObject.transform;
                         if (origin == null)
                         {
-                            pose = handJoints[HandsUtils.ConvertToIndex(joint)];
+                            pose = handJoints[index];
                             return false;
                         }
 
                         // Otherwise, we need to deal with palm/root vs finger separately
                         if (joint == TrackedHandJoint.Palm)
                         {
-                            handDevice.Value.TryGetRootBone(out Bone rootBone);
-                            thisQueryValid |= TryUpdateJoint(TrackedHandJoint.Palm, rootBone, origin);
+                            if (handDevice.Value.TryGetRootBone(out Bone rootBone))
+                            {
+                                thisQueryValid |= TryUpdateJoint(index, rootBone, origin);
+                            }
                         }
                         else
                         {
@@ -114,7 +117,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                             if (handDevice.Value.TryGetFingerBones(finger, fingerBones))
                             {
                                 Bone bone = fingerBones[HandsUtils.GetOffsetFromBase(joint)];
-                                thisQueryValid |= TryUpdateJoint(joint, bone, origin);
+                                thisQueryValid |= TryUpdateJoint(index, bone, origin);
                             }
                         }
                     }
@@ -125,7 +128,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                         thisQueryValid = FullQueryValid;
                     }
 
-                    pose = handJoints[HandsUtils.ConvertToIndex(joint)];
+                    pose = handJoints[index];
                     return thisQueryValid;
                 }
             }
@@ -208,20 +211,21 @@ namespace Microsoft.MixedReality.Toolkit.Input
                     }
 
                     FullQueryValid = true;
+
                     foreach (HandFinger finger in HandsUtils.HandFingers)
                     {
                         if (handDevice.Value.TryGetFingerBones(finger, fingerBones))
                         {
                             for (int i = 0; i < fingerBones.Count; i++)
                             {
-                                FullQueryValid &= TryUpdateJoint(HandsUtils.ConvertToTrackedHandJoint(finger, i), fingerBones[i], origin);
+                                FullQueryValid &= TryUpdateJoint(HandsUtils.ConvertToIndex(HandsUtils.ConvertToTrackedHandJoint(finger, i)), fingerBones[i], origin);
                             }
                         }
                     }
 
                     // Write root bone into handJoints as palm joint.
                     handDevice.Value.TryGetRootBone(out Bone rootBone);
-                    FullQueryValid &= TryUpdateJoint(TrackedHandJoint.Palm, rootBone, origin);
+                    FullQueryValid &= TryUpdateJoint(HandsUtils.ConvertToIndex(TrackedHandJoint.Palm), rootBone, origin);
 
                     // Mark this hand as having been fully queried this frame.
                     // If any joint is queried again this frame, we'll reuse the
@@ -237,21 +241,17 @@ namespace Microsoft.MixedReality.Toolkit.Input
             /// Given a destination jointID, apply the Bone info to the correct struct
             /// in the handJoints collection.
             /// </summary>
-            private bool TryUpdateJoint(TrackedHandJoint jointID, Bone bone, Transform playspaceTransform)
+            private bool TryUpdateJoint(int jointIndex, Bone bone, Transform playspaceTransform)
             {
                 using (TryUpdateJointPerfMarker.Auto())
                 {
-                    bool gotData = true;
-                    gotData &= bone.TryGetPosition(out Vector3 position);
-                    gotData &= bone.TryGetRotation(out Quaternion rotation);
-
-                    if (!gotData)
+                    if (!bone.TryGetPosition(out Vector3 position) || !bone.TryGetRotation(out Quaternion rotation))
                     {
                         return false;
                     }
 
                     // XRSDK does not return joint radius. 0.5cm default.
-                    handJoints[HandsUtils.ConvertToIndex(jointID)] = new HandJointPose(
+                    handJoints[jointIndex] = new HandJointPose(
                         playspaceTransform.TransformPoint(position),
                         playspaceTransform.rotation * rotation,
                         HandsUtils.DefaultHandJointRadius);
