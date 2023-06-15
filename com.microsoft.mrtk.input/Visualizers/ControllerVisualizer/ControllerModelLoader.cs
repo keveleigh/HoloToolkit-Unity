@@ -8,10 +8,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-#if MROPENXR_PRESENT && (UNITY_STANDALONE_WIN || UNITY_WSA || UNITY_ANDROID) && GLTFAST_PRESENT && KTX_PRESENT
+#if MROPENXR_PRESENT && (UNITY_STANDALONE_WIN || UNITY_WSA || UNITY_ANDROID) && GLTFAST_PRESENT
 using Microsoft.MixedReality.OpenXR;
 using GLTFast;
-#endif // MROPENXR_PRESENT && (UNITY_STANDALONE_WIN || UNITY_WSA || UNITY_ANDROID) && GLTFAST_PRESENT && KTX_PRESENT
+#endif // MROPENXR_PRESENT && (UNITY_STANDALONE_WIN || UNITY_WSA || UNITY_ANDROID) && GLTFAST_PRESENT
 
 namespace Microsoft.MixedReality.Toolkit.Input
 {
@@ -51,7 +51,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
             // Proceed with trying to load the model from the platform
             GameObject gltfGameObject = null;
 
-#if MROPENXR_PRESENT && (UNITY_STANDALONE_WIN || UNITY_WSA || UNITY_ANDROID) && GLTFAST_PRESENT && KTX_PRESENT
+#if MROPENXR_PRESENT && (UNITY_STANDALONE_WIN || UNITY_WSA || UNITY_ANDROID) && GLTFAST_PRESENT
             ControllerModel controllerModelProvider = handedness == Handedness.Left ? ControllerModel.Left :
                                                         handedness == Handedness.Right ?  ControllerModel.Right :
                                                         null;
@@ -132,7 +132,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
             }
 #else
             await Task.CompletedTask;
-#endif // MROPENXR_PRESENT && (UNITY_STANDALONE_WIN || UNITY_WSA || UNITY_ANDROID) && GLTFAST_PRESENT && KTX_PRESENT
+#endif // MROPENXR_PRESENT && (UNITY_STANDALONE_WIN || UNITY_WSA || UNITY_ANDROID) && GLTFAST_PRESENT
 
             return gltfGameObject;
         }

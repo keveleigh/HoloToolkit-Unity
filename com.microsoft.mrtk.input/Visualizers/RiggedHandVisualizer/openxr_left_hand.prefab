@@ -159,5 +159,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: openxr_left_hand
       objectReference: {fileID: 0}
+    - target: {fileID: 7078008822564096723, guid: da93d751ddc0f64468dfc02f18d02d00, type: 3}
+      propertyPath: handNode
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da93d751ddc0f64468dfc02f18d02d00, type: 3}
