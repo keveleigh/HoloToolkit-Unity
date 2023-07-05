@@ -1,26 +1,24 @@
 {
   "dependencies": {
     "com.atteneder.gltfast": {
-      "version": "https://github.com/atteneder/glTFast.git#v4.8.3",
+      "version": "file:D:/Kurtis/git/glTFast",
       "depth": 0,
-      "source": "git",
+      "source": "local",
       "dependencies": {
         "com.unity.modules.jsonserialize": "1.0.0",
         "com.unity.modules.unitywebrequest": "1.0.0",
-        "com.unity.modules.unitywebrequesttexture": "1.0.0",
         "com.unity.mathematics": "1.2.6",
         "com.unity.burst": "1.6.6"
-      },
-      "hash": "04962b47618cdab46943217d30c6c6de33d3c3f7"
+      }
     },
     "com.atteneder.ktx": {
-      "version": "https://github.com/atteneder/KtxUnity.git#v2.1.2",
+      "version": "https://github.com/atteneder/KtxUnity.git#v2.2.3",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.modules.unitywebrequest": "1.0.0"
       },
-      "hash": "7747a48d5e994db800b4c60a0a8b95a5ae2ce39f"
+      "hash": "a3d6d62eea01fa0b0c3b06a2b78b7cc278dffb08"
     },
     "com.microsoft.mixedreality.openxr": {
       "version": "file:D:/Kurtis/git/Unity-MR-Plugin/com.microsoft.mixedreality.openxr",
@@ -207,7 +205,7 @@
       }
     },
     "com.qualcomm.qcht.unity.interactions": {
-      "version": "file:D:/Kurtis/workspace/Snapdragon_Spaces_SDK_0_12_1_for_Unity/Unity Package/com.qualcomm.qcht.unity.interactions-4.0.0-pre.9.tgz",
+      "version": "file:D:/Kurtis/workspace/Snapdragon_Spaces_SDK_0_14_0_for_Unity/Unity Package/com.qualcomm.qcht.unity.interactions-4.0.0-pre.14.tgz",
       "depth": 0,
       "source": "local-tarball",
       "dependencies": {
@@ -217,7 +215,7 @@
       }
     },
     "com.qualcomm.snapdragon.spaces": {
-      "version": "file:D:/Kurtis/workspace/Snapdragon_Spaces_SDK_0_13_0_for_Unity/Unity Package/SnapdragonSpaces_Package_0_13_0.tgz",
+      "version": "file:D:/Kurtis/workspace/Snapdragon_Spaces_SDK_0_14_0_for_Unity/Unity Package/com.qualcomm.snapdragon.spaces-0.14.0.tgz",
       "depth": 0,
       "source": "local-tarball",
       "dependencies": {
@@ -479,14 +477,6 @@
         "com.unity.inputsystem": "1.4.4"
       },
       "url": "https://packages.unity.com"
-    },
-    "com.unity.xr.openxr.picoxr": {
-      "version": "file:D:/Kurtis/workspace/PICO Unity OpenXR Plugin（Experiment）",
-      "depth": 0,
-      "source": "local",
-      "dependencies": {
-        "com.unity.xr.openxr": "1.3.0"
-      }
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Name: PICOTouchControllerProfile WSA
   m_EditorClassIdentifier: 
   m_enabled: 0
+  <failedInitialization>k__BackingField: 0
   nameUi: PICO Touch Controller Profile
   version: 1.0.0
   featureIdInternal: com.unity.openxr.feature.input.PICOtouch
@@ -213,7 +214,6 @@ MonoBehaviour:
   - {fileID: -4917165930297877912}
   - {fileID: 2243842767272741898}
   - {fileID: 2338698953695705379}
-  - {fileID: -6256638357669570301}
   - {fileID: 6828806840034173759}
   - {fileID: 8842371351093229396}
   - {fileID: -5167072357938630856}
@@ -224,7 +224,6 @@ MonoBehaviour:
   - {fileID: 7184792380987883228}
   - {fileID: -3675173896095908783}
   - {fileID: 1776296627563257413}
-  - {fileID: 4749052217392485315}
   - {fileID: -45282039415450401}
   - {fileID: -6001689167010836115}
   - {fileID: 7199441699848953015}
@@ -485,7 +484,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_enabled: 0
   nameUi: Camera Access (Experimental)
-  version: 0.13.0
+  version: 0.14.0
   featureIdInternal: com.qualcomm.snapdragon.spaces.cameraaccess
   openxrExtensionStrings: XR_QCOMX_camera_frame_access
   company: Qualcomm
@@ -536,7 +535,6 @@ MonoBehaviour:
   - {fileID: 2336370177899416651}
   - {fileID: -2143106124480449346}
   - {fileID: 7427133096608864526}
-  - {fileID: -7338873637009856866}
   - {fileID: -7802926380480539947}
   - {fileID: -5731312345930761019}
   - {fileID: -243070923169931762}
@@ -547,8 +545,6 @@ MonoBehaviour:
   - {fileID: 3767529871019855277}
   - {fileID: 6023169588298778005}
   - {fileID: 7091625898768819395}
-  - {fileID: -3949524546629995906}
-  - {fileID: 5740335927941991746}
   - {fileID: -3328271263143879340}
   - {fileID: 8988399328746489734}
   - {fileID: 7544230637656231277}
@@ -639,7 +635,7 @@ MonoBehaviour:
   m_enabled: 0
   nameUi: Filter Stage Space
   version: 0.0.1
-  featureIdInternal: com.qualcomm.kurtis.stage
+  featureIdInternal: com.qualcomm.launcher.stage
   openxrExtensionStrings: 
   company: Qualcomm
   priority: 0
@@ -677,6 +673,7 @@ MonoBehaviour:
   m_Name: PICOFeature Android
   m_EditorClassIdentifier: 
   m_enabled: 0
+  <failedInitialization>k__BackingField: 0
   nameUi: PICO Support
   version: 1.0.0
   featureIdInternal: com.unity.openxr.feature.piconeo3
@@ -738,7 +735,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_enabled: 0
   nameUi: Plane Detection
-  version: 0.13.0
+  version: 0.14.0
   featureIdInternal: com.qualcomm.snapdragon.spaces.planedetection
   openxrExtensionStrings: XR_QCOM_plane_detection XR_MSFT_scene_understanding
   company: Qualcomm
@@ -768,7 +765,6 @@ MonoBehaviour:
   - {fileID: 6200879250133271262}
   - {fileID: 4927434654719064628}
   - {fileID: -8964303056677276351}
-  - {fileID: 8523959846802518864}
   - {fileID: 6503440722060878286}
   - {fileID: 7726299179072223725}
   - {fileID: 6525564855498925814}
@@ -776,7 +772,6 @@ MonoBehaviour:
   - {fileID: -7411580885746646398}
   - {fileID: 1129184700373308147}
   - {fileID: 3711638547996562666}
-  - {fileID: -8040923843626298594}
   - {fileID: -8980693168992181623}
   - {fileID: -7646755079092717825}
   - {fileID: 97843176995234906}
@@ -838,7 +833,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_enabled: 0
   nameUi: Hit Testing
-  version: 0.13.0
+  version: 0.14.0
   featureIdInternal: com.qualcomm.snapdragon.spaces.raycasting
   openxrExtensionStrings: XR_QCOM_ray_casting
   company: Qualcomm
@@ -878,7 +873,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_enabled: 0
   nameUi: Spatial Anchors
-  version: 0.13.0
+  version: 0.14.0
   featureIdInternal: com.qualcomm.snapdragon.spaces.spatialanchors
   openxrExtensionStrings: XR_MSFT_spatial_anchor XR_MSFT_spatial_anchor_persistence
   company: Qualcomm
@@ -918,7 +913,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_enabled: 0
   nameUi: Spatial Meshing (Experimental)
-  version: 0.13.0
+  version: 0.14.0
   featureIdInternal: com.qualcomm.snapdragon.spaces.sceneunderstanding
   openxrExtensionStrings: XR_MSFT_scene_understanding
   company: Qualcomm
@@ -1048,7 +1043,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d92eb84450f0a8c4cae7d0f2b19ea1f8, type: 3}
   m_Name: TestFeatureLifecycle Standalone
   m_EditorClassIdentifier: 
-  m_enabled: 0
+  m_enabled: 1
   nameUi: Test Feature Lifecycle
   version: 0.0.1
   featureIdInternal: com.qualcomm.openxr.feature.lifecycletest
@@ -1088,7 +1083,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d01ac767787e2934e8e2fb5f24efcecd, type: 3}
   m_Name: HandMeshFeature Android
   m_EditorClassIdentifier: 
-  m_enabled: 1
+  m_enabled: 0
   nameUi: Tracked Hand Mesh
   version: 0.0.1
   featureIdInternal: com.qualcomm.openxr.feature.handmesh
@@ -1156,7 +1151,7 @@ MonoBehaviour:
   m_Name: PassthroughFeature Standalone
   m_EditorClassIdentifier: 
   m_enabled: 0
-  nameUi: Filter Stage Space
+  nameUi: Passthrough
   version: 0.0.1
   featureIdInternal: com.qualcomm.kurtis.passthrough
   openxrExtensionStrings: XR_FB_passthrough
@@ -1260,10 +1255,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68585674cf5e46846b40930cfbaab612, type: 3}
   m_Name: FilterStageFeature Standalone
   m_EditorClassIdentifier: 
-  m_enabled: 1
+  m_enabled: 0
   nameUi: Filter Stage Space
   version: 0.0.1
-  featureIdInternal: com.qualcomm.kurtis.stage
+  featureIdInternal: com.qualcomm.launcher.stage
   openxrExtensionStrings: 
   company: Qualcomm
   priority: 0
@@ -1303,7 +1298,7 @@ MonoBehaviour:
   m_enabled: 0
   nameUi: Filter Stage Space
   version: 0.0.1
-  featureIdInternal: com.qualcomm.kurtis.stage
+  featureIdInternal: com.qualcomm.launcher.stage
   openxrExtensionStrings: 
   company: Qualcomm
   priority: 0
@@ -1404,13 +1399,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_enabled: 1
   nameUi: Base Runtime
-  version: 0.13.0
+  version: 0.14.0
   featureIdInternal: com.qualcomm.snapdragon.spaces.base
   openxrExtensionStrings: XR_QCOM_component_versioning
   company: Qualcomm
   priority: 0
   required: 1
-  CheckInstalledRuntime: 0
+  CheckInstalledRuntime: 1
   LaunchAppOnViewer: 1
   PreventSleepMode: 1
   ShowLaunchMessageOnHost: 0
@@ -1452,6 +1447,7 @@ MonoBehaviour:
   m_Name: PICOTouchControllerProfile Standalone
   m_EditorClassIdentifier: 
   m_enabled: 0
+  <failedInitialization>k__BackingField: 0
   nameUi: PICO Touch Controller Profile
   version: 1.0.0
   featureIdInternal: com.unity.openxr.feature.input.PICOtouch
@@ -1518,7 +1514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f928d0d73a35f294fbe357ca17aa3547, type: 3}
   m_Name: MicrosoftHandInteraction Android
   m_EditorClassIdentifier: 
-  m_enabled: 0
+  m_enabled: 1
   nameUi: Microsoft Hand Interaction Profile
   version: 0.0.1
   featureIdInternal: com.unity.openxr.feature.input.handtracking
@@ -1539,6 +1535,7 @@ MonoBehaviour:
   m_Name: PICOTouchControllerProfile Android
   m_EditorClassIdentifier: 
   m_enabled: 0
+  <failedInitialization>k__BackingField: 0
   nameUi: PICO Touch Controller Profile
   version: 1.0.0
   featureIdInternal: com.unity.openxr.feature.input.PICOtouch
@@ -1558,7 +1555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feeef8d85de8db242bdda70cc7ff5acd, type: 3}
   m_Name: OculusTouchControllerProfile Android
   m_EditorClassIdentifier: 
-  m_enabled: 0
+  m_enabled: 1
   nameUi: Oculus Touch Controller Profile
   version: 0.0.1
   featureIdInternal: com.unity.openxr.feature.input.oculustouch
@@ -1684,7 +1681,7 @@ MonoBehaviour:
   m_Name: PassthroughFeature Android
   m_EditorClassIdentifier: 
   m_enabled: 0
-  nameUi: Filter Stage Space
+  nameUi: Passthrough
   version: 0.0.1
   featureIdInternal: com.qualcomm.kurtis.passthrough
   openxrExtensionStrings: XR_FB_passthrough
@@ -1745,7 +1742,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_enabled: 0
   nameUi: Image Tracking
-  version: 0.13.0
+  version: 0.14.0
   featureIdInternal: com.qualcomm.snapdragon.spaces.imagetracking
   openxrExtensionStrings: XR_QCOM_image_tracking
   company: Qualcomm
@@ -1765,9 +1762,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d25b6c93e04925bb42da7f2fdf8027, type: 3}
   m_Name: SpacesMicrosoftMixedRealityMotionControllerProfile Android
   m_EditorClassIdentifier: 
-  m_enabled: 0
+  m_enabled: 1
   nameUi: Microsoft Mixed Reality Motion Controller Profile
-  version: 0.13.0
+  version: 0.14.0
   featureIdInternal: com.unity.openxr.feature.input.microsoftmotioncontroller
   openxrExtensionStrings: 
   company: Qualcomm
@@ -2008,9 +2005,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12ea98de581824d928181a8149a1e778, type: 3}
   m_Name: HandTrackingFeature Android
   m_EditorClassIdentifier: 
-  m_enabled: 1
+  m_enabled: 0
   nameUi: Hand Tracking (Deprecated)
-  version: 0.13.0
+  version: 0.14.0
   featureIdInternal: com.qualcomm.snapdragon.spaces.handtracking.deprecated
   openxrExtensionStrings: XR_EXT_hand_tracking XR_QCOM_hand_tracking_gesture
   company: Qualcomm

@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "com.atteneder.gltfast": "https://github.com/atteneder/glTFast.git#v4.8.3",
-    "com.atteneder.ktx": "https://github.com/atteneder/KtxUnity.git#v2.1.2",
+    "com.atteneder.gltfast": "file:D:/Kurtis/git/glTFast",
+    "com.atteneder.ktx": "https://github.com/atteneder/KtxUnity.git#v2.2.3",
     "com.microsoft.mixedreality.openxr": "file:D:/Kurtis/git/Unity-MR-Plugin/com.microsoft.mixedreality.openxr",
     "com.microsoft.mixedreality.visualprofiler": "https://github.com/microsoft/VisualProfiler-Unity.git#v2.2.0",
     "com.microsoft.mrtk.accessibility": "file:../../../com.microsoft.mrtk.accessibility",
@@ -22,8 +22,8 @@
     "com.microsoft.mrtk.windowsspeech": "file:../../../com.microsoft.mrtk.windowsspeech",
     "com.microsoft.spatialaudio.spatializer.unity": "file:../../../ExternalDependencies/com.microsoft.spatialaudio.spatializer.unity-2.0.37.tgz",
     "com.qualcomm.kurtis": "file:D:/Kurtis/git/UnityPlugin/com.qualcomm.kurtis",
-    "com.qualcomm.qcht.unity.interactions": "file:D:/Kurtis/workspace/Snapdragon_Spaces_SDK_0_12_1_for_Unity/Unity Package/com.qualcomm.qcht.unity.interactions-4.0.0-pre.9.tgz",
-    "com.qualcomm.snapdragon.spaces": "file:D:/Kurtis/workspace/Snapdragon_Spaces_SDK_0_13_0_for_Unity/Unity Package/SnapdragonSpaces_Package_0_13_0.tgz",
+    "com.qualcomm.qcht.unity.interactions": "file:D:/Kurtis/workspace/Snapdragon_Spaces_SDK_0_14_0_for_Unity/Unity Package/com.qualcomm.qcht.unity.interactions-4.0.0-pre.14.tgz",
+    "com.qualcomm.snapdragon.spaces": "file:D:/Kurtis/workspace/Snapdragon_Spaces_SDK_0_14_0_for_Unity/Unity Package/com.qualcomm.snapdragon.spaces-0.14.0.tgz",
     "com.unity.collab-proxy": "2.0.3",
     "com.unity.ide.rider": "3.0.20",
     "com.unity.ide.visualstudio": "2.0.18",
@@ -41,7 +41,6 @@
     "com.unity.xr.interaction.toolkit": "2.3.1",
     "com.unity.xr.management": "4.3.3",
     "com.unity.xr.openxr": "1.7.0",
-    "com.unity.xr.openxr.picoxr": "file:D:/Kurtis/workspace/PICO Unity OpenXR Plugin（Experiment）",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",

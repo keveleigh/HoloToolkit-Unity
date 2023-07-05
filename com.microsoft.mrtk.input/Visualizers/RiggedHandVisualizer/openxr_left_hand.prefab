@@ -100,12 +100,12 @@ PrefabInstance:
       value: Controller Detected
       objectReference: {fileID: 0}
     - target: {fileID: 3507431783398283103, guid: da93d751ddc0f64468dfc02f18d02d00, type: 3}
-      propertyPath: handNode
-      value: 4
+      propertyPath: showHandsOnTransparentDisplays
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3507431783398283103, guid: da93d751ddc0f64468dfc02f18d02d00, type: 3}
-      propertyPath: handScale
-      value: 0.95
+    - target: {fileID: 3957823326167938785, guid: da93d751ddc0f64468dfc02f18d02d00, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3973969148631863464, guid: da93d751ddc0f64468dfc02f18d02d00, type: 3}
       propertyPath: m_RootOrder

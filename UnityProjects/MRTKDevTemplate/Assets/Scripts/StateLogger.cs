@@ -12,6 +12,8 @@ using UnityEngine.XR.ARSubsystems;
 using UnityEngine.XR.Hands;
 using UnityEngine.XR.OpenXR;
 using XRHandedness = UnityEngine.XR.Hands.Handedness;
+using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit.Inputs;
 
 namespace Microsoft.MixedReality.Toolkit.Examples
 {
@@ -22,6 +24,12 @@ namespace Microsoft.MixedReality.Toolkit.Examples
 
         [SerializeField]
         private XROrigin xrOrigin = null;
+
+        [SerializeField]
+        private InputActionProperty positionAction;
+
+        [SerializeField]
+        private InputActionProperty rotationAction;
 
         private const int CountToNextUpdate = 20;
         private int countSinceLastUpdate = 0;
@@ -41,6 +49,9 @@ namespace Microsoft.MixedReality.Toolkit.Examples
                 enabled = false;
             }
 
+            positionAction.EnableDirectAction();
+            rotationAction.EnableDirectAction();
+
 #if UNITY_ANDROID
             systemNameFeature = OpenXRSettings.Instance.GetFeature<SystemNameFeature>();
 #endif
@@ -56,6 +67,8 @@ namespace Microsoft.MixedReality.Toolkit.Examples
                     ? "OpenXR Runtime is not available."
                     : $"{OpenXRRuntime.name} {OpenXRRuntime.version}";
 
+                Vector3 position = positionAction.action.ReadValue<Vector3>();
+
                 text.SetText($"{Application.productName}" +
                     $"\nUnity Version: {Application.unityVersion}" +
                     $"\nUnity OpenXR Plugin Version: {OpenXRRuntime.pluginVersion}" +
@@ -69,14 +82,18 @@ namespace Microsoft.MixedReality.Toolkit.Examples
                     $"\n{GetDisplayInfo()}" +
                     $"\nAR Session State: {ARSession.state} | {GetTrackingMode()}" +
                     $"\nXR Origin: {xrOrigin.RequestedTrackingOriginMode} (requested) | {GetOriginMode()} (actual)" +
+                    "\n" +
+                    $"\nPhone controller position: ({position.x}, {position.y}, {position.z})" +
+                    $"\nPhone controller rotation: {rotationAction.action.ReadValue<Quaternion>()}" +
 #if UNITY_ANDROID
-                    $"\nLeft Hand gesture state: {GetGestureState(XRHandedness.Left)}" +
-                    $"\nRight Hand gesture state: {GetGestureState(XRHandedness.Right)}" +
+                    //                    $"\nLeft Hand gesture state: {GetGestureState(XRHandedness.Left)}" +
+                    //                    $"\nRight Hand gesture state: {GetGestureState(XRHandedness.Right)}" +
 #endif
+                    "\n" +
                     $"\nLeft Hand tracking state: {GetTrackingState(XRHandedness.Left)}" +
-                    $"\nRight Hand tracking state: {GetTrackingState(XRHandedness.Right)}" +
-                    $"\nLeft Hand pinch state: {GetPinchState(XRHandedness.Left)}" +
-                    $"\nRight Hand pinch state: {GetPinchState(XRHandedness.Right)}");
+                    $"\nRight Hand tracking state: {GetTrackingState(XRHandedness.Right)}");
+                //                    $"\nLeft Hand pinch state: {GetPinchState(XRHandedness.Left)}" +
+                //                    $"\nRight Hand pinch state: {GetPinchState(XRHandedness.Right)}");
             }
         }
 

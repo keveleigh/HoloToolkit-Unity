@@ -12,7 +12,7 @@ namespace Microsoft.MixedReality.Toolkit.Subsystems
     /// MUST implement this interface, preferably with a direct 1:1 mapping
     /// between the provider surface and the subsystem surface.
     /// </summary>
-    public interface IKeywordRecognitionSubsystem
+    internal interface IKeywordRecognitionSubsystem
     {
         /// <summary>
         /// Add or update a keyword to recognize.

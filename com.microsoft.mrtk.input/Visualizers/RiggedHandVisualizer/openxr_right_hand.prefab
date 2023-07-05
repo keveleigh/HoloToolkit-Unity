@@ -600,13 +600,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4354293980546992658}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a4cc0663b372fd4795c4e6d942500fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   handNode: 5
-  showHandsOnTransparentDisplays: 0
+  showHandsOnTransparentDisplays: 1
   wrist: {fileID: 5446693289115484214}
   handRenderer: {fileID: 5709336421934327412}
   pinchAmountMaterialProperty: _PinchAmount
@@ -617,7 +617,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4354293980546992658}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8c84c0b2be85add4ea1a5d0b1b2bf027, type: 3}
   m_Name: 
