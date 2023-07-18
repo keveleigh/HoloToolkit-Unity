@@ -31,6 +31,9 @@ namespace Microsoft.MixedReality.Toolkit.Examples
         [SerializeField]
         private InputActionProperty rotationAction;
 
+        [SerializeField]
+        private InputActionProperty trackingStateAction;
+
         private const int CountToNextUpdate = 20;
         private int countSinceLastUpdate = 0;
         private XRHandSubsystem handSubsystem;
@@ -51,6 +54,7 @@ namespace Microsoft.MixedReality.Toolkit.Examples
 
             positionAction.EnableDirectAction();
             rotationAction.EnableDirectAction();
+            trackingStateAction.EnableDirectAction();
 
 #if UNITY_ANDROID
             systemNameFeature = OpenXRSettings.Instance.GetFeature<SystemNameFeature>();
@@ -68,6 +72,9 @@ namespace Microsoft.MixedReality.Toolkit.Examples
                     : $"{OpenXRRuntime.name} {OpenXRRuntime.version}";
 
                 Vector3 position = positionAction.action.ReadValue<Vector3>();
+                InputTrackingState state = (InputTrackingState)trackingStateAction.action.ReadValue<int>();
+                bool isPositionallyTracked = (state & InputTrackingState.Position) > 0;
+                bool isRotationallyTracked = (state & InputTrackingState.Rotation) > 0;
 
                 text.SetText($"{Application.productName}" +
                     $"\nUnity Version: {Application.unityVersion}" +
@@ -83,8 +90,9 @@ namespace Microsoft.MixedReality.Toolkit.Examples
                     $"\nAR Session State: {ARSession.state} | {GetTrackingMode()}" +
                     $"\nXR Origin: {xrOrigin.RequestedTrackingOriginMode} (requested) | {GetOriginMode()} (actual)" +
                     "\n" +
-                    $"\nPhone controller position: ({position.x}, {position.y}, {position.z})" +
-                    $"\nPhone controller rotation: {rotationAction.action.ReadValue<Quaternion>()}" +
+                    $"\nPhone position: ({position.x}, {position.y}, {position.z})" +
+                    $"\nPhone rotation: {rotationAction.action.ReadValue<Quaternion>()}" +
+                    $"\nPhone tracked state: Position? {isPositionallyTracked} Rotation? {isRotationallyTracked}" +
 #if UNITY_ANDROID
                     //                    $"\nLeft Hand gesture state: {GetGestureState(XRHandedness.Left)}" +
                     //                    $"\nRight Hand gesture state: {GetGestureState(XRHandedness.Right)}" +
