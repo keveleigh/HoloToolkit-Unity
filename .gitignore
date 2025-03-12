@@ -7,7 +7,7 @@
 **/[Bb]uilds/
 **/[Bb]uild/
 **/[Ll]ibrary/
-**/[Aa]pp/
+**/[Aa]pp*/
 **/[Uu]serSettings/
 **/[Ll]ogs/
 UWP/
@@ -22,6 +22,7 @@ project.lock.json
 **/.DS_Store
 **/Assets/Oculus/
 **/Assets/Oculus.meta
+.utmp/
 
 # ============ #
 # Certificates #
