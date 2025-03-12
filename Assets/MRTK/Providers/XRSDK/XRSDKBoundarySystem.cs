@@ -49,7 +49,7 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
             {
 #if UNITY_2019_3_OR_NEWER
                 // If the "main" input subsystem doesn't have an available boundary, check the rest of them
-                SubsystemManager.GetInstances(XRInputSubsystems);
+                SubsystemManager.GetSubsystems(XRInputSubsystems);
                 foreach (XRInputSubsystem xrInputSubsystem in XRInputSubsystems)
                 {
                     if (xrInputSubsystem.running
@@ -125,7 +125,7 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK
 
 #if UNITY_2019_3_OR_NEWER
             // If the "main" input subsystem can't set the origin mode, check the rest of them
-            SubsystemManager.GetInstances(XRInputSubsystems);
+            SubsystemManager.GetSubsystems(XRInputSubsystems);
             foreach (XRInputSubsystem xrInputSubsystem in XRInputSubsystems)
             {
                 if (xrInputSubsystem.running && xrInputSubsystem.TrySetTrackingOriginMode(trackingOriginMode))

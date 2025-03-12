@@ -499,10 +499,10 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
                 if (rbody != null)
                 {
                     originalUseGravity = rbody.useGravity;
-                    originalDrag = rbody.drag;
+                    originalDrag = rbody.linearDamping;
 
                     rbody.useGravity = false;
-                    rbody.drag = float.PositiveInfinity;
+                    rbody.linearDamping = float.PositiveInfinity;
                 }
 
                 OnDragStart.Invoke();
@@ -538,7 +538,7 @@ namespace Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking
                 if (rbody != null)
                 {
                     rbody.useGravity = originalUseGravity;
-                    rbody.drag = originalDrag;
+                    rbody.linearDamping = originalDrag;
                 }
 
                 if (useAsSlider)

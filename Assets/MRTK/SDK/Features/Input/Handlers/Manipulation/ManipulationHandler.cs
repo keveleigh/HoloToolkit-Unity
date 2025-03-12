@@ -961,7 +961,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
 
                 if (releaseBehavior.IsMaskSet(ReleaseBehaviorType.KeepVelocity))
                 {
-                    rigidBody.velocity = GetPointersVelocity();
+                    rigidBody.linearVelocity = GetPointersVelocity();
                 }
 
                 if (releaseBehavior.IsMaskSet(ReleaseBehaviorType.KeepAngularVelocity))

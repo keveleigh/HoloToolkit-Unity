@@ -213,7 +213,7 @@ namespace Microsoft.MixedReality.Toolkit.Tests
             // With simulated hand angular velocity would not be equal to 0, because of how simulation
             // moves hand when releasing the Pitch. Even though it doesn't directly follow from hand movement, there will always be some rotation.
             Assert.NotZero(rigidBody.angularVelocity.magnitude, "ObjectManipulator should apply angular velocity to rigidBody upon release.");
-            Assert.AreEqual(hand.GetVelocity(), rigidBody.velocity, "ObjectManipulator should apply hand velocity to rigidBody upon release.");
+            Assert.AreEqual(hand.GetVelocity(), rigidBody.linearVelocity, "ObjectManipulator should apply hand velocity to rigidBody upon release.");
 
             // This is just for debugging purposes, so object's movement after release can be seen.
             yield return hand.MoveTo(initialHandPosition);
@@ -267,7 +267,7 @@ namespace Microsoft.MixedReality.Toolkit.Tests
             // With simulated hand angular velocity would not be equal to 0, because of how simulation
             // moves hand when releasing the Pitch. Even though it doesn't directly follow from hand movement, there will always be some rotation.
             Assert.Zero(rigidBody.angularVelocity.magnitude, "Object should have maintained its angular velocity of zero being released.");
-            Assert.IsTrue(rigidBody.velocity != hand.GetVelocity() && rigidBody.velocity.magnitude > 0.0f, "ObjectManipulator should not dampen it's velocity to match the hand's upon release.");
+            Assert.IsTrue(rigidBody.linearVelocity != hand.GetVelocity() && rigidBody.linearVelocity.magnitude > 0.0f, "ObjectManipulator should not dampen it's velocity to match the hand's upon release.");
 
             // This is just for debugging purposes, so object's movement after release can be seen.
             yield return hand.MoveTo(initialHandPosition);
@@ -1408,7 +1408,7 @@ namespace Microsoft.MixedReality.Toolkit.Tests
 
             yield return hand.Move(Vector3.forward * 3f, numHandSteps);
 
-            Assert.AreNotEqual(Vector3.zero, backgroundRigidbody.velocity);
+            Assert.AreNotEqual(Vector3.zero, backgroundRigidbody.linearVelocity);
             Assert.AreEqual(1, collisionListener.CollisionCount);
         }
 

@@ -949,7 +949,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
                 else
                 {
                     // We are using forces
-                    rigidBody.velocity = ((1f - Mathf.Pow(moveLerpTime, Time.deltaTime)) / Time.deltaTime) * (targetTransform.Position - HostTransform.position);
+                    rigidBody.linearVelocity = ((1f - Mathf.Pow(moveLerpTime, Time.deltaTime)) / Time.deltaTime) * (targetTransform.Position - HostTransform.position);
 
                     var relativeRotation = targetTransform.Rotation * Quaternion.Inverse(HostTransform.rotation);
                     relativeRotation.ToAngleAxis(out float angle, out Vector3 axis);
@@ -1035,7 +1035,7 @@ namespace Microsoft.MixedReality.Toolkit.UI
                 {
                     if (releaseBehavior.IsMaskSet(ReleaseBehaviorType.KeepVelocity))
                     {
-                        rigidBody.velocity = velocity;
+                        rigidBody.linearVelocity = velocity;
                     }
 
                     if (releaseBehavior.IsMaskSet(ReleaseBehaviorType.KeepAngularVelocity))
