@@ -55,6 +55,19 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.AndroidXR
             base.UpdateController(inputDevice);
 
             UpdateHandData();
+
+            // Updating the Index finger pose right after getting the hand data
+            // regardless of whether device data is present
+            for (int i = 0; i < Interactions?.Length; i++)
+            {
+                var interactionMapping = Interactions[i];
+                switch (interactionMapping.InputType)
+                {
+                    case DeviceInputType.IndexFinger:
+                        handDefinition?.UpdateCurrentIndexPose(interactionMapping);
+                        break;
+                }
+            }
         }
 
         private static readonly ProfilerMarker UpdateSingleAxisDataPerfMarker = new ProfilerMarker("[MRTK] OpenXRArticulatedHand.UpdateSingleAxisData");

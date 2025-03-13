@@ -84,7 +84,6 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.AndroidXR
 
                     if (handSubsystem == null)
                     {
-                        Debug.Log("NO SUBSYSTEM?!?!?!?");
                         // No hand subsystem running this frame.
                         return default;
                     }
@@ -95,7 +94,6 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.AndroidXR
 
             if (xrHand.isTracked)
             {
-                Debug.Log("HAND TRACKED!!!");
                 for (int i = (int)XRHandJointID.BeginMarker; i < (int)XRHandJointID.EndMarker; i++)
                 {
                     if (xrHand.GetJoint((XRHandJointID)i).TryGetPose(out Pose pose))
@@ -113,10 +111,6 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.AndroidXR
                         jointPoses[i] = new MixedRealityPose(position, rotation);
                     }
                 }
-            }
-            else
-            {
-                Debug.Log("HAND NOT TRACKEDDDDDD :(");
             }
 #endif
         }

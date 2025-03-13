@@ -1,4 +1,5 @@
 using Microsoft.MixedReality.Toolkit.Input;
+using Microsoft.MixedReality.Toolkit.Utilities;
 using System;
 
 #if UNITY_OPENXR
@@ -7,6 +8,11 @@ using UnityEngine.XR.OpenXR;
 
 namespace Microsoft.MixedReality.Toolkit.XRSDK.AndroidXR
 {
+    [MixedRealityDataProvider(
+        typeof(IMixedRealityInputSystem),
+        (SupportedPlatforms)(-1),
+        "OpenXR Device Manager",
+        supportedUnityXRPipelines: SupportedUnityXRPipelines.XRSDK)]
     public class OpenXRDeviceManager : OpenXR.OpenXRDeviceManager
     {
         public OpenXRDeviceManager(
@@ -19,14 +25,9 @@ namespace Microsoft.MixedReality.Toolkit.XRSDK.AndroidXR
         protected override Type GetControllerType(SupportedControllerType supportedControllerType)
         {
 #if UNITY_OPENXR
-            switch (supportedControllerType)
+            if (supportedControllerType == SupportedControllerType.ArticulatedHand && OpenXRRuntime.IsExtensionEnabled("XR_EXT_hand_interaction"))
             {
-                case SupportedControllerType.ArticulatedHand:
-                    if (OpenXRRuntime.IsExtensionEnabled("XR_EXT_hand_interaction"))
-                    {
-                        return typeof(OpenXRArticulatedHand);
-                    }
-                    break;
+                return typeof(OpenXRArticulatedHand);
             }
 #endif
             return base.GetControllerType(supportedControllerType);
